@@ -1,8 +1,10 @@
 import { Navigation } from '@/components/public/Navigation';
-import { HeroSection } from '@/components/public/HeroSection';
+import { HeroCarousel } from '@/components/public/HeroCarousel';
 import { AnnouncementsSection } from '@/components/public/AnnouncementsSection';
 import { HighlightsSection } from '@/components/public/HighlightsSection';
+import { ValuesSection } from '@/components/public/ValuesSection';
 import { ClassesSection } from '@/components/public/ClassesSection';
+import { PhotoGallerySection } from '@/components/public/PhotoGallerySection';
 import { WelcomeSection } from '@/components/public/WelcomeSection';
 import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
@@ -65,15 +67,8 @@ export default async function HomePage() {
       <Navigation />
 
       <main className="min-h-screen">
-        {/* Hero Section */}
-        <HeroSection
-          organizationName={settings.organizationName}
-          subtitle={settings.subtitle}
-          location={settings.location}
-          leftLogoUrl={settings.leftLogoUrl}
-          rightLogoUrl={settings.rightLogoUrl}
-          heroBackgroundColor={settings.heroBackgroundColor}
-        />
+        {/* Hero Carousel */}
+        <HeroCarousel />
 
         {/* Announcements Section */}
         <AnnouncementsSection announcements={announcements} />
@@ -81,8 +76,14 @@ export default async function HomePage() {
         {/* Highlights Section */}
         <HighlightsSection />
 
+        {/* Values Section */}
+        <ValuesSection />
+
         {/* Classes Section */}
         <ClassesSection classes={classes} />
+
+        {/* Photo Gallery Section */}
+        <PhotoGallerySection />
 
         {/* Welcome & Contact Section */}
         <WelcomeSection
