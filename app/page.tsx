@@ -4,15 +4,16 @@ import { ClassesSection } from '@/components/public/ClassesSection';
 import { WelcomeSection } from '@/components/public/WelcomeSection';
 import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
+import { Announcement, Class, SiteSetting } from '@prisma/client';
 
 // Force dynamic rendering to avoid database connection at build time
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   // Fetch site settings from database (with fallback defaults)
-  let siteSettings = null;
-  let announcements = [];
-  let classes = [];
+  let siteSettings: SiteSetting | null = null;
+  let announcements: Announcement[] = [];
+  let classes: Class[] = [];
 
   try {
     siteSettings = await db.siteSetting.findFirst();
