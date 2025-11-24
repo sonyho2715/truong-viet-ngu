@@ -37,7 +37,7 @@ export function AnnouncementsSection({ announcements }: AnnouncementsSectionProp
   }
 
   return (
-    <section className="bg-gray-50 px-6 py-16 lg:py-24">
+    <section id="announcements" className="bg-gray-50 px-6 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center">

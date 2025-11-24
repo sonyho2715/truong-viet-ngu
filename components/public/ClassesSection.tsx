@@ -26,7 +26,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
   }
 
   return (
-    <section className="bg-white px-6 py-16 lg:py-24">
+    <section id="classes" className="bg-white px-6 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center">

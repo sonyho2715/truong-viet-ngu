@@ -1,5 +1,7 @@
+import { Navigation } from '@/components/public/Navigation';
 import { HeroSection } from '@/components/public/HeroSection';
 import { AnnouncementsSection } from '@/components/public/AnnouncementsSection';
+import { HighlightsSection } from '@/components/public/HighlightsSection';
 import { ClassesSection } from '@/components/public/ClassesSection';
 import { WelcomeSection } from '@/components/public/WelcomeSection';
 import { Footer } from '@/components/public/Footer';
@@ -58,33 +60,41 @@ export default async function HomePage() {
   };
 
   return (
-    <main className="min-h-screen">
-      {/* Hero Section */}
-      <HeroSection
-        organizationName={settings.organizationName}
-        subtitle={settings.subtitle}
-        location={settings.location}
-        leftLogoUrl={settings.leftLogoUrl}
-        rightLogoUrl={settings.rightLogoUrl}
-        heroBackgroundColor={settings.heroBackgroundColor}
-      />
+    <>
+      {/* Navigation Bar */}
+      <Navigation />
 
-      {/* Announcements Section */}
-      <AnnouncementsSection announcements={announcements} />
+      <main className="min-h-screen">
+        {/* Hero Section */}
+        <HeroSection
+          organizationName={settings.organizationName}
+          subtitle={settings.subtitle}
+          location={settings.location}
+          leftLogoUrl={settings.leftLogoUrl}
+          rightLogoUrl={settings.rightLogoUrl}
+          heroBackgroundColor={settings.heroBackgroundColor}
+        />
 
-      {/* Classes Section */}
-      <ClassesSection classes={classes} />
+        {/* Announcements Section */}
+        <AnnouncementsSection announcements={announcements} />
 
-      {/* Welcome & Contact Section */}
-      <WelcomeSection
-        welcomeMessage={settings.welcomeMessage}
-        contactEmail={settings.contactEmail}
-        contactPhone={settings.contactPhone}
-        address={settings.address}
-      />
+        {/* Highlights Section */}
+        <HighlightsSection />
 
-      {/* Footer */}
-      <Footer />
-    </main>
+        {/* Classes Section */}
+        <ClassesSection classes={classes} />
+
+        {/* Welcome & Contact Section */}
+        <WelcomeSection
+          welcomeMessage={settings.welcomeMessage}
+          contactEmail={settings.contactEmail}
+          contactPhone={settings.contactPhone}
+          address={settings.address}
+        />
+
+        {/* Footer */}
+        <Footer />
+      </main>
+    </>
   );
 }

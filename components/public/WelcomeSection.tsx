@@ -12,11 +12,11 @@ export function WelcomeSection({
   address = '123 Church Street, Honolulu, HI 96817',
 }: WelcomeSectionProps) {
   return (
-    <section className="bg-brand-cream px-6 py-16 lg:py-24">
+    <section id="about" className="bg-brand-cream px-6 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Welcome Message */}
-          <div className="flex flex-col justify-center">
+          <div id="contact" className="flex flex-col justify-center">
             <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
               Chào Mừng
             </h2>
