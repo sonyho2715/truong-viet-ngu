@@ -1,0 +1,195 @@
+// Truong Viet Ngu - Vietnamese Language School Database Schema
+// This schema supports admin management of announcements, classes, materials, and site settings
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// AUTHENTICATION & ADMIN MANAGEMENT
+// ============================================
+
+model Admin {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  password    String    // bcrypt hashed
+  name        String
+  role        Role      @default(ADMIN)
+  isActive    Boolean   @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([email])
+  @@map("admins")
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+// ============================================
+// ANNOUNCEMENTS
+// ============================================
+
+model Announcement {
+  id          String            @id @default(cuid())
+  title       String            // Vietnamese title
+  description String            @db.Text // Rich text content
+  category    AnnouncementCategory
+  startDate   DateTime
+  endDate     DateTime?         // Optional end date
+  priority    Int               @default(0) // Higher number = higher priority
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  // Indexes for common queries
+  @@index([isActive, priority(sort: Desc), startDate(sort: Desc)])
+  @@index([category])
+  @@index([startDate])
+  @@map("announcements")
+}
+
+enum AnnouncementCategory {
+  CHOIR       // Ca đoàn TNTT
+  BIBLE       // Chương Trình Đọc Sách Thánh
+  EVENT       // General events
+  GENERAL     // General announcements
+  HOLIDAY     // Holidays and closures
+}
+
+// ============================================
+// CLASSES
+// ============================================
+
+model Class {
+  id              String   @id @default(cuid())
+  name            String   // e.g., "Lớp MG-A", "Lớp 1"
+  gradeLevel      GradeLevel
+  teacherName     String?
+  teacherEmail    String?
+  classroomImage  String?  // Path to classroom image
+  classPhotoImage String?  // Path to class photo
+  schedule        String?  // e.g., "Saturday 9:00 AM - 11:00 AM"
+  roomNumber      String?
+  description     String?  @db.Text
+  isActive        Boolean  @default(true)
+  displayOrder    Int      @default(0) // For custom ordering
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Indexes for queries
+  @@index([isActive, gradeLevel, displayOrder])
+  @@index([gradeLevel])
+  @@map("classes")
+}
+
+enum GradeLevel {
+  MAU_GIAO_A    // Mẫu giáo A
+  MAU_GIAO_B    // Mẫu giáo B
+  MAU_GIAO_C    // Mẫu giáo C
+  LOP_1         // Grade 1
+  LOP_2         // Grade 2
+  LOP_3         // Grade 3
+  LOP_4         // Grade 4
+  LOP_5         // Grade 5
+}
+
+// ============================================
+// LEARNING MATERIALS
+// ============================================
+
+model LearningMaterial {
+  id            String      @id @default(cuid())
+  title         String      // e.g., "Tomathien.org Lessons"
+  gradeLevel    GradeLevel
+  lessonNumbers String?     // e.g., "1 + 21 17" or "1 tới 16"
+  externalLink  String?     // URL to external resource
+  fileUrl       String?     // Path to uploaded PDF/document
+  description   String?     @db.Text
+  isActive      Boolean     @default(true)
+  displayOrder  Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([isActive, gradeLevel, displayOrder])
+  @@index([gradeLevel])
+  @@map("learning_materials")
+}
+
+// ============================================
+// SITE SETTINGS
+// ============================================
+
+model SiteSetting {
+  id                String   @id @default("site_settings") // Singleton pattern
+  organizationName  String   @default("Trường Việt Ngữ")
+  subtitle          String   @default("Thiếu Nhi Thánh Thể")
+  location          String   @default("Honolulu, HI")
+  leftLogoUrl       String?  // Path to Công đoàn logo
+  rightLogoUrl      String?  // Path to TNTT logo
+  heroBackground    String?  // Path to hero background image
+  heroBackgroundColor String @default("#1e3a5f") // Default navy blue
+  welcomeMessage    String?  @db.Text
+  contactEmail      String?
+  contactPhone      String?
+  address           String?
+  facebookUrl       String?
+  youtubeUrl        String?
+  updatedAt         DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+// ============================================
+// IMAGE GALLERY (Optional - for future expansion)
+// ============================================
+
+model Image {
+  id          String     @id @default(cuid())
+  filename    String
+  filepath    String
+  altText     String?
+  category    ImageCategory
+  uploadedBy  String?    // Admin email or name
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+
+  @@index([category, isActive])
+  @@map("images")
+}
+
+enum ImageCategory {
+  LOGO
+  CLASSROOM
+  CLASS_PHOTO
+  HERO_BACKGROUND
+  ANNOUNCEMENT
+  GENERAL
+}
+
+// ============================================
+// AUDIT LOG (Optional - for tracking changes)
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String?  // Who made the change
+  action    String   // "CREATE", "UPDATE", "DELETE"
+  entity    String   // "Announcement", "Class", etc.
+  entityId  String   // ID of the affected record
+  changes   Json?    // Old and new values
+  createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([entity, entityId])
+  @@index([createdAt(sort: Desc)])
+  @@map("audit_logs")
+}
