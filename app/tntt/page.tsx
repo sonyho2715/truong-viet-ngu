@@ -1,11 +1,13 @@
 import { Navigation } from '@/components/public/Navigation';
 import { Footer } from '@/components/public/Footer';
+import { Breadcrumb } from '@/components/public/Breadcrumb';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Thiếu Nhi Thánh Thể - TNTT',
-  description: 'Chương trình Thiếu Nhi Thánh Thể - nuôi dưỡng đức tin và giá trị Công Giáo cho thế hệ trẻ',
+  title: 'Thiếu Nhi Thánh Thể (TNTT) - Trường Việt Ngữ',
+  description: 'Chương trình Thiếu Nhi Thánh Thể - Nuôi dưỡng đức tin và truyền thống Công Giáo cho thế hệ trẻ tại Honolulu, HI. Bao gồm các ngành Ấu Nhi, Thiếu Nhi, Nghĩa Sĩ, và Hiệp Sĩ.',
+  keywords: ['TNTT', 'Thiếu Nhi Thánh Thể', 'Eucharistic Youth Movement', 'Catholic youth program'],
 };
 
 export default function TNTTPage() {
@@ -115,7 +117,8 @@ export default function TNTTPage() {
           </div>
           <div className="relative flex h-full items-center">
             <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-              <div className="text-center">
+              <Breadcrumb items={[{ label: 'Thiếu Nhi Thánh Thể' }]} />
+              <div className="mt-6 text-center">
                 <h1 className="font-serif text-5xl font-bold text-white lg:text-6xl">
                   Thiếu Nhi Thánh Thể
                 </h1>

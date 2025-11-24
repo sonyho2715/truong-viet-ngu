@@ -24,8 +24,8 @@
 
 @theme inline {
   /* Font Families */
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-noto-sans);
+  --font-serif: var(--font-noto-serif);
 
   /* Custom Brand Colors */
   --color-brand-navy: var(--color-navy);

@@ -40,7 +40,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
             Các Lớp Học
           </h2>
           <p className="mt-3 text-lg text-gray-600">
-            Mẫu giáo A đến Lớp 5
+            Mẫu Giáo A đến Lớp 7 và TNTT
           </p>
         </div>
 

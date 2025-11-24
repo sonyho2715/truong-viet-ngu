@@ -20,27 +20,33 @@ export function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-8">
+          <div className="hidden md:flex md:items-center md:gap-6">
             <Link
-              href="#announcements"
+              href="/"
               className="text-sm font-medium text-gray-700 transition-colors hover:text-brand-gold"
             >
-              Thông Báo
+              Trang Chủ
             </Link>
             <Link
-              href="#classes"
+              href="/#classes"
               className="text-sm font-medium text-gray-700 transition-colors hover:text-brand-gold"
             >
               Các Lớp Học
             </Link>
             <Link
-              href="#about"
+              href="/tntt"
               className="text-sm font-medium text-gray-700 transition-colors hover:text-brand-gold"
             >
-              Giới Thiệu
+              TNTT
             </Link>
             <Link
-              href="#contact"
+              href="/calendar"
+              className="text-sm font-medium text-gray-700 transition-colors hover:text-brand-gold"
+            >
+              Lịch Học
+            </Link>
+            <Link
+              href="/#contact"
               className="text-sm font-medium text-gray-700 transition-colors hover:text-brand-gold"
             >
               Liên Hệ
@@ -103,28 +109,35 @@ export function Navigation() {
         <div className="md:hidden">
           <div className="space-y-1 border-t border-gray-200 px-4 pb-3 pt-2">
             <Link
-              href="#announcements"
+              href="/"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-brand-navy"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Thông Báo
+              Trang Chủ
             </Link>
             <Link
-              href="#classes"
+              href="/#classes"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-brand-navy"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Các Lớp Học
             </Link>
             <Link
-              href="#about"
+              href="/tntt"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-brand-navy"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Giới Thiệu
+              TNTT
             </Link>
             <Link
-              href="#contact"
+              href="/calendar"
+              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-brand-navy"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Lịch Học
+            </Link>
+            <Link
+              href="/#contact"
               className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-brand-navy"
               onClick={() => setIsMobileMenuOpen(false)}
             >
