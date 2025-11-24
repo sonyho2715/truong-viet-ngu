@@ -22,14 +22,9 @@ const categoryColors: Record<string, string> = {
 };
 
 export function AnnouncementsSection({ announcements }: AnnouncementsSectionProps) {
+  // Show ALL active announcements regardless of date, sorted by priority
   const activeAnnouncements = announcements
     .filter((a) => a.isActive)
-    .filter((a) => {
-      const now = new Date();
-      const start = new Date(a.startDate);
-      const end = a.endDate ? new Date(a.endDate) : null;
-      return start <= now && (!end || end >= now);
-    })
     .sort((a, b) => b.priority - a.priority);
 
   if (activeAnnouncements.length === 0) {

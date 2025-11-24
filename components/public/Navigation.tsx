@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 export function Navigation() {
@@ -12,7 +13,14 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo/Brand */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/uploads/logos/cttd.png"
+                alt="CTTD Logo"
+                width={48}
+                height={48}
+                className="h-12 w-12 object-contain"
+              />
               <span className="font-serif text-xl font-bold text-brand-navy">
                 Trường Việt Ngữ
               </span>
