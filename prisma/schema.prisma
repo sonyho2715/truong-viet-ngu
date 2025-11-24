@@ -95,11 +95,17 @@ enum GradeLevel {
   MAU_GIAO_A    // Mẫu giáo A
   MAU_GIAO_B    // Mẫu giáo B
   MAU_GIAO_C    // Mẫu giáo C
-  LOP_1         // Grade 1
-  LOP_2         // Grade 2
-  LOP_3         // Grade 3
-  LOP_4         // Grade 4
-  LOP_5         // Grade 5
+  LOP_1         // Lớp 1 (7-9 tuổi)
+  LOP_2         // Lớp 2 (10-12 tuổi)
+  LOP_3         // Lớp 3 (13-15 tuổi)
+  LOP_4         // Lớp 4 (16-18 tuổi)
+  LOP_5         // Lớp 5
+  LOP_6         // Lớp 6
+  LOP_7         // Lớp 7
+  AU_NHI        // TNTT: Ấu Nhi (7-9 tuổi)
+  THIEU_NHI     // TNTT: Thiếu Nhi (10-12 tuổi)
+  NGHIA_SI      // TNTT: Nghĩa Sĩ (13-15 tuổi)
+  HIEP_SI       // TNTT: Hiệp Sĩ (16-18 tuổi)
 }
 
 // ============================================

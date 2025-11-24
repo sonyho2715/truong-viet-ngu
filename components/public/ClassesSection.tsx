@@ -14,6 +14,12 @@ const gradeLevelLabels: Record<string, string> = {
   LOP_3: 'Lớp 3',
   LOP_4: 'Lớp 4',
   LOP_5: 'Lớp 5',
+  LOP_6: 'Lớp 6',
+  LOP_7: 'Lớp 7',
+  AU_NHI: 'Ấu Nhi',
+  THIEU_NHI: 'Thiếu Nhi',
+  NGHIA_SI: 'Nghĩa Sĩ',
+  HIEP_SI: 'Hiệp Sĩ',
 };
 
 export function ClassesSection({ classes }: ClassesSectionProps) {

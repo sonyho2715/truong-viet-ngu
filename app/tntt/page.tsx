@@ -12,27 +12,31 @@ export default function TNTTPage() {
   const levels = [
     {
       name: 'Ấu Nhi',
-      ageRange: '6-8 tuổi',
+      ageRange: '7-9 tuổi',
       description: 'Làm quen với đức tin Công Giáo qua các hoạt động vui chơi và học tập',
       color: 'bg-blue-100 text-blue-800',
+      image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
     },
     {
       name: 'Thiếu Nhi',
-      ageRange: '9-11 tuổi',
+      ageRange: '10-12 tuổi',
       description: 'Phát triển đức tin qua các hoạt động nhóm và học giáo lý',
       color: 'bg-green-100 text-green-800',
+      image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80',
     },
     {
       name: 'Nghĩa Sĩ',
-      ageRange: '12-14 tuổi',
+      ageRange: '13-15 tuổi',
       description: 'Rèn luyện đức tin và tinh thần phục vụ cộng đồng',
       color: 'bg-yellow-100 text-yellow-800',
+      image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80',
     },
     {
       name: 'Hiệp Sĩ',
-      ageRange: '15-17 tuổi',
+      ageRange: '16-18 tuổi',
       description: 'Trở thành lãnh đạo và gương mẫu cho các em nhỏ',
       color: 'bg-red-100 text-red-800',
+      image: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=600&q=80',
     },
   ];
 
@@ -186,19 +190,35 @@ export default function TNTTPage() {
               {levels.map((level, index) => (
                 <article
                   key={index}
-                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
+                  className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
                 >
-                  <div className="mb-4 text-center">
-                    <span className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium ${level.color}`}>
-                      {level.ageRange}
-                    </span>
+                  {/* Level Image */}
+                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-brand-navy/10 to-brand-navy/5">
+                    <Image
+                      src={level.image}
+                      alt={level.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/40 to-transparent" />
+
+                    {/* Age Range Badge */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                      <span className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium ${level.color}`}>
+                        {level.ageRange}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="mb-3 text-center font-serif text-2xl font-bold text-brand-navy">
-                    {level.name}
-                  </h3>
-                  <p className="text-center text-gray-600">
-                    {level.description}
-                  </p>
+
+                  {/* Level Info */}
+                  <div className="p-6">
+                    <h3 className="mb-3 text-center font-serif text-2xl font-bold text-brand-navy">
+                      {level.name}
+                    </h3>
+                    <p className="text-center text-sm text-gray-600">
+                      {level.description}
+                    </p>
+                  </div>
                 </article>
               ))}
             </div>

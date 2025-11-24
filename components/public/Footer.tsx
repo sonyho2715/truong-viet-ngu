@@ -79,7 +79,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Tô Màu Thiên
+                  Toma Thien
                 </a>
               </li>
               <li>
