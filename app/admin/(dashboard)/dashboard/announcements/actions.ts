@@ -33,7 +33,7 @@ export async function createAnnouncementAction(formData: FormData) {
       return {
         success: false,
         error: 'Dữ liệu không hợp lệ',
-        details: error.errors,
+        details: error.issues,
       };
     }
 
@@ -73,7 +73,7 @@ export async function updateAnnouncementAction(id: string, formData: FormData) {
       return {
         success: false,
         error: 'Dữ liệu không hợp lệ',
-        details: error.errors,
+        details: error.issues,
       };
     }
 
