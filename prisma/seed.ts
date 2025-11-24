@@ -35,7 +35,7 @@ async function main() {
   // ============================================
   console.log('Creating site settings...');
 
-  const siteSettings = await prisma.siteSettings.upsert({
+  const siteSettings = await prisma.siteSetting.upsert({
     where: { id: 'site_settings' },
     update: {},
     create: {
