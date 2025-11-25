@@ -3,6 +3,7 @@
 import { useTransition, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Announcement } from '@prisma/client';
+import { toast } from 'sonner';
 import {
   createAnnouncementAction,
   updateAnnouncementAction,
@@ -37,9 +38,13 @@ export function AnnouncementForm({ mode, announcement }: AnnouncementFormProps) 
           : await updateAnnouncementAction(announcement!.id, formData);
 
       if (result?.success) {
+        toast.success(
+          mode === 'create' ? 'Tạo thông báo thành công' : 'Cập nhật thông báo thành công'
+        );
         await redirectToAnnouncementsList();
       } else {
         setError(result?.error || 'Đã xảy ra lỗi');
+        toast.error(result?.error || 'Đã xảy ra lỗi');
       }
     });
   }

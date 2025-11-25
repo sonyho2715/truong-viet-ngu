@@ -8,7 +8,7 @@ import { PhotoGallerySection } from '@/components/public/PhotoGallerySection';
 import { WelcomeSection } from '@/components/public/WelcomeSection';
 import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
-import { Announcement, Class, SiteSetting } from '@prisma/client';
+import { Announcement, Class, SiteSetting, Teacher } from '@prisma/client';
 
 // Force dynamic rendering to avoid database connection at build time
 export const dynamic = 'force-dynamic';
@@ -17,7 +17,9 @@ export default async function HomePage() {
   // Fetch site settings from database (with fallback defaults)
   let siteSettings: SiteSetting | null = null;
   let announcements: Announcement[] = [];
-  let classes: Class[] = [];
+  let classes: (Class & {
+    teacher: Pick<Teacher, 'id' | 'firstName' | 'lastName'> | null;
+  })[] = [];
 
   try {
     siteSettings = await db.siteSetting.findFirst();
@@ -37,6 +39,15 @@ export default async function HomePage() {
     classes = await db.class.findMany({
       where: {
         isActive: true,
+      },
+      include: {
+        teacher: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
       orderBy: {
         displayOrder: 'asc',
@@ -66,7 +77,7 @@ export default async function HomePage() {
       {/* Navigation Bar */}
       <Navigation />
 
-      <main className="min-h-screen">
+      <main id="main-content" className="min-h-screen">
         {/* Hero Carousel */}
         <HeroCarousel />
 

@@ -1,10 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Suspense } from 'react';
 import { db } from '@/lib/db';
+import { SearchInput } from '@/components/ui/SearchInput';
+import { Pagination } from '@/components/ui/Pagination';
 
 export const metadata = {
   title: 'Quản lý lớp học | Trang quản trị',
 };
+
+const ITEMS_PER_PAGE = 12;
 
 const gradeLevelLabels: Record<string, string> = {
   MAU_GIAO_A: 'Mẫu Giáo A',
@@ -23,15 +28,57 @@ const gradeLevelLabels: Record<string, string> = {
   HIEP_SI: 'Hiệp Sĩ',
 };
 
-export default async function ClassesPage() {
-  const classes = await db.class.findMany({
-    orderBy: [{ displayOrder: 'asc' }],
-  });
+interface PageProps {
+  searchParams: Promise<{ page?: string; search?: string }>;
+}
+
+export default async function ClassesPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const currentPage = Math.max(1, parseInt(params.page || '1', 10));
+  const search = params.search || '';
+
+  // Build where clause for search
+  const whereClause = search
+    ? {
+        OR: [
+          { name: { contains: search, mode: 'insensitive' as const } },
+          { description: { contains: search, mode: 'insensitive' as const } },
+          { roomNumber: { contains: search, mode: 'insensitive' as const } },
+        ],
+      }
+    : {};
+
+  // Get total count and classes with pagination
+  const [totalCount, classes] = await Promise.all([
+    db.class.count({ where: whereClause }),
+    db.class.findMany({
+      where: whereClause,
+      include: {
+        teacher: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+        _count: {
+          select: {
+            enrollments: true,
+          },
+        },
+      },
+      orderBy: [{ displayOrder: 'asc' }],
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
+      take: ITEMS_PER_PAGE,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">Quản lý lớp học</h1>
           <p className="mt-2 text-gray-600">
@@ -40,7 +87,7 @@ export default async function ClassesPage() {
         </div>
         <Link
           href="/admin/dashboard/classes/new"
-          className="flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -52,6 +99,13 @@ export default async function ClassesPage() {
           </svg>
           Thêm lớp học
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="w-full sm:max-w-md">
+        <Suspense fallback={<div className="h-11 animate-pulse rounded-lg bg-gray-200" />}>
+          <SearchInput placeholder="Tìm kiếm lớp học..." />
+        </Suspense>
       </div>
 
       {/* Classes List */}
@@ -71,23 +125,29 @@ export default async function ClassesPage() {
             />
           </svg>
           <h3 className="mt-4 font-serif text-lg font-semibold text-gray-900">
-            Chưa có lớp học nào
+            {search ? 'Không tìm thấy kết quả' : 'Chưa có lớp học nào'}
           </h3>
-          <p className="mt-2 text-gray-600">Bắt đầu bằng cách tạo lớp học đầu tiên.</p>
-          <Link
-            href="/admin/dashboard/classes/new"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            Tạo lớp học
-          </Link>
+          <p className="mt-2 text-gray-600">
+            {search
+              ? `Không tìm thấy lớp học nào với từ khóa "${search}"`
+              : 'Bắt đầu bằng cách tạo lớp học đầu tiên.'}
+          </p>
+          {!search && (
+            <Link
+              href="/admin/dashboard/classes/new"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Tạo lớp học
+            </Link>
+          )}
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -134,7 +194,7 @@ export default async function ClassesPage() {
                   {classItem.name}
                 </h3>
                 <div className="space-y-2 text-sm text-gray-600">
-                  {classItem.teacherName && (
+                  {classItem.teacher && (
                     <div className="flex items-center gap-2">
                       <svg
                         className="h-4 w-4 text-brand-gold"
@@ -149,7 +209,27 @@ export default async function ClassesPage() {
                           d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                         />
                       </svg>
-                      <span className="truncate">{classItem.teacherName}</span>
+                      <span className="truncate">
+                        {classItem.teacher.firstName} {classItem.teacher.lastName}
+                      </span>
+                    </div>
+                  )}
+                  {classItem._count.enrollments > 0 && (
+                    <div className="flex items-center gap-2">
+                      <svg
+                        className="h-4 w-4 text-brand-gold"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                      </svg>
+                      <span>{classItem._count.enrollments} học sinh</span>
                     </div>
                   )}
                   {classItem.schedule && (
@@ -209,6 +289,16 @@ export default async function ClassesPage() {
             </Link>
           ))}
         </div>
+      )}
+
+      {/* Pagination */}
+      {totalCount > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalCount}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
       )}
     </div>
   );

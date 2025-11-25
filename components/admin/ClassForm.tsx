@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Class } from '@prisma/client';
+import { Class, Teacher } from '@prisma/client';
+import { toast } from 'sonner';
+import { ImageUpload } from '@/components/ui/ImageUpload';
 import {
   createClassAction,
   updateClassAction,
@@ -12,6 +14,7 @@ import {
 interface ClassFormProps {
   mode: 'create' | 'edit';
   initialData?: Class;
+  teachers: Pick<Teacher, 'id' | 'firstName' | 'lastName'>[];
 }
 
 const gradeLevels = [
@@ -31,14 +34,33 @@ const gradeLevels = [
   { value: 'HIEP_SI', label: 'Hiệp Sĩ (TNTT)' },
 ];
 
-export function ClassForm({ mode, initialData }: ClassFormProps) {
+export function ClassForm({ mode, initialData, teachers }: ClassFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [classroomImage, setClassroomImage] = useState<string | null>(
+    initialData?.classroomImage || null
+  );
+  const [classPhotoImage, setClassPhotoImage] = useState<string | null>(
+    initialData?.classPhotoImage || null
+  );
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
+
+    // Add image URLs to form data
+    if (classroomImage) {
+      formData.set('classroomImage', classroomImage);
+    } else {
+      formData.delete('classroomImage');
+    }
+
+    if (classPhotoImage) {
+      formData.set('classPhotoImage', classPhotoImage);
+    } else {
+      formData.delete('classPhotoImage');
+    }
 
     try {
       const result =
@@ -47,12 +69,17 @@ export function ClassForm({ mode, initialData }: ClassFormProps) {
           : await updateClassAction(initialData!.id, formData);
 
       if (result.success) {
+        toast.success(
+          mode === 'create' ? 'Tạo lớp học thành công' : 'Cập nhật lớp học thành công'
+        );
         await redirectToClassesList();
       } else {
         setError(result.error || 'Có lỗi xảy ra');
+        toast.error(result.error || 'Có lỗi xảy ra');
       }
-    } catch (err) {
+    } catch {
       setError('Có lỗi xảy ra khi lưu lớp học');
+      toast.error('Có lỗi xảy ra khi lưu lớp học');
     } finally {
       setLoading(false);
     }
@@ -103,34 +130,27 @@ export function ClassForm({ mode, initialData }: ClassFormProps) {
         </select>
       </div>
 
-      {/* Teacher Name */}
+      {/* Teacher Assignment */}
       <div>
-        <label htmlFor="teacherName" className="mb-2 block text-sm font-medium text-gray-700">
-          Giáo viên
+        <label htmlFor="teacherId" className="mb-2 block text-sm font-medium text-gray-700">
+          Giáo viên phụ trách
         </label>
-        <input
-          type="text"
-          id="teacherName"
-          name="teacherName"
-          defaultValue={initialData?.teacherName || ''}
+        <select
+          id="teacherId"
+          name="teacherId"
+          defaultValue={initialData?.teacherId || ''}
           className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="Tên giáo viên"
-        />
-      </div>
-
-      {/* Teacher Email */}
-      <div>
-        <label htmlFor="teacherEmail" className="mb-2 block text-sm font-medium text-gray-700">
-          Email giáo viên
-        </label>
-        <input
-          type="email"
-          id="teacherEmail"
-          name="teacherEmail"
-          defaultValue={initialData?.teacherEmail || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="email@example.com"
-        />
+        >
+          <option value="">Chưa phân công giáo viên</option>
+          {teachers.map((teacher) => (
+            <option key={teacher.id} value={teacher.id}>
+              {teacher.firstName} {teacher.lastName}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1 text-xs text-gray-500">
+          Chọn giáo viên dạy lớp này. Bạn có thể thêm giáo viên mới trong phần &quot;Quản lý giáo viên&quot;.
+        </p>
       </div>
 
       {/* Schedule */}
@@ -163,20 +183,28 @@ export function ClassForm({ mode, initialData }: ClassFormProps) {
         />
       </div>
 
-      {/* Classroom Image */}
+      {/* Classroom Image - Now with upload */}
       <div>
-        <label htmlFor="classroomImage" className="mb-2 block text-sm font-medium text-gray-700">
-          Link ảnh lớp học
-        </label>
-        <input
-          type="url"
-          id="classroomImage"
-          name="classroomImage"
-          defaultValue={initialData?.classroomImage || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="https://example.com/image.jpg"
+        <ImageUpload
+          value={classroomImage}
+          onChange={setClassroomImage}
+          category="classrooms"
+          label="Ảnh lớp học"
+          helpText="Ảnh phòng học hoặc không gian lớp"
+          disabled={loading}
         />
-        <p className="mt-1 text-xs text-gray-500">URL ảnh từ Unsplash hoặc nguồn khác</p>
+      </div>
+
+      {/* Class Photo Image - Now with upload */}
+      <div>
+        <ImageUpload
+          value={classPhotoImage}
+          onChange={setClassPhotoImage}
+          category="class-photos"
+          label="Ảnh tập thể lớp"
+          helpText="Ảnh tập thể của lớp học"
+          disabled={loading}
+        />
       </div>
 
       {/* Description */}

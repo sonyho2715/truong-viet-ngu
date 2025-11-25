@@ -30,7 +30,7 @@ export default async function AdminDashboardLayout({
         <AdminHeader session={session} />
 
         {/* Main Content */}
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main id="main-content" className="flex-1 p-6 lg:p-8">{children}</main>
 
         {/* Footer */}
         <footer className="border-t border-gray-200 bg-white px-6 py-4">

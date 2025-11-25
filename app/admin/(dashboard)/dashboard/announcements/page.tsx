@@ -1,10 +1,16 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { db } from '@/lib/db';
 import { DeleteAnnouncementButton } from '@/components/admin/DeleteAnnouncementButton';
+import { SearchInput } from '@/components/ui/SearchInput';
+import { Pagination } from '@/components/ui/Pagination';
+import { AnnouncementListSkeleton } from '@/components/ui/Skeleton';
 
 export const metadata = {
   title: 'Quản lý thông báo | Trang quản trị',
 };
+
+const ITEMS_PER_PAGE = 10;
 
 const categoryLabels: Record<string, string> = {
   CHOIR: 'Ca đoàn TNTT',
@@ -22,15 +28,42 @@ const categoryColors: Record<string, string> = {
   HOLIDAY: 'bg-red-100 text-red-800',
 };
 
-export default async function AnnouncementsPage() {
-  const announcements = await db.announcement.findMany({
-    orderBy: [{ isActive: 'desc' }, { priority: 'desc' }, { startDate: 'desc' }],
-  });
+interface PageProps {
+  searchParams: Promise<{ page?: string; search?: string }>;
+}
+
+export default async function AnnouncementsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const currentPage = Math.max(1, parseInt(params.page || '1', 10));
+  const search = params.search || '';
+
+  // Build where clause for search
+  const whereClause = search
+    ? {
+        OR: [
+          { title: { contains: search, mode: 'insensitive' as const } },
+          { description: { contains: search, mode: 'insensitive' as const } },
+        ],
+      }
+    : {};
+
+  // Get total count and announcements with pagination
+  const [totalCount, announcements] = await Promise.all([
+    db.announcement.count({ where: whereClause }),
+    db.announcement.findMany({
+      where: whereClause,
+      orderBy: [{ isActive: 'desc' }, { priority: 'desc' }, { startDate: 'desc' }],
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
+      take: ITEMS_PER_PAGE,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">Quản lý thông báo</h1>
           <p className="mt-2 text-gray-600">
@@ -39,7 +72,7 @@ export default async function AnnouncementsPage() {
         </div>
         <Link
           href="/admin/dashboard/announcements/new"
-          className="flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -51,6 +84,13 @@ export default async function AnnouncementsPage() {
           </svg>
           Thêm thông báo
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="w-full sm:max-w-md">
+        <Suspense fallback={<div className="h-11 animate-pulse rounded-lg bg-gray-200" />}>
+          <SearchInput placeholder="Tìm kiếm thông báo..." />
+        </Suspense>
       </div>
 
       {/* Announcements List */}
@@ -70,23 +110,29 @@ export default async function AnnouncementsPage() {
             />
           </svg>
           <h3 className="mt-4 font-serif text-lg font-semibold text-gray-900">
-            Chưa có thông báo nào
+            {search ? 'Không tìm thấy kết quả' : 'Chưa có thông báo nào'}
           </h3>
-          <p className="mt-2 text-gray-600">Bắt đầu bằng cách tạo thông báo đầu tiên.</p>
-          <Link
-            href="/admin/dashboard/announcements/new"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            Tạo thông báo
-          </Link>
+          <p className="mt-2 text-gray-600">
+            {search
+              ? `Không tìm thấy thông báo nào với từ khóa "${search}"`
+              : 'Bắt đầu bằng cách tạo thông báo đầu tiên.'}
+          </p>
+          {!search && (
+            <Link
+              href="/admin/dashboard/announcements/new"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Tạo thông báo
+            </Link>
+          )}
         </div>
       ) : (
         <div className="grid gap-4">
@@ -190,6 +236,16 @@ export default async function AnnouncementsPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Pagination */}
+      {totalCount > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalCount}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
       )}
     </div>
   );

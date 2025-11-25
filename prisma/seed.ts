@@ -54,7 +54,68 @@ async function main() {
   console.log('');
 
   // ============================================
-  // 3. CREATE CLASSES
+  // 3. CREATE TEACHERS
+  // ============================================
+  console.log('Creating teachers...');
+
+  const teachers = await Promise.all([
+    prisma.teacher.create({
+      data: {
+        firstName: 'Lan',
+        lastName: 'Nguyễn',
+        email: 'lan.nguyen@truongvietngu.com',
+        phone: '(808) 111-2222',
+        bio: 'Giáo viên mẫu giáo với 10 năm kinh nghiệm.',
+        isActive: true,
+      },
+    }),
+    prisma.teacher.create({
+      data: {
+        firstName: 'Hoa',
+        lastName: 'Trần',
+        email: 'hoa.tran@truongvietngu.com',
+        phone: '(808) 222-3333',
+        bio: 'Chuyên giảng dạy cho trẻ em nhỏ tuổi.',
+        isActive: true,
+      },
+    }),
+    prisma.teacher.create({
+      data: {
+        firstName: 'Mai',
+        lastName: 'Lê',
+        email: 'mai.le@truongvietngu.com',
+        phone: '(808) 333-4444',
+        bio: 'Giáo viên mẫu giáo giàu kinh nghiệm.',
+        isActive: true,
+      },
+    }),
+    prisma.teacher.create({
+      data: {
+        firstName: 'Nam',
+        lastName: 'Phạm',
+        email: 'nam.pham@truongvietngu.com',
+        phone: '(808) 444-5555',
+        bio: 'Giáo viên tiếng Việt cho các lớp tiểu học.',
+        isActive: true,
+      },
+    }),
+    prisma.teacher.create({
+      data: {
+        firstName: 'Thu',
+        lastName: 'Võ',
+        email: 'thu.vo@truongvietngu.com',
+        phone: '(808) 555-6666',
+        bio: 'Chuyên về văn học và văn hóa Việt Nam.',
+        isActive: true,
+      },
+    }),
+  ]);
+
+  console.log(`✅ Created ${teachers.length} teachers`);
+  console.log('');
+
+  // ============================================
+  // 4. CREATE CLASSES
   // ============================================
   console.log('Creating classes...');
 
@@ -64,7 +125,7 @@ async function main() {
       data: {
         name: 'Lớp Mẫu Giáo A',
         gradeLevel: 'MAU_GIAO_A',
-        teacherName: 'Cô Lan',
+        teacherId: teachers[0].id,
         schedule: 'Thứ Bảy 9:00 AM - 10:30 AM',
         roomNumber: 'Phòng 101',
         description: 'Lớp mẫu giáo cho trẻ 3-4 tuổi. Học chữ cái và từ vựng cơ bản.',
@@ -76,7 +137,7 @@ async function main() {
       data: {
         name: 'Lớp Mẫu Giáo B',
         gradeLevel: 'MAU_GIAO_B',
-        teacherName: 'Cô Hoa',
+        teacherId: teachers[1].id,
         schedule: 'Thứ Bảy 9:00 AM - 10:30 AM',
         roomNumber: 'Phòng 102',
         description: 'Lớp mẫu giáo cho trẻ 4-5 tuổi. Học chữ cái, từ vựng và câu đơn giản.',
@@ -88,7 +149,7 @@ async function main() {
       data: {
         name: 'Lớp Mẫu Giáo C',
         gradeLevel: 'MAU_GIAO_C',
-        teacherName: 'Cô Mai',
+        teacherId: teachers[2].id,
         schedule: 'Thứ Bảy 9:00 AM - 10:30 AM',
         roomNumber: 'Phòng 103',
         description: 'Lớp mẫu giáo cho trẻ 5-6 tuổi. Chuẩn bị cho lớp 1.',
@@ -102,7 +163,7 @@ async function main() {
       data: {
         name: 'Lớp 1',
         gradeLevel: 'LOP_1',
-        teacherName: 'Thầy Nam',
+        teacherId: teachers[3].id,
         schedule: 'Thứ Bảy 10:45 AM - 12:15 PM',
         roomNumber: 'Phòng 201',
         description: 'Lớp 1 - Học đọc, viết và ngữ pháp cơ bản.',
@@ -114,7 +175,7 @@ async function main() {
       data: {
         name: 'Lớp 3',
         gradeLevel: 'LOP_3',
-        teacherName: 'Cô Thu',
+        teacherId: teachers[4].id,
         schedule: 'Thứ Bảy 10:45 AM - 12:15 PM',
         roomNumber: 'Phòng 203',
         description: 'Lớp 3 - Học văn, thơ và văn hóa Việt Nam.',
@@ -128,7 +189,7 @@ async function main() {
   console.log('');
 
   // ============================================
-  // 4. CREATE LEARNING MATERIALS
+  // 5. CREATE LEARNING MATERIALS
   // ============================================
   console.log('Creating learning materials...');
 

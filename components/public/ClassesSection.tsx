@@ -1,8 +1,10 @@
 import Image from 'next/image';
-import type { Class } from '@prisma/client';
+import type { Class, Teacher } from '@prisma/client';
 
 interface ClassesSectionProps {
-  classes: Class[];
+  classes: (Class & {
+    teacher: Pick<Teacher, 'id' | 'firstName' | 'lastName'> | null;
+  })[];
 }
 
 const gradeLevelLabels: Record<string, string> = {
@@ -77,7 +79,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
 
                 <div className="space-y-3 text-sm text-gray-600">
                   {/* Teacher */}
-                  {classItem.teacherName && (
+                  {classItem.teacher && (
                     <div className="flex items-center gap-2">
                       <svg
                         className="h-5 w-5 flex-shrink-0 text-brand-gold"
@@ -93,7 +95,8 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
                         />
                       </svg>
                       <span>
-                        <strong>Giáo viên:</strong> {classItem.teacherName}
+                        <strong>Giáo viên:</strong> {classItem.teacher.firstName}{' '}
+                        {classItem.teacher.lastName}
                       </span>
                     </div>
                   )}

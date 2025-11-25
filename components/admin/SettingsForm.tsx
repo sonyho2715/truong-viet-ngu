@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SiteSetting } from '@prisma/client';
+import { toast } from 'sonner';
+import { ImageUpload } from '@/components/ui/ImageUpload';
 import { updateSettingsAction } from '@/app/admin/(dashboard)/dashboard/settings/actions';
 
 interface SettingsFormProps {
@@ -13,24 +15,47 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+
+  // Image state
+  const [leftLogoUrl, setLeftLogoUrl] = useState<string | null>(initialData.leftLogoUrl || null);
+  const [rightLogoUrl, setRightLogoUrl] = useState<string | null>(initialData.rightLogoUrl || null);
+  const [heroBackground, setHeroBackground] = useState<string | null>(initialData.heroBackground || null);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
-    setSuccess(false);
+
+    // Add image URLs to form data
+    if (leftLogoUrl) {
+      formData.set('leftLogoUrl', leftLogoUrl);
+    } else {
+      formData.delete('leftLogoUrl');
+    }
+
+    if (rightLogoUrl) {
+      formData.set('rightLogoUrl', rightLogoUrl);
+    } else {
+      formData.delete('rightLogoUrl');
+    }
+
+    if (heroBackground) {
+      formData.set('heroBackground', heroBackground);
+    } else {
+      formData.delete('heroBackground');
+    }
 
     try {
       const result = await updateSettingsAction(formData);
 
       if (result.success) {
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
+        toast.success('Cài đặt đã được lưu thành công!');
       } else {
         setError(result.error || 'Có lỗi xảy ra');
+        toast.error(result.error || 'Có lỗi xảy ra');
       }
-    } catch (err) {
+    } catch {
       setError('Có lỗi xảy ra khi lưu cài đặt');
+      toast.error('Có lỗi xảy ra khi lưu cài đặt');
     } finally {
       setLoading(false);
     }
@@ -38,13 +63,6 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
 
   return (
     <form action={handleSubmit} className="space-y-8">
-      {/* Success Message */}
-      {success && (
-        <div className="rounded-lg bg-green-50 p-4 text-sm text-green-800">
-          Cài đặt đã được lưu thành công!
-        </div>
-      )}
-
       {/* Error Message */}
       {error && (
         <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
@@ -117,62 +135,62 @@ export function SettingsForm({ initialData }: SettingsFormProps) {
       <div className="space-y-6 border-t border-gray-200 pt-8">
         <h2 className="text-xl font-semibold text-gray-900">Logo và hình ảnh</h2>
 
-        <div>
-          <label htmlFor="leftLogoUrl" className="mb-2 block text-sm font-medium text-gray-700">
-            Logo trái (Công đoàn)
-          </label>
-          <input
-            type="url"
-            id="leftLogoUrl"
-            name="leftLogoUrl"
-            defaultValue={initialData.leftLogoUrl || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="https://example.com/logo-left.png"
+        <div className="grid gap-6 md:grid-cols-2">
+          <ImageUpload
+            value={leftLogoUrl}
+            onChange={setLeftLogoUrl}
+            category="logos"
+            label="Logo trái (Công đoàn)"
+            helpText="Logo hiển thị bên trái header"
+            disabled={loading}
+          />
+
+          <ImageUpload
+            value={rightLogoUrl}
+            onChange={setRightLogoUrl}
+            category="logos"
+            label="Logo phải (TNTT)"
+            helpText="Logo hiển thị bên phải header"
+            disabled={loading}
           />
         </div>
 
-        <div>
-          <label htmlFor="rightLogoUrl" className="mb-2 block text-sm font-medium text-gray-700">
-            Logo phải (TNTT)
-          </label>
-          <input
-            type="url"
-            id="rightLogoUrl"
-            name="rightLogoUrl"
-            defaultValue={initialData.rightLogoUrl || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="https://example.com/logo-right.png"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="heroBackground" className="mb-2 block text-sm font-medium text-gray-700">
-            Hình nền trang chủ
-          </label>
-          <input
-            type="url"
-            id="heroBackground"
-            name="heroBackground"
-            defaultValue={initialData.heroBackground || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="https://example.com/hero-bg.jpg"
-          />
-        </div>
+        <ImageUpload
+          value={heroBackground}
+          onChange={setHeroBackground}
+          category="hero"
+          label="Hình nền trang chủ"
+          helpText="Hình nền cho phần hero section"
+          disabled={loading}
+        />
 
         <div>
           <label htmlFor="heroBackgroundColor" className="mb-2 block text-sm font-medium text-gray-700">
             Màu nền dự phòng <span className="text-red-500">*</span>
           </label>
-          <input
-            type="text"
-            id="heroBackgroundColor"
-            name="heroBackgroundColor"
-            required
-            defaultValue={initialData.heroBackgroundColor}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="#1e3a5f"
-          />
-          <p className="mt-1 text-xs text-gray-500">Mã màu hex (VD: #1e3a5f)</p>
+          <div className="flex gap-3">
+            <input
+              type="color"
+              id="heroBackgroundColorPicker"
+              defaultValue={initialData.heroBackgroundColor}
+              onChange={(e) => {
+                const input = document.getElementById('heroBackgroundColor') as HTMLInputElement;
+                if (input) input.value = e.target.value;
+              }}
+              className="h-10 w-14 cursor-pointer rounded border border-gray-300"
+            />
+            <input
+              type="text"
+              id="heroBackgroundColor"
+              name="heroBackgroundColor"
+              required
+              defaultValue={initialData.heroBackgroundColor}
+              pattern="^#[0-9A-Fa-f]{6}$"
+              className="block flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
+              placeholder="#1e3a5f"
+            />
+          </div>
+          <p className="mt-1 text-xs text-gray-500">Mã màu hex (VD: #1e3a5f). Sử dụng khi không có hình nền.</p>
         </div>
       </div>
 

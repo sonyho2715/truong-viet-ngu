@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LearningMaterial } from '@prisma/client';
+import { toast } from 'sonner';
+import { FileUpload } from '@/components/ui/FileUpload';
 import {
   createMaterialAction,
   updateMaterialAction,
@@ -35,10 +37,18 @@ export function MaterialForm({ mode, initialData }: MaterialFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(initialData?.fileUrl || null);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
+
+    // Add file URL to form data
+    if (fileUrl) {
+      formData.set('fileUrl', fileUrl);
+    } else {
+      formData.delete('fileUrl');
+    }
 
     try {
       const result =
@@ -47,12 +57,17 @@ export function MaterialForm({ mode, initialData }: MaterialFormProps) {
           : await updateMaterialAction(initialData!.id, formData);
 
       if (result.success) {
+        toast.success(
+          mode === 'create' ? 'Tạo tài liệu thành công' : 'Cập nhật tài liệu thành công'
+        );
         await redirectToMaterialsList();
       } else {
         setError(result.error || 'Có lỗi xảy ra');
+        toast.error(result.error || 'Có lỗi xảy ra');
       }
-    } catch (err) {
+    } catch {
       setError('Có lỗi xảy ra khi lưu tài liệu');
+      toast.error('Có lỗi xảy ra khi lưu tài liệu');
     } finally {
       setLoading(false);
     }
@@ -135,20 +150,16 @@ export function MaterialForm({ mode, initialData }: MaterialFormProps) {
         <p className="mt-1 text-xs text-gray-500">URL đến tài liệu trên website khác</p>
       </div>
 
-      {/* File URL */}
+      {/* File Upload */}
       <div>
-        <label htmlFor="fileUrl" className="mb-2 block text-sm font-medium text-gray-700">
-          Link file đính kèm
-        </label>
-        <input
-          type="url"
-          id="fileUrl"
-          name="fileUrl"
-          defaultValue={initialData?.fileUrl || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="https://example.com/file.pdf"
+        <FileUpload
+          value={fileUrl}
+          onChange={setFileUrl}
+          category="materials"
+          label="File đính kèm (PDF)"
+          helpText="Tải lên file PDF tài liệu học tập"
+          disabled={loading}
         />
-        <p className="mt-1 text-xs text-gray-500">URL đến file PDF hoặc tài liệu</p>
       </div>
 
       {/* Description */}

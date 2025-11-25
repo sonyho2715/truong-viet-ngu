@@ -1,9 +1,14 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { db } from '@/lib/db';
+import { SearchInput } from '@/components/ui/SearchInput';
+import { Pagination } from '@/components/ui/Pagination';
 
 export const metadata = {
   title: 'Quản lý tài liệu | Trang quản trị',
 };
+
+const ITEMS_PER_PAGE = 12;
 
 const gradeLevelLabels: Record<string, string> = {
   MAU_GIAO_A: 'Mẫu Giáo A',
@@ -22,15 +27,43 @@ const gradeLevelLabels: Record<string, string> = {
   HIEP_SI: 'Hiệp Sĩ',
 };
 
-export default async function MaterialsPage() {
-  const materials = await db.learningMaterial.findMany({
-    orderBy: [{ gradeLevel: 'asc' }, { displayOrder: 'asc' }],
-  });
+interface PageProps {
+  searchParams: Promise<{ page?: string; search?: string }>;
+}
+
+export default async function MaterialsPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const currentPage = Math.max(1, parseInt(params.page || '1', 10));
+  const search = params.search || '';
+
+  // Build where clause for search
+  const whereClause = search
+    ? {
+        OR: [
+          { title: { contains: search, mode: 'insensitive' as const } },
+          { description: { contains: search, mode: 'insensitive' as const } },
+          { lessonNumbers: { contains: search, mode: 'insensitive' as const } },
+        ],
+      }
+    : {};
+
+  // Get total count and materials with pagination
+  const [totalCount, materials] = await Promise.all([
+    db.learningMaterial.count({ where: whereClause }),
+    db.learningMaterial.findMany({
+      where: whereClause,
+      orderBy: [{ gradeLevel: 'asc' }, { displayOrder: 'asc' }],
+      skip: (currentPage - 1) * ITEMS_PER_PAGE,
+      take: ITEMS_PER_PAGE,
+    }),
+  ]);
+
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">Quản lý tài liệu học tập</h1>
           <p className="mt-2 text-gray-600">
@@ -39,7 +72,7 @@ export default async function MaterialsPage() {
         </div>
         <Link
           href="/admin/dashboard/materials/new"
-          className="flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -51,6 +84,13 @@ export default async function MaterialsPage() {
           </svg>
           Thêm tài liệu
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="w-full sm:max-w-md">
+        <Suspense fallback={<div className="h-11 animate-pulse rounded-lg bg-gray-200" />}>
+          <SearchInput placeholder="Tìm kiếm tài liệu..." />
+        </Suspense>
       </div>
 
       {/* Materials List */}
@@ -70,23 +110,29 @@ export default async function MaterialsPage() {
             />
           </svg>
           <h3 className="mt-4 font-serif text-lg font-semibold text-gray-900">
-            Chưa có tài liệu nào
+            {search ? 'Không tìm thấy kết quả' : 'Chưa có tài liệu nào'}
           </h3>
-          <p className="mt-2 text-gray-600">Bắt đầu bằng cách tạo tài liệu đầu tiên.</p>
-          <Link
-            href="/admin/dashboard/materials/new"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
-            </svg>
-            Tạo tài liệu
-          </Link>
+          <p className="mt-2 text-gray-600">
+            {search
+              ? `Không tìm thấy tài liệu nào với từ khóa "${search}"`
+              : 'Bắt đầu bằng cách tạo tài liệu đầu tiên.'}
+          </p>
+          {!search && (
+            <Link
+              href="/admin/dashboard/materials/new"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-gold/90"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              Tạo tài liệu
+            </Link>
+          )}
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -203,6 +249,16 @@ export default async function MaterialsPage() {
             </Link>
           ))}
         </div>
+      )}
+
+      {/* Pagination */}
+      {totalCount > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalCount}
+          itemsPerPage={ITEMS_PER_PAGE}
+        />
       )}
     </div>
   );

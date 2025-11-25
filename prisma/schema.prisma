@@ -66,6 +66,30 @@ enum AnnouncementCategory {
 }
 
 // ============================================
+// TEACHERS
+// ============================================
+
+model Teacher {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  phone       String?
+  photoUrl    String?
+  bio         String?  @db.Text
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  classes     Class[]  // A teacher can teach multiple classes
+
+  @@index([email])
+  @@index([isActive])
+  @@map("teachers")
+}
+
+// ============================================
 // CLASSES
 // ============================================
 
@@ -73,8 +97,6 @@ model Class {
   id              String   @id @default(cuid())
   name            String   // e.g., "Lớp MG-A", "Lớp 1"
   gradeLevel      GradeLevel
-  teacherName     String?
-  teacherEmail    String?
   classroomImage  String?  // Path to classroom image
   classPhotoImage String?  // Path to class photo
   schedule        String?  // e.g., "Saturday 9:00 AM - 11:00 AM"
@@ -85,10 +107,79 @@ model Class {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
+  // Relations
+  teacherId       String?  // Foreign key to Teacher
+  teacher         Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  enrollments     Enrollment[] // Students enrolled in this class
+
   // Indexes for queries
   @@index([isActive, gradeLevel, displayOrder])
   @@index([gradeLevel])
+  @@index([teacherId])
   @@map("classes")
+}
+
+// ============================================
+// STUDENTS
+// ============================================
+
+model Student {
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  dateOfBirth     DateTime?
+  gradeLevel      GradeLevel?
+  photoUrl        String?
+  parentName      String?
+  parentEmail     String?
+  parentPhone     String?
+  address         String?  @db.Text
+  emergencyContact String?
+  notes           String?  @db.Text
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  enrollments     Enrollment[] // Classes this student is enrolled in
+
+  @@index([isActive])
+  @@index([lastName, firstName])
+  @@index([gradeLevel])
+  @@map("students")
+}
+
+// ============================================
+// ENROLLMENTS (Students in Classes)
+// ============================================
+
+model Enrollment {
+  id              String   @id @default(cuid())
+  studentId       String
+  classId         String
+  enrollmentDate  DateTime @default(now())
+  status          EnrollmentStatus @default(ACTIVE)
+  notes           String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  student         Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class           Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  // Ensure a student can only be enrolled once per class
+  @@unique([studentId, classId])
+  @@index([studentId])
+  @@index([classId])
+  @@index([status])
+  @@map("enrollments")
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  INACTIVE
+  COMPLETED
+  DROPPED
 }
 
 enum GradeLevel {

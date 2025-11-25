@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Noto_Serif } from "next/font/google";
+import { Toaster } from "@/components/ui/Toaster";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -35,7 +36,15 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`${notoSans.variable} ${notoSerif.variable}`}>
       <body className={`${notoSans.className} antialiased`}>
+        {/* Skip to main content link for accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-brand-gold focus:px-4 focus:py-2 focus:font-semibold focus:text-brand-navy focus:shadow-lg"
+        >
+          Bỏ qua đến nội dung chính
+        </a>
         {children}
+        <Toaster />
       </body>
     </html>
   );
