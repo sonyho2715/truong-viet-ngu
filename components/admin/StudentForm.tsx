@@ -5,6 +5,12 @@ import { useRouter } from 'next/navigation';
 import { Student } from '@prisma/client';
 import { toast } from 'sonner';
 import { ImageUpload } from '@/components/ui/ImageUpload';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/Textarea';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { Button } from '@/components/ui/Button';
+import { Alert } from '@/components/ui/Alert';
 import {
   createStudentAction,
   updateStudentAction,
@@ -43,7 +49,6 @@ export function StudentForm({ mode, initialData }: StudentFormProps) {
     setLoading(true);
     setError(null);
 
-    // Add photo URL to form data
     if (photoUrl) {
       formData.set('photoUrl', photoUrl);
     } else {
@@ -80,230 +85,132 @@ export function StudentForm({ mode, initialData }: StudentFormProps) {
   return (
     <form action={handleSubmit} className="space-y-6">
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <Alert variant="error" onDismiss={() => setError(null)}>
           {error}
-        </div>
+        </Alert>
       )}
 
       {/* Basic Information */}
       <div className="space-y-4">
-        <h3 className="font-serif text-lg font-semibold text-gray-900">
-          Thông tin cơ bản
-        </h3>
+        <h3 className="heading-4">Thông tin cơ bản</h3>
 
-        {/* First Name */}
-        <div>
-          <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-gray-700">
-            Tên <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Tên"
             name="firstName"
             required
             defaultValue={initialData?.firstName}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
             placeholder="VD: John"
           />
-        </div>
 
-        {/* Last Name */}
-        <div>
-          <label htmlFor="lastName" className="mb-2 block text-sm font-medium text-gray-700">
-            Họ <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="lastName"
+          <Input
+            label="Họ"
             name="lastName"
             required
             defaultValue={initialData?.lastName}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
             placeholder="VD: Nguyễn"
           />
         </div>
 
-        {/* Date of Birth */}
-        <div>
-          <label htmlFor="dateOfBirth" className="mb-2 block text-sm font-medium text-gray-700">
-            Ngày sinh
-          </label>
-          <input
-            type="date"
-            id="dateOfBirth"
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Ngày sinh"
             name="dateOfBirth"
+            type="date"
             defaultValue={dateOfBirthValue}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
           />
-        </div>
 
-        {/* Grade Level */}
-        <div>
-          <label htmlFor="gradeLevel" className="mb-2 block text-sm font-medium text-gray-700">
-            Cấp lớp
-          </label>
-          <select
-            id="gradeLevel"
+          <Select
+            label="Cấp lớp"
             name="gradeLevel"
+            options={gradeLevels}
             defaultValue={initialData?.gradeLevel || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          >
-            <option value="">Chọn cấp lớp</option>
-            {gradeLevels.map((level) => (
-              <option key={level.value} value={level.value}>
-                {level.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Photo Upload */}
-        <div>
-          <ImageUpload
-            value={photoUrl}
-            onChange={setPhotoUrl}
-            category="general"
-            label="Ảnh học sinh"
-            helpText="Ảnh chân dung của học sinh"
-            disabled={loading}
+            placeholder="Chọn cấp lớp"
           />
         </div>
+
+        <ImageUpload
+          value={photoUrl}
+          onChange={setPhotoUrl}
+          category="general"
+          label="Ảnh học sinh"
+          helpText="Ảnh chân dung của học sinh"
+          disabled={loading}
+        />
       </div>
 
       {/* Parent/Guardian Information */}
       <div className="space-y-4 border-t border-gray-200 pt-6">
-        <h3 className="font-serif text-lg font-semibold text-gray-900">
-          Thông tin phụ huynh
-        </h3>
+        <h3 className="heading-4">Thông tin phụ huynh</h3>
 
-        {/* Parent Name */}
-        <div>
-          <label htmlFor="parentName" className="mb-2 block text-sm font-medium text-gray-700">
-            Tên phụ huynh
-          </label>
-          <input
-            type="text"
-            id="parentName"
-            name="parentName"
-            defaultValue={initialData?.parentName || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="VD: Ông/Bà Nguyễn Văn A"
-          />
-        </div>
+        <Input
+          label="Tên phụ huynh"
+          name="parentName"
+          defaultValue={initialData?.parentName || ''}
+          placeholder="VD: Ông/Bà Nguyễn Văn A"
+        />
 
-        {/* Parent Email */}
-        <div>
-          <label htmlFor="parentEmail" className="mb-2 block text-sm font-medium text-gray-700">
-            Email phụ huynh
-          </label>
-          <input
-            type="email"
-            id="parentEmail"
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label="Email phụ huynh"
             name="parentEmail"
+            type="email"
             defaultValue={initialData?.parentEmail || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
             placeholder="email@example.com"
           />
-        </div>
 
-        {/* Parent Phone */}
-        <div>
-          <label htmlFor="parentPhone" className="mb-2 block text-sm font-medium text-gray-700">
-            Số điện thoại phụ huynh
-          </label>
-          <input
-            type="tel"
-            id="parentPhone"
+          <Input
+            label="Số điện thoại phụ huynh"
             name="parentPhone"
+            type="tel"
             defaultValue={initialData?.parentPhone || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
             placeholder="(808) 123-4567"
           />
         </div>
 
-        {/* Address */}
-        <div>
-          <label htmlFor="address" className="mb-2 block text-sm font-medium text-gray-700">
-            Địa chỉ
-          </label>
-          <textarea
-            id="address"
-            name="address"
-            rows={2}
-            defaultValue={initialData?.address || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="Địa chỉ nhà"
-          />
-        </div>
+        <Textarea
+          label="Địa chỉ"
+          name="address"
+          rows={2}
+          defaultValue={initialData?.address || ''}
+          placeholder="Địa chỉ nhà"
+        />
 
-        {/* Emergency Contact */}
-        <div>
-          <label htmlFor="emergencyContact" className="mb-2 block text-sm font-medium text-gray-700">
-            Liên hệ khẩn cấp
-          </label>
-          <input
-            type="text"
-            id="emergencyContact"
-            name="emergencyContact"
-            defaultValue={initialData?.emergencyContact || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="Tên và số điện thoại người liên hệ khẩn cấp"
-          />
-        </div>
+        <Input
+          label="Liên hệ khẩn cấp"
+          name="emergencyContact"
+          defaultValue={initialData?.emergencyContact || ''}
+          placeholder="Tên và số điện thoại người liên hệ khẩn cấp"
+        />
       </div>
 
       {/* Additional Information */}
       <div className="space-y-4 border-t border-gray-200 pt-6">
-        <h3 className="font-serif text-lg font-semibold text-gray-900">
-          Thông tin bổ sung
-        </h3>
+        <h3 className="heading-4">Thông tin bổ sung</h3>
 
-        {/* Notes */}
-        <div>
-          <label htmlFor="notes" className="mb-2 block text-sm font-medium text-gray-700">
-            Ghi chú
-          </label>
-          <textarea
-            id="notes"
-            name="notes"
-            rows={4}
-            defaultValue={initialData?.notes || ''}
-            className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-            placeholder="Ghi chú về học sinh (dị ứng, nhu cầu đặc biệt, v.v.)"
-          />
-        </div>
+        <Textarea
+          label="Ghi chú"
+          name="notes"
+          rows={4}
+          defaultValue={initialData?.notes || ''}
+          placeholder="Ghi chú về học sinh (dị ứng, nhu cầu đặc biệt, v.v.)"
+        />
 
-        {/* Is Active */}
-        <div className="flex items-center gap-3">
-          <input
-            type="checkbox"
-            id="isActive"
-            name="isActive"
-            defaultChecked={initialData?.isActive !== false}
-            className="h-5 w-5 rounded border-gray-300 text-brand-gold focus:ring-2 focus:ring-brand-gold"
-          />
-          <label htmlFor="isActive" className="text-sm font-medium text-gray-700">
-            Học sinh đang theo học
-          </label>
-        </div>
+        <Checkbox
+          label="Học sinh đang theo học"
+          name="isActive"
+          defaultChecked={initialData?.isActive !== false}
+        />
       </div>
 
       {/* Submit Buttons */}
       <div className="flex items-center justify-end gap-4 border-t border-gray-200 pt-6">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="rounded-lg border-2 border-gray-300 px-6 py-2 font-semibold text-gray-700 transition-colors hover:bg-gray-50"
-        >
+        <Button type="button" variant="outline" onClick={() => router.back()}>
           Hủy
-        </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-lg bg-brand-gold px-6 py-2 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl disabled:opacity-50"
-        >
-          {loading ? 'Đang lưu...' : mode === 'create' ? 'Tạo học sinh' : 'Cập nhật'}
-        </button>
+        </Button>
+        <Button type="submit" variant="primary" isLoading={loading}>
+          {mode === 'create' ? 'Tạo học sinh' : 'Cập nhật'}
+        </Button>
       </div>
     </form>
   );

@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pagination } from '@/components/ui/Pagination';
 import { Badge } from '@/components/ui/Badge';
+import { Avatar } from '@/components/ui/Avatar';
 
 export const metadata = {
   title: 'Quản lý giáo viên | Trang quản trị',
@@ -124,20 +125,12 @@ export default async function TeachersPage({ searchParams }: PageProps) {
               {/* Teacher Info */}
               <div className="flex items-start gap-4">
                 {/* Avatar */}
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy text-white">
-                  {teacher.photoUrl ? (
-                    <img
-                      src={teacher.photoUrl}
-                      alt={`${teacher.firstName} ${teacher.lastName}`}
-                      className="h-full w-full rounded-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-xl font-bold">
-                      {teacher.firstName[0]}
-                      {teacher.lastName[0]}
-                    </span>
-                  )}
-                </div>
+                <Avatar
+                  src={teacher.photoUrl}
+                  alt={`${teacher.firstName} ${teacher.lastName}`}
+                  fallback={`${teacher.firstName[0]}${teacher.lastName[0]}`}
+                  size="xl"
+                />
 
                 <div className="flex-1">
                   <h3 className="font-serif text-xl font-bold text-gray-900 group-hover:text-brand-navy">

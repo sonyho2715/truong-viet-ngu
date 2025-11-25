@@ -5,6 +5,12 @@ import { useRouter } from 'next/navigation';
 import { Class, Teacher } from '@prisma/client';
 import { toast } from 'sonner';
 import { ImageUpload } from '@/components/ui/ImageUpload';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/Textarea';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { Button } from '@/components/ui/Button';
+import { Alert } from '@/components/ui/Alert';
 import {
   createClassAction,
   updateClassAction,
@@ -45,11 +51,18 @@ export function ClassForm({ mode, initialData, teachers }: ClassFormProps) {
     initialData?.classPhotoImage || null
   );
 
+  const teacherOptions = [
+    { value: '', label: 'Chưa phân công giáo viên' },
+    ...teachers.map((teacher) => ({
+      value: teacher.id,
+      label: `${teacher.firstName} ${teacher.lastName}`,
+    })),
+  ];
+
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
 
-    // Add image URLs to form data
     if (classroomImage) {
       formData.set('classroomImage', classroomImage);
     } else {
@@ -88,103 +101,55 @@ export function ClassForm({ mode, initialData, teachers }: ClassFormProps) {
   return (
     <form action={handleSubmit} className="space-y-6">
       {error && (
-        <div className="rounded-lg bg-red-50 p-4 text-sm text-red-800">
+        <Alert variant="error" onDismiss={() => setError(null)}>
           {error}
-        </div>
+        </Alert>
       )}
 
-      {/* Name */}
-      <div>
-        <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-700">
-          Tên lớp học <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          id="name"
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Input
+          label="Tên lớp học"
           name="name"
           required
           defaultValue={initialData?.name}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
           placeholder="VD: Lớp 1, Mẫu Giáo A..."
         />
-      </div>
 
-      {/* Grade Level */}
-      <div>
-        <label htmlFor="gradeLevel" className="mb-2 block text-sm font-medium text-gray-700">
-          Cấp lớp <span className="text-red-500">*</span>
-        </label>
-        <select
-          id="gradeLevel"
+        <Select
+          label="Cấp lớp"
           name="gradeLevel"
           required
+          options={gradeLevels}
           defaultValue={initialData?.gradeLevel}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-        >
-          <option value="">Chọn cấp lớp</option>
-          {gradeLevels.map((level) => (
-            <option key={level.value} value={level.value}>
-              {level.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Teacher Assignment */}
-      <div>
-        <label htmlFor="teacherId" className="mb-2 block text-sm font-medium text-gray-700">
-          Giáo viên phụ trách
-        </label>
-        <select
-          id="teacherId"
-          name="teacherId"
-          defaultValue={initialData?.teacherId || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-        >
-          <option value="">Chưa phân công giáo viên</option>
-          {teachers.map((teacher) => (
-            <option key={teacher.id} value={teacher.id}>
-              {teacher.firstName} {teacher.lastName}
-            </option>
-          ))}
-        </select>
-        <p className="mt-1 text-xs text-gray-500">
-          Chọn giáo viên dạy lớp này. Bạn có thể thêm giáo viên mới trong phần &quot;Quản lý giáo viên&quot;.
-        </p>
-      </div>
-
-      {/* Schedule */}
-      <div>
-        <label htmlFor="schedule" className="mb-2 block text-sm font-medium text-gray-700">
-          Lịch học
-        </label>
-        <input
-          type="text"
-          id="schedule"
-          name="schedule"
-          defaultValue={initialData?.schedule || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="VD: Chủ Nhật 9:00 AM - 12:00 PM"
+          placeholder="Chọn cấp lớp"
         />
       </div>
 
-      {/* Room Number */}
-      <div>
-        <label htmlFor="roomNumber" className="mb-2 block text-sm font-medium text-gray-700">
-          Số phòng
-        </label>
-        <input
-          type="text"
-          id="roomNumber"
+      <Select
+        label="Giáo viên phụ trách"
+        name="teacherId"
+        options={teacherOptions}
+        defaultValue={initialData?.teacherId || ''}
+        hint="Chọn giáo viên dạy lớp này. Bạn có thể thêm giáo viên mới trong phần Quản lý giáo viên."
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Input
+          label="Lịch học"
+          name="schedule"
+          defaultValue={initialData?.schedule || ''}
+          placeholder="VD: Chủ Nhật 9:00 AM - 12:00 PM"
+        />
+
+        <Input
+          label="Số phòng"
           name="roomNumber"
           defaultValue={initialData?.roomNumber || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
           placeholder="VD: A101, B205..."
         />
       </div>
 
-      {/* Classroom Image - Now with upload */}
-      <div>
+      <div className="grid gap-6 sm:grid-cols-2">
         <ImageUpload
           value={classroomImage}
           onChange={setClassroomImage}
@@ -193,10 +158,7 @@ export function ClassForm({ mode, initialData, teachers }: ClassFormProps) {
           helpText="Ảnh phòng học hoặc không gian lớp"
           disabled={loading}
         />
-      </div>
 
-      {/* Class Photo Image - Now with upload */}
-      <div>
         <ImageUpload
           value={classPhotoImage}
           onChange={setClassPhotoImage}
@@ -207,67 +169,37 @@ export function ClassForm({ mode, initialData, teachers }: ClassFormProps) {
         />
       </div>
 
-      {/* Description */}
-      <div>
-        <label htmlFor="description" className="mb-2 block text-sm font-medium text-gray-700">
-          Mô tả
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          rows={4}
-          defaultValue={initialData?.description || ''}
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-          placeholder="Mô tả về lớp học..."
-        />
-      </div>
+      <Textarea
+        label="Mô tả"
+        name="description"
+        rows={4}
+        defaultValue={initialData?.description || ''}
+        placeholder="Mô tả về lớp học..."
+      />
 
-      {/* Display Order */}
-      <div>
-        <label htmlFor="displayOrder" className="mb-2 block text-sm font-medium text-gray-700">
-          Thứ tự hiển thị
-        </label>
-        <input
-          type="number"
-          id="displayOrder"
-          name="displayOrder"
-          defaultValue={initialData?.displayOrder || 0}
-          min="0"
-          className="block w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-gold focus:outline-none focus:ring-2 focus:ring-brand-gold"
-        />
-        <p className="mt-1 text-xs text-gray-500">Số thứ tự để sắp xếp lớp học (0 = đầu tiên)</p>
-      </div>
+      <Input
+        label="Thứ tự hiển thị"
+        name="displayOrder"
+        type="number"
+        defaultValue={initialData?.displayOrder || 0}
+        min={0}
+        hint="Số thứ tự để sắp xếp lớp học (0 = đầu tiên)"
+      />
 
-      {/* Is Active */}
-      <div className="flex items-center gap-3">
-        <input
-          type="checkbox"
-          id="isActive"
-          name="isActive"
-          defaultChecked={initialData?.isActive !== false}
-          className="h-5 w-5 rounded border-gray-300 text-brand-gold focus:ring-2 focus:ring-brand-gold"
-        />
-        <label htmlFor="isActive" className="text-sm font-medium text-gray-700">
-          Hiển thị lớp học này trên website
-        </label>
-      </div>
+      <Checkbox
+        label="Hiển thị lớp học này trên website"
+        name="isActive"
+        defaultChecked={initialData?.isActive !== false}
+      />
 
       {/* Submit Buttons */}
       <div className="flex items-center justify-end gap-4 border-t border-gray-200 pt-6">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="rounded-lg border-2 border-gray-300 px-6 py-2 font-semibold text-gray-700 transition-colors hover:bg-gray-50"
-        >
+        <Button type="button" variant="outline" onClick={() => router.back()}>
           Hủy
-        </button>
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-lg bg-brand-gold px-6 py-2 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl disabled:opacity-50"
-        >
-          {loading ? 'Đang lưu...' : mode === 'create' ? 'Tạo lớp học' : 'Cập nhật'}
-        </button>
+        </Button>
+        <Button type="submit" variant="primary" isLoading={loading}>
+          {mode === 'create' ? 'Tạo lớp học' : 'Cập nhật'}
+        </Button>
       </div>
     </form>
   );
