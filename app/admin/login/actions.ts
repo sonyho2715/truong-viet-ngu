@@ -5,6 +5,12 @@ import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { db } from '@/lib/db';
 import { getSession } from '@/lib/auth';
+import {
+  checkLoginRateLimit,
+  recordFailedLogin,
+  resetRateLimit,
+  formatRemainingTime,
+} from '@/lib/rate-limit';
 
 const loginSchema = z.object({
   email: z.string().email('Email không hợp lệ'),
@@ -18,6 +24,15 @@ export async function loginAction(formData: FormData) {
       password: formData.get('password'),
     });
 
+    // Check rate limit before processing
+    const rateLimit = checkLoginRateLimit(validated.email);
+    if (!rateLimit.success) {
+      return {
+        success: false,
+        error: `Quá nhiều lần đăng nhập thất bại. Vui lòng thử lại sau ${formatRemainingTime(rateLimit.resetInSeconds)}.`,
+      };
+    }
+
     // Find admin by email
     const admin = await db.admin.findUnique({
       where: {
@@ -26,6 +41,7 @@ export async function loginAction(formData: FormData) {
     });
 
     if (!admin) {
+      recordFailedLogin(validated.email);
       return {
         success: false,
         error: 'Email hoặc mật khẩu không đúng',
@@ -34,6 +50,7 @@ export async function loginAction(formData: FormData) {
 
     // Check if admin is active
     if (!admin.isActive) {
+      recordFailedLogin(validated.email);
       return {
         success: false,
         error: 'Tài khoản đã bị vô hiệu hóa',
@@ -44,11 +61,15 @@ export async function loginAction(formData: FormData) {
     const passwordMatch = await bcrypt.compare(validated.password, admin.password);
 
     if (!passwordMatch) {
+      recordFailedLogin(validated.email);
       return {
         success: false,
         error: 'Email hoặc mật khẩu không đúng',
       };
     }
+
+    // Reset rate limit on successful login
+    resetRateLimit(validated.email);
 
     // Create session
     const session = await getSession();

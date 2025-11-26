@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pagination } from '@/components/ui/Pagination';
+import { ExportButton } from '@/components/ui/ExportButton';
 import { Badge } from '@/components/ui/Badge';
 import { Avatar } from '@/components/ui/Avatar';
 
@@ -55,6 +57,8 @@ export default async function TeachersPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -63,15 +67,18 @@ export default async function TeachersPage({ searchParams }: PageProps) {
             Danh sách {totalCount} giáo viên
           </p>
         </div>
-        <Link
-          href="/admin/dashboard/teachers/new"
-          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Thêm giáo viên
-        </Link>
+        <div className="flex items-center gap-3">
+          <ExportButton type="teachers" label="Xuất danh sách" />
+          <Link
+            href="/admin/dashboard/teachers/new"
+            className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Thêm giáo viên
+          </Link>
+        </div>
       </div>
 
       {/* Search */}

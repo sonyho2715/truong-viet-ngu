@@ -1,3 +1,4 @@
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { StudentForm } from '@/components/admin/StudentForm';
 
 export const metadata = {
@@ -7,6 +8,8 @@ export const metadata = {
 export default function NewStudentPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       <div>
         <h1 className="font-serif text-3xl font-bold text-gray-900">Thêm học sinh mới</h1>
         <p className="mt-2 text-gray-600">Tạo hồ sơ học sinh mới</p>

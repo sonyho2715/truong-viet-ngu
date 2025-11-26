@@ -2,8 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pagination } from '@/components/ui/Pagination';
+import { ExportButton } from '@/components/ui/ExportButton';
 
 export const metadata = {
   title: 'Quản lý học sinh | Trang quản trị',
@@ -76,6 +78,8 @@ export default async function StudentsPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -84,20 +88,23 @@ export default async function StudentsPage({ searchParams }: PageProps) {
             Quản lý thông tin học sinh và ghi danh vào các lớp học
           </p>
         </div>
-        <Link
-          href="/admin/dashboard/students/new"
-          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Thêm học sinh
-        </Link>
+        <div className="flex items-center gap-3">
+          <ExportButton type="students" label="Xuất danh sách" />
+          <Link
+            href="/admin/dashboard/students/new"
+            className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Thêm học sinh
+          </Link>
+        </div>
       </div>
 
       {/* Search */}

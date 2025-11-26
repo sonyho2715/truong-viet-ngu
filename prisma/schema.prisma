@@ -273,6 +273,103 @@ enum ImageCategory {
 }
 
 // ============================================
+// CALENDAR EVENTS
+// ============================================
+
+model CalendarEvent {
+  id          String        @id @default(cuid())
+  title       String
+  description String?       @db.Text
+  eventType   EventType
+  startDate   DateTime
+  endDate     DateTime?
+  startTime   String?       // e.g., "9:00 AM"
+  endTime     String?       // e.g., "12:00 PM"
+  location    String?
+  isRecurring Boolean       @default(false)
+  isActive    Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([isActive, startDate])
+  @@index([eventType])
+  @@map("calendar_events")
+}
+
+enum EventType {
+  CLASS           // Regular class
+  TNTT            // TNTT activities
+  HOLIDAY         // School holidays
+  SPECIAL_EVENT   // Special events
+  MASS            // Mass/liturgical events
+  MEETING         // Parent/teacher meetings
+}
+
+// ============================================
+// ABSENCE REPORTS
+// ============================================
+
+model AbsenceReport {
+  id            String   @id @default(cuid())
+  studentName   String
+  parentName    String
+  parentEmail   String
+  parentPhone   String?
+  absenceDate   DateTime
+  reason        String   @db.Text
+  additionalNotes String? @db.Text
+  status        AbsenceStatus @default(PENDING)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([absenceDate])
+  @@index([status])
+  @@map("absence_reports")
+}
+
+enum AbsenceStatus {
+  PENDING
+  APPROVED
+  NOTED
+}
+
+// ============================================
+// NEWSLETTER SUBSCRIBERS
+// ============================================
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@map("newsletter_subscribers")
+}
+
+// ============================================
+// PARENT ACCOUNTS
+// ============================================
+
+model Parent {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password     String   // bcrypt hashed
+  firstName    String
+  lastName     String
+  phone        String?
+  isActive     Boolean  @default(true)
+  isVerified   Boolean  @default(false)
+  lastLoginAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+  @@map("parents")
+}
+
+// ============================================
 // AUDIT LOG (Optional - for tracking changes)
 // ============================================
 

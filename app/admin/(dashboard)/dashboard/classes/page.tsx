@@ -2,8 +2,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pagination } from '@/components/ui/Pagination';
+import { ExportButton } from '@/components/ui/ExportButton';
 
 export const metadata = {
   title: 'Quản lý lớp học | Trang quản trị',
@@ -77,6 +79,8 @@ export default async function ClassesPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -85,20 +89,23 @@ export default async function ClassesPage({ searchParams }: PageProps) {
             Tạo và quản lý các lớp Việt Ngữ và TNTT
           </p>
         </div>
-        <Link
-          href="/admin/dashboard/classes/new"
-          className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Thêm lớp học
-        </Link>
+        <div className="flex items-center gap-3">
+          <ExportButton type="classes" label="Xuất danh sách" />
+          <Link
+            href="/admin/dashboard/classes/new"
+            className="flex items-center justify-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy shadow-lg transition-all hover:bg-brand-gold/90 hover:shadow-xl"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Thêm lớp học
+          </Link>
+        </div>
       </div>
 
       {/* Search */}

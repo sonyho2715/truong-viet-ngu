@@ -1,3 +1,4 @@
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { AnnouncementForm } from '@/components/admin/AnnouncementForm';
 
 export const metadata = {
@@ -7,6 +8,8 @@ export const metadata = {
 export default function NewAnnouncementPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div>
         <h1 className="font-serif text-3xl font-bold text-gray-900">Tạo thông báo mới</h1>

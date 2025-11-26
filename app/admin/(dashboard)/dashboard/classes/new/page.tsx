@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { ClassForm } from '@/components/admin/ClassForm';
 
 export const metadata = {
@@ -18,6 +19,8 @@ export default async function NewClassPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       <div>
         <h1 className="font-serif text-3xl font-bold text-gray-900">Tạo lớp học mới</h1>
         <p className="mt-2 text-gray-600">Thêm lớp học mới cho trường Việt Ngữ và TNTT</p>

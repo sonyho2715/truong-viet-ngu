@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { ClassForm } from '@/components/admin/ClassForm';
 import { DeleteClassButton } from '@/components/admin/DeleteClassButton';
 import { EnrollmentManager } from '@/components/admin/EnrollmentManager';
@@ -76,6 +77,8 @@ export default async function EditClassPage({ params }: EditClassPageProps) {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       <div className="flex items-start justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { db } from '@/lib/db';
 import { DeleteAnnouncementButton } from '@/components/admin/DeleteAnnouncementButton';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Pagination } from '@/components/ui/Pagination';
 import { AnnouncementListSkeleton } from '@/components/ui/Skeleton';
@@ -62,6 +63,8 @@ export default async function AnnouncementsPage({ searchParams }: PageProps) {
 
   return (
     <div className="space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

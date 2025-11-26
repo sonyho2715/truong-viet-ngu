@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { SettingsForm } from '@/components/admin/SettingsForm';
 
 export const metadata = {
@@ -26,6 +27,8 @@ export default async function SettingsPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       {/* Page Header */}
       <div>
         <h1 className="font-serif text-3xl font-bold text-gray-900">Cài đặt website</h1>

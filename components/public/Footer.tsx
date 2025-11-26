@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NewsletterSignup } from './NewsletterSignup';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,6 +16,17 @@ export function Footer() {
             <p className="text-sm leading-relaxed text-gray-300">
               Trường Việt Ngữ - Thiếu Nhi Thánh Thể. Giảng dạy tiếng Việt và giáo lý Công Giáo cho thế hệ trẻ.
             </p>
+            <div className="mt-4 space-y-1 text-sm">
+              <Link href="/about" className="block text-gray-300 hover:text-brand-gold">
+                Về Trường
+              </Link>
+              <Link href="/teachers" className="block text-gray-300 hover:text-brand-gold">
+                Đội Ngũ Giáo Viên
+              </Link>
+              <Link href="/faq" className="block text-gray-300 hover:text-brand-gold">
+                Câu Hỏi Thường Gặp
+              </Link>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -33,7 +45,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#announcements"
+                  href="/#announcements"
                   className="text-gray-300 hover:text-brand-gold"
                 >
                   Thông Báo
@@ -41,7 +53,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#classes"
+                  href="/#classes"
                   className="text-gray-300 hover:text-brand-gold"
                 >
                   Các Lớp Học
@@ -49,7 +61,15 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#contact"
+                  href="/tntt"
+                  className="text-gray-300 hover:text-brand-gold"
+                >
+                  TNTT
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#contact"
                   className="text-gray-300 hover:text-brand-gold"
                 >
                   Liên Hệ
@@ -73,16 +93,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a
-                  href="https://tomathien.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-brand-gold"
-                >
-                  Toma Thien
-                </a>
-              </li>
-              <li>
                 <Link
                   href="/calendar"
                   className="text-gray-300 hover:text-brand-gold"
@@ -90,16 +100,34 @@ export function Footer() {
                   Lịch Học
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/absence-report"
+                  className="text-gray-300 hover:text-brand-gold"
+                >
+                  Báo Nghỉ Học
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://tomathien.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-brand-gold"
+                >
+                  Toma Thien ↗
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Contact & Social */}
+          {/* Newsletter & Contact */}
           <div>
-            <h3 className="mb-4 font-serif text-lg font-bold text-brand-gold">
-              Kết Nối
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <li className="flex items-center gap-2">
+            <NewsletterSignup variant="dark" />
+
+            {/* Contact Info */}
+            <div className="mt-6 space-y-2 text-sm text-gray-300">
+              <div className="flex items-center gap-2">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -107,19 +135,19 @@ export function Footer() {
                 <a href="mailto:info@truongvietngu.com" className="hover:text-brand-gold">
                   info@truongvietngu.com
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
+              </div>
+              <div className="flex items-center gap-2">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                 </svg>
                 <a href="tel:8081234567" className="hover:text-brand-gold">
                   (808) 123-4567
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
 
             {/* Social Media Icons */}
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-4 flex items-center gap-4">
               <a
                 href="#"
                 aria-label="Facebook"
@@ -136,20 +164,6 @@ export function Footer() {
               >
                 <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                aria-label="Email Newsletter"
-                className="text-gray-300 hover:text-brand-gold"
-              >
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
                 </svg>
               </a>
             </div>

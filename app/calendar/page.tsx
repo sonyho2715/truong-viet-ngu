@@ -1,7 +1,9 @@
 import { Navigation } from '@/components/public/Navigation';
 import { Footer } from '@/components/public/Footer';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
+import { db } from '@/lib/db';
 import Link from 'next/link';
+import { Calendar, BookOpen, Users, Star, Clock, MapPin } from 'lucide-react';
 
 export const metadata = {
   title: 'Lịch Học - Trường Việt Ngữ',
@@ -9,119 +11,96 @@ export const metadata = {
   keywords: ['lịch học', 'calendar', 'thời khóa biểu', 'Vietnamese school schedule'],
 };
 
-interface CalendarEvent {
-  date: string;
-  title: string;
-  time?: string;
-  description?: string;
-  type: 'class' | 'tntt' | 'event' | 'holiday';
+const eventTypeLabels: Record<string, string> = {
+  CLASS: 'Lớp Học',
+  TNTT: 'TNTT',
+  HOLIDAY: 'Nghỉ Lễ',
+  SPECIAL_EVENT: 'Sự Kiện Đặc Biệt',
+  MASS: 'Thánh Lễ',
+  MEETING: 'Họp',
+};
+
+const eventTypeColors: Record<string, string> = {
+  CLASS: 'bg-blue-100 text-blue-800 border-blue-300',
+  TNTT: 'bg-green-100 text-green-800 border-green-300',
+  HOLIDAY: 'bg-red-100 text-red-800 border-red-300',
+  SPECIAL_EVENT: 'bg-purple-100 text-purple-800 border-purple-300',
+  MASS: 'bg-amber-100 text-amber-800 border-amber-300',
+  MEETING: 'bg-gray-100 text-gray-800 border-gray-300',
+};
+
+const EventIcon = ({ type }: { type: string }) => {
+  switch (type) {
+    case 'CLASS':
+      return <BookOpen className="h-5 w-5" />;
+    case 'TNTT':
+      return <Users className="h-5 w-5" />;
+    case 'HOLIDAY':
+      return <Clock className="h-5 w-5" />;
+    case 'SPECIAL_EVENT':
+      return <Star className="h-5 w-5" />;
+    case 'MASS':
+      return (
+        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      );
+    case 'MEETING':
+      return (
+        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      );
+    default:
+      return <Calendar className="h-5 w-5" />;
+  }
+};
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('vi-VN', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
 }
 
-export default function CalendarPage() {
-  // Sample events - in production, these would come from database
-  const events: CalendarEvent[] = [
-    {
-      date: '2025-01-05',
-      title: 'Khai Giảng Năm Học Mới',
-      time: '9:00 AM',
-      description: 'Lễ khai giảng năm học 2025 cho tất cả các lớp',
-      type: 'event',
-    },
-    {
-      date: '2025-01-12',
-      title: 'Lớp Học Thường Xuyên',
-      time: '9:00 AM - 12:00 PM',
-      description: 'Tất cả các lớp Việt Ngữ và TNTT',
-      type: 'class',
-    },
-    {
-      date: '2025-01-19',
-      title: 'Lớp Học Thường Xuyên',
-      time: '9:00 AM - 12:00 PM',
-      description: 'Tất cả các lớp Việt Ngữ và TNTT',
-      type: 'class',
-    },
-    {
-      date: '2025-01-26',
-      title: 'Tết Nguyên Đán',
-      time: 'Nghỉ học',
-      description: 'Chúc mừng năm mới Ất Tỵ',
-      type: 'holiday',
-    },
-    {
-      date: '2025-02-02',
-      title: 'Lớp Học Thường Xuyên',
-      time: '9:00 AM - 12:00 PM',
-      description: 'Tất cả các lớp Việt Ngữ và TNTT',
-      type: 'class',
-    },
-    {
-      date: '2025-02-09',
-      title: 'Sinh Hoạt TNTT Đặc Biệt',
-      time: '9:00 AM - 1:00 PM',
-      description: 'Hoạt động ngoài trời cho tất cả các ngành',
-      type: 'tntt',
-    },
-    {
-      date: '2025-02-16',
-      title: 'Lớp Học Thường Xuyên',
-      time: '9:00 AM - 12:00 PM',
-      description: 'Tất cả các lớp Việt Ngữ và TNTT',
-      type: 'class',
-    },
-  ];
+function formatTimeRange(startTime?: string | null, endTime?: string | null) {
+  if (!startTime) return null;
+  if (endTime) return `${startTime} - ${endTime}`;
+  return startTime;
+}
 
-  const getEventColor = (type: CalendarEvent['type']) => {
-    switch (type) {
-      case 'class':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 'tntt':
-        return 'bg-green-100 text-green-800 border-green-300';
-      case 'event':
-        return 'bg-purple-100 text-purple-800 border-purple-300';
-      case 'holiday':
-        return 'bg-red-100 text-red-800 border-red-300';
-    }
-  };
+export default async function CalendarPage() {
+  // Fetch upcoming events from database
+  const events = await db.calendarEvent.findMany({
+    where: {
+      isActive: true,
+      startDate: {
+        gte: new Date(),
+      },
+    },
+    orderBy: {
+      startDate: 'asc',
+    },
+    take: 20,
+  });
 
-  const getEventIcon = (type: CalendarEvent['type']) => {
-    switch (type) {
-      case 'class':
-        return (
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        );
-      case 'tntt':
-        return (
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-        );
-      case 'event':
-        return (
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
-        );
-      case 'holiday':
-        return (
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        );
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('vi-VN', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }).format(date);
-  };
+  // Group events by month
+  const eventsByMonth = events.reduce(
+    (acc, event) => {
+      const monthKey = new Intl.DateTimeFormat('vi-VN', {
+        year: 'numeric',
+        month: 'long',
+      }).format(event.startDate);
+      if (!acc[monthKey]) {
+        acc[monthKey] = [];
+      }
+      acc[monthKey].push(event);
+      return acc;
+    },
+    {} as Record<string, typeof events>
+  );
 
   return (
     <>
@@ -133,6 +112,7 @@ export default function CalendarPage() {
           <div className="mx-auto max-w-7xl">
             <Breadcrumb items={[{ label: 'Lịch Học' }]} />
             <div className="text-center">
+              <Calendar className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
               <h1 className="font-serif text-4xl font-bold text-white lg:text-5xl">
                 Lịch Học
               </h1>
@@ -151,9 +131,7 @@ export default function CalendarPage() {
               <div className="rounded-xl border-2 border-blue-200 bg-blue-50 p-6">
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+                    <BookOpen className="h-6 w-6" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-gray-900">
                     Lớp Học Hàng Tuần
@@ -170,9 +148,7 @@ export default function CalendarPage() {
               <div className="rounded-xl border-2 border-green-200 bg-green-50 p-6">
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
+                    <Users className="h-6 w-6" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-gray-900">
                     Sinh Hoạt TNTT
@@ -189,9 +165,7 @@ export default function CalendarPage() {
               <div className="rounded-xl border-2 border-purple-200 bg-purple-50 p-6">
                 <div className="mb-4 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-600 text-white">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
+                    <Star className="h-6 w-6" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-gray-900">
                     Sự Kiện Đặc Biệt
@@ -214,47 +188,83 @@ export default function CalendarPage() {
               Lịch Chi Tiết
             </h2>
 
-            <div className="space-y-4">
-              {events.map((event, index) => (
-                <article
-                  key={index}
-                  className={`group rounded-xl border-2 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-lg ${getEventColor(event.type)}`}
-                >
-                  <div className="flex items-start gap-4">
-                    {/* Icon */}
-                    <div className="flex-shrink-0">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow">
-                        {getEventIcon(event.type)}
-                      </div>
-                    </div>
+            {events.length > 0 ? (
+              <div className="space-y-10">
+                {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
+                  <div key={month}>
+                    <h3 className="mb-4 border-b-2 border-brand-gold pb-2 font-serif text-xl font-bold capitalize text-brand-navy">
+                      {month}
+                    </h3>
+                    <div className="space-y-4">
+                      {monthEvents.map((event) => (
+                        <article
+                          key={event.id}
+                          className={`group rounded-xl border-2 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-lg ${eventTypeColors[event.eventType]}`}
+                        >
+                          <div className="flex items-start gap-4">
+                            {/* Icon */}
+                            <div className="flex-shrink-0">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow">
+                                <EventIcon type={event.eventType} />
+                              </div>
+                            </div>
 
-                    {/* Event Details */}
-                    <div className="flex-1">
-                      <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
-                        <h3 className="font-serif text-xl font-bold text-gray-900">
-                          {event.title}
-                        </h3>
-                        {event.time && (
-                          <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">
-                            {event.time}
-                          </span>
-                        )}
-                      </div>
+                            {/* Event Details */}
+                            <div className="flex-1">
+                              <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
+                                <div>
+                                  <span className="mb-1 inline-block rounded-full bg-white/80 px-2 py-0.5 text-xs font-medium">
+                                    {eventTypeLabels[event.eventType]}
+                                  </span>
+                                  <h4 className="font-serif text-xl font-bold text-gray-900">
+                                    {event.title}
+                                  </h4>
+                                </div>
+                                {formatTimeRange(event.startTime, event.endTime) && (
+                                  <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">
+                                    {formatTimeRange(event.startTime, event.endTime)}
+                                  </span>
+                                )}
+                              </div>
 
-                      <p className="mb-2 text-sm font-medium text-gray-700">
-                        {formatDate(event.date)}
-                      </p>
+                              <p className="mb-2 text-sm font-medium text-gray-700">
+                                {formatDate(event.startDate)}
+                                {event.endDate && event.endDate.toDateString() !== event.startDate.toDateString() && (
+                                  <> - {formatDate(event.endDate)}</>
+                                )}
+                              </p>
 
-                      {event.description && (
-                        <p className="text-sm text-gray-600">
-                          {event.description}
-                        </p>
-                      )}
+                              {event.location && (
+                                <p className="mb-2 flex items-center gap-1 text-sm text-gray-600">
+                                  <MapPin className="h-4 w-4" />
+                                  {event.location}
+                                </p>
+                              )}
+
+                              {event.description && (
+                                <p className="text-sm text-gray-600">
+                                  {event.description}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </article>
+                      ))}
                     </div>
                   </div>
-                </article>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-xl bg-white p-12 text-center shadow-sm">
+                <Calendar className="mx-auto h-16 w-16 text-gray-300" />
+                <h3 className="mt-4 font-serif text-xl font-bold text-gray-600">
+                  Chưa có sự kiện nào sắp tới
+                </h3>
+                <p className="mt-2 text-gray-500">
+                  Các sự kiện và lịch học sẽ được cập nhật sớm.
+                </p>
+              </div>
+            )}
 
             {/* Note */}
             <div className="mt-12 rounded-xl border-2 border-brand-gold bg-brand-cream p-6">

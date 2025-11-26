@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { MaterialForm } from '@/components/admin/MaterialForm';
 import { DeleteMaterialButton } from '@/components/admin/DeleteMaterialButton';
 
@@ -26,6 +27,8 @@ export default async function EditMaterialPage({ params }: EditMaterialPageProps
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
+      <AdminBreadcrumb />
+
       <div className="flex items-start justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">
