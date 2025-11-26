@@ -70,16 +70,19 @@ enum AnnouncementCategory {
 // ============================================
 
 model Teacher {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   firstName   String
   lastName    String
-  email       String   @unique
+  email       String    @unique
+  password    String?   // bcrypt hashed (optional for legacy teachers)
   phone       String?
   photoUrl    String?
-  bio         String?  @db.Text
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  bio         String?   @db.Text
+  isActive    Boolean   @default(true)
+  isApproved  Boolean   @default(false) // Requires admin approval
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Relations
   classes     Class[]  // A teacher can teach multiple classes
@@ -269,7 +272,66 @@ enum ImageCategory {
   CLASS_PHOTO
   HERO_BACKGROUND
   ANNOUNCEMENT
+  GALLERY
+  SLIDESHOW
   GENERAL
+}
+
+// ============================================
+// PHOTO GALLERY ALBUMS
+// ============================================
+
+model GalleryAlbum {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  coverImage  String?
+  eventDate   DateTime?
+  isActive    Boolean  @default(true)
+  displayOrder Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  photos      GalleryPhoto[]
+
+  @@index([isActive, displayOrder])
+  @@map("gallery_albums")
+}
+
+model GalleryPhoto {
+  id          String   @id @default(cuid())
+  albumId     String
+  imageUrl    String
+  caption     String?
+  displayOrder Int     @default(0)
+  createdAt   DateTime @default(now())
+
+  // Relations
+  album       GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  @@index([albumId, displayOrder])
+  @@map("gallery_photos")
+}
+
+// ============================================
+// HOMEPAGE SLIDESHOW
+// ============================================
+
+model SlideshowSlide {
+  id           String   @id @default(cuid())
+  imageUrl     String
+  title        String?
+  subtitle     String?
+  linkUrl      String?
+  linkText     String?
+  displayOrder Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isActive, displayOrder])
+  @@map("slideshow_slides")
 }
 
 // ============================================
