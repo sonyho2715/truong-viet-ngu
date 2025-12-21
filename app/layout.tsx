@@ -22,10 +22,17 @@ export const metadata: Metadata = {
   title: 'Trường Việt Ngữ - Thiếu Nhi Thánh Thể',
   description: 'Trường Việt Ngữ Thiếu Nhi Thánh Thể - Honolulu, HI. Giáo dục tiếng Việt và văn hóa Việt Nam cho thế hệ trẻ.',
   keywords: ['Trường Việt Ngữ', 'Vietnamese School', 'Thiếu Nhi Thánh Thể', 'Honolulu', 'Hawaii', 'Vietnamese Language'],
+  manifest: '/manifest.json',
   openGraph: {
     title: 'Trường Việt Ngữ - Thiếu Nhi Thánh Thể',
     description: 'Giáo dục tiếng Việt và văn hóa Việt Nam cho thế hệ trẻ tại Honolulu, HI',
     locale: 'vi_VN',
+    type: 'website',
+    siteName: 'Trường Việt Ngữ',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

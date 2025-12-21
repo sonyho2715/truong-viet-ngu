@@ -1,0 +1,14 @@
+# Robots.txt for Truong Viet Ngu
+# https://truong-viet-ngu.vercel.app
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /parent/dashboard
+Disallow: /teacher/dashboard
+
+# Sitemap
+Sitemap: https://truong-viet-ngu.vercel.app/sitemap.xml

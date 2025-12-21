@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { getSession } from '@/lib/auth';
 import { LoginForm } from '@/components/admin/LoginForm';
 
@@ -56,7 +57,7 @@ export default async function AdminLoginPage() {
 
         {/* Back to Home Link */}
         <div className="mt-6 text-center">
-          <a
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-sm text-brand-cream/80 transition-colors hover:text-brand-gold"
           >
@@ -74,7 +75,7 @@ export default async function AdminLoginPage() {
               />
             </svg>
             Về trang chủ
-          </a>
+          </Link>
         </div>
       </div>
     </div>

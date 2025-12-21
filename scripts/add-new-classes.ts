@@ -1,6 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, GradeLevel, Prisma } from '@prisma/client';
 
 const prisma = new PrismaClient();
+
+type ClassCreateInput = Prisma.ClassCreateInput;
 
 async function main() {
   console.log('Adding new Vietnamese language and TNTT classes...');
@@ -97,12 +99,12 @@ async function main() {
   // Create Vietnamese classes
   for (const classData of vietnameseClasses) {
     const existing = await prisma.class.findFirst({
-      where: { gradeLevel: classData.gradeLevel as any },
+      where: { gradeLevel: classData.gradeLevel as GradeLevel },
     });
 
     if (!existing) {
       await prisma.class.create({
-        data: classData as any,
+        data: classData as ClassCreateInput,
       });
       console.log(`✓ Created ${classData.name}`);
     } else {
@@ -113,12 +115,12 @@ async function main() {
   // Create TNTT classes
   for (const classData of tnttClasses) {
     const existing = await prisma.class.findFirst({
-      where: { gradeLevel: classData.gradeLevel as any },
+      where: { gradeLevel: classData.gradeLevel as GradeLevel },
     });
 
     if (!existing) {
       await prisma.class.create({
-        data: classData as any,
+        data: classData as ClassCreateInput,
       });
       console.log(`✓ Created ${classData.name}`);
     } else {

@@ -21,10 +21,11 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   const [language, setLanguageState] = useState<Language>('vi');
   const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load saved language preference on mount
+  // Load saved language preference on mount (intentional setState in effect for hydration)
   useEffect(() => {
     const saved = localStorage.getItem('language') as Language | null;
-    if (saved && (saved === 'vi' || saved === 'en')) {
+    if (saved === 'vi' || saved === 'en') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLanguageState(saved);
     }
     setIsHydrated(true);
