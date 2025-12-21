@@ -1,9 +1,10 @@
 import { Navigation } from '@/components/public/Navigation';
 import { Footer } from '@/components/public/Footer';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
+import { EventCard } from '@/components/public/EventCard';
 import { db } from '@/lib/db';
 import Link from 'next/link';
-import { Calendar, BookOpen, Users, Star, Clock, MapPin } from 'lucide-react';
+import { Calendar, BookOpen, Users, Star, Clock } from 'lucide-react';
 
 export const metadata = {
   title: 'Lịch Học - Trường Việt Ngữ',
@@ -11,73 +12,22 @@ export const metadata = {
   keywords: ['lịch học', 'calendar', 'thời khóa biểu', 'Vietnamese school schedule'],
 };
 
-const eventTypeLabels: Record<string, string> = {
-  CLASS: 'Lớp Học',
-  TNTT: 'TNTT',
-  HOLIDAY: 'Nghỉ Lễ',
-  SPECIAL_EVENT: 'Sự Kiện Đặc Biệt',
-  MASS: 'Thánh Lễ',
-  MEETING: 'Họp',
-};
-
-const eventTypeColors: Record<string, string> = {
-  CLASS: 'bg-blue-100 text-blue-800 border-blue-300',
-  TNTT: 'bg-green-100 text-green-800 border-green-300',
-  HOLIDAY: 'bg-red-100 text-red-800 border-red-300',
-  SPECIAL_EVENT: 'bg-purple-100 text-purple-800 border-purple-300',
-  MASS: 'bg-amber-100 text-amber-800 border-amber-300',
-  MEETING: 'bg-gray-100 text-gray-800 border-gray-300',
-};
-
-const EventIcon = ({ type }: { type: string }) => {
-  switch (type) {
-    case 'CLASS':
-      return <BookOpen className="h-5 w-5" />;
-    case 'TNTT':
-      return <Users className="h-5 w-5" />;
-    case 'HOLIDAY':
-      return <Clock className="h-5 w-5" />;
-    case 'SPECIAL_EVENT':
-      return <Star className="h-5 w-5" />;
-    case 'MASS':
-      return (
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-      );
-    case 'MEETING':
-      return (
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      );
-    default:
-      return <Calendar className="h-5 w-5" />;
-  }
-};
-
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat('vi-VN', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
-}
-
-function formatTimeRange(startTime?: string | null, endTime?: string | null) {
-  if (!startTime) return null;
-  if (endTime) return `${startTime} - ${endTime}`;
-  return startTime;
-}
 
 export default async function CalendarPage() {
-  // Fetch upcoming events from database
+  // Fetch upcoming events from database with RSVP counts
   const events = await db.calendarEvent.findMany({
     where: {
       isActive: true,
       startDate: {
         gte: new Date(),
+      },
+    },
+    include: {
+      _count: {
+        select: { rsvps: true },
+      },
+      rsvps: {
+        select: { numberOfGuests: true },
       },
     },
     orderBy: {
@@ -86,8 +36,14 @@ export default async function CalendarPage() {
     take: 20,
   });
 
+  // Calculate total guest count for each event
+  const eventsWithCounts = events.map((event) => ({
+    ...event,
+    rsvpCount: event.rsvps.reduce((sum, r) => sum + r.numberOfGuests, 0),
+  }));
+
   // Group events by month
-  const eventsByMonth = events.reduce(
+  const eventsByMonth = eventsWithCounts.reduce(
     (acc, event) => {
       const monthKey = new Intl.DateTimeFormat('vi-VN', {
         year: 'numeric',
@@ -99,7 +55,7 @@ export default async function CalendarPage() {
       acc[monthKey].push(event);
       return acc;
     },
-    {} as Record<string, typeof events>
+    {} as Record<string, typeof eventsWithCounts>
   );
 
   return (
@@ -188,7 +144,7 @@ export default async function CalendarPage() {
               Lịch Chi Tiết
             </h2>
 
-            {events.length > 0 ? (
+            {eventsWithCounts.length > 0 ? (
               <div className="space-y-10">
                 {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
                   <div key={month}>
@@ -197,58 +153,23 @@ export default async function CalendarPage() {
                     </h3>
                     <div className="space-y-4">
                       {monthEvents.map((event) => (
-                        <article
+                        <EventCard
                           key={event.id}
-                          className={`group rounded-xl border-2 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-lg ${eventTypeColors[event.eventType]}`}
-                        >
-                          <div className="flex items-start gap-4">
-                            {/* Icon */}
-                            <div className="flex-shrink-0">
-                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow">
-                                <EventIcon type={event.eventType} />
-                              </div>
-                            </div>
-
-                            {/* Event Details */}
-                            <div className="flex-1">
-                              <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
-                                <div>
-                                  <span className="mb-1 inline-block rounded-full bg-white/80 px-2 py-0.5 text-xs font-medium">
-                                    {eventTypeLabels[event.eventType]}
-                                  </span>
-                                  <h4 className="font-serif text-xl font-bold text-gray-900">
-                                    {event.title}
-                                  </h4>
-                                </div>
-                                {formatTimeRange(event.startTime, event.endTime) && (
-                                  <span className="rounded-full bg-white px-3 py-1 text-sm font-medium shadow">
-                                    {formatTimeRange(event.startTime, event.endTime)}
-                                  </span>
-                                )}
-                              </div>
-
-                              <p className="mb-2 text-sm font-medium text-gray-700">
-                                {formatDate(event.startDate)}
-                                {event.endDate && event.endDate.toDateString() !== event.startDate.toDateString() && (
-                                  <> - {formatDate(event.endDate)}</>
-                                )}
-                              </p>
-
-                              {event.location && (
-                                <p className="mb-2 flex items-center gap-1 text-sm text-gray-600">
-                                  <MapPin className="h-4 w-4" />
-                                  {event.location}
-                                </p>
-                              )}
-
-                              {event.description && (
-                                <p className="text-sm text-gray-600">
-                                  {event.description}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </article>
+                          event={{
+                            id: event.id,
+                            title: event.title,
+                            description: event.description,
+                            eventType: event.eventType,
+                            startDate: event.startDate.toISOString(),
+                            endDate: event.endDate?.toISOString() || null,
+                            startTime: event.startTime,
+                            endTime: event.endTime,
+                            location: event.location,
+                            allowRSVP: event.allowRSVP,
+                            maxAttendees: event.maxAttendees,
+                            rsvpCount: event.rsvpCount,
+                          }}
+                        />
                       ))}
                     </div>
                   </div>

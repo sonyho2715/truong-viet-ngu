@@ -183,3 +183,45 @@ body {
   min-height: 44px;
   min-width: 44px;
 }
+
+/* ===== MOBILE UTILITIES ===== */
+
+/* Safe area for devices with notches (iPhone X+) */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Bottom padding for pages to account for mobile bottom navigation */
+.mobile-bottom-padding {
+  @apply pb-24 lg:pb-0;
+}
+
+/* Touch-friendly spacing */
+.touch-spacing {
+  @apply gap-3 p-4;
+}
+
+/* Hide on mobile, show on desktop */
+.desktop-only {
+  @apply hidden lg:block;
+}
+
+/* Show on mobile, hide on desktop */
+.mobile-only {
+  @apply block lg:hidden;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Improve tap highlight on mobile */
+.tap-highlight-none {
+  -webkit-tap-highlight-color: transparent;
+}

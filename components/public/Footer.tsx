@@ -1,30 +1,89 @@
+'use client';
+
 import Link from 'next/link';
 import { NewsletterSignup } from './NewsletterSignup';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguage();
+
+  const content = {
+    vi: {
+      about: {
+        title: 'Giới Thiệu',
+        description: 'Trường Việt Ngữ - Thiếu Nhi Thánh Thể. Giảng dạy tiếng Việt và giáo lý Công Giáo cho thế hệ trẻ.',
+        aboutSchool: 'Về Trường',
+        teachers: 'Đội Ngũ Giáo Viên',
+        faq: 'Câu Hỏi Thường Gặp',
+      },
+      links: {
+        title: 'Liên Kết',
+        home: 'Trang Chủ',
+        announcements: 'Thông Báo',
+        classes: 'Các Lớp Học',
+        tntt: 'TNTT',
+        contact: 'Liên Hệ',
+      },
+      resources: {
+        title: 'Tài Nguyên',
+        materials: 'Tài Liệu Học Tập',
+        calendar: 'Lịch Học',
+        absence: 'Báo Nghỉ Học',
+      },
+      copyright: `© ${currentYear} Trường Việt Ngữ - Thiếu Nhi Thánh Thể. All rights reserved.`,
+      builtWith: 'Xây dựng với ❤️ cho Cộng Đồng Công Giáo Việt Nam',
+    },
+    en: {
+      about: {
+        title: 'About Us',
+        description: 'Vietnamese Language School - Eucharistic Youth Movement. Teaching Vietnamese and Catholic faith to the younger generation.',
+        aboutSchool: 'About School',
+        teachers: 'Our Teachers',
+        faq: 'FAQ',
+      },
+      links: {
+        title: 'Quick Links',
+        home: 'Home',
+        announcements: 'Announcements',
+        classes: 'Classes',
+        tntt: 'TNTT',
+        contact: 'Contact',
+      },
+      resources: {
+        title: 'Resources',
+        materials: 'Learning Materials',
+        calendar: 'Calendar',
+        absence: 'Absence Report',
+      },
+      copyright: `© ${currentYear} Vietnamese Language School - TNTT. All rights reserved.`,
+      builtWith: 'Built with ❤️ for the Vietnamese Catholic Community',
+    },
+  };
+
+  const t = content[language];
 
   return (
-    <footer className="border-t border-gray-200 bg-brand-navy px-6 py-12 text-white lg:py-16">
+    <footer className="border-t border-gray-200 bg-brand-navy px-6 py-12 text-white lg:py-16 pb-24 lg:pb-16">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* About */}
           <div>
             <h3 className="mb-4 font-serif text-lg font-bold text-brand-gold">
-              Giới Thiệu
+              {t.about.title}
             </h3>
             <p className="text-sm leading-relaxed text-gray-300">
-              Trường Việt Ngữ - Thiếu Nhi Thánh Thể. Giảng dạy tiếng Việt và giáo lý Công Giáo cho thế hệ trẻ.
+              {t.about.description}
             </p>
             <div className="mt-4 space-y-1 text-sm">
               <Link href="/about" className="block text-gray-300 hover:text-brand-gold">
-                Về Trường
+                {t.about.aboutSchool}
               </Link>
               <Link href="/teachers" className="block text-gray-300 hover:text-brand-gold">
-                Đội Ngũ Giáo Viên
+                {t.about.teachers}
               </Link>
               <Link href="/faq" className="block text-gray-300 hover:text-brand-gold">
-                Câu Hỏi Thường Gặp
+                {t.about.faq}
               </Link>
             </div>
           </div>
@@ -32,7 +91,7 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="mb-4 font-serif text-lg font-bold text-brand-gold">
-              Liên Kết
+              {t.links.title}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -40,7 +99,7 @@ export function Footer() {
                   href="/"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Trang Chủ
+                  {t.links.home}
                 </Link>
               </li>
               <li>
@@ -48,7 +107,7 @@ export function Footer() {
                   href="/#announcements"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Thông Báo
+                  {t.links.announcements}
                 </Link>
               </li>
               <li>
@@ -56,7 +115,7 @@ export function Footer() {
                   href="/#classes"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Các Lớp Học
+                  {t.links.classes}
                 </Link>
               </li>
               <li>
@@ -64,7 +123,7 @@ export function Footer() {
                   href="/tntt"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  TNTT
+                  {t.links.tntt}
                 </Link>
               </li>
               <li>
@@ -72,7 +131,7 @@ export function Footer() {
                   href="/#contact"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Liên Hệ
+                  {t.links.contact}
                 </Link>
               </li>
             </ul>
@@ -81,7 +140,7 @@ export function Footer() {
           {/* Resources */}
           <div>
             <h3 className="mb-4 font-serif text-lg font-bold text-brand-gold">
-              Tài Nguyên
+              {t.resources.title}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -89,7 +148,7 @@ export function Footer() {
                   href="/materials"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Tài Liệu Học Tập
+                  {t.resources.materials}
                 </Link>
               </li>
               <li>
@@ -97,7 +156,7 @@ export function Footer() {
                   href="/calendar"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Lịch Học
+                  {t.resources.calendar}
                 </Link>
               </li>
               <li>
@@ -105,7 +164,7 @@ export function Footer() {
                   href="/absence-report"
                   className="text-gray-300 hover:text-brand-gold"
                 >
-                  Báo Nghỉ Học
+                  {t.resources.absence}
                 </Link>
               </li>
               <li>
@@ -173,10 +232,10 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
           <p>
-            &copy; {currentYear} Trường Việt Ngữ - Thiếu Nhi Thánh Thể. All rights reserved.
+            {t.copyright}
           </p>
           <p className="mt-2">
-            Built with ❤️ for the Vietnamese Catholic Community
+            {t.builtWith}
           </p>
         </div>
       </div>
