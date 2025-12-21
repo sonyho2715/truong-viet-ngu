@@ -151,7 +151,7 @@ const navigation = [
   },
   {
     name: 'Lịch sự kiện',
-    href: '/admin/calendar',
+    href: '/admin/dashboard/calendar',
     icon: (
       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
@@ -165,7 +165,7 @@ const navigation = [
   },
   {
     name: 'Thư viện ảnh',
-    href: '/admin/gallery',
+    href: '/admin/dashboard/gallery',
     icon: (
       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
@@ -179,7 +179,7 @@ const navigation = [
   },
   {
     name: 'Slideshow',
-    href: '/admin/slideshow',
+    href: '/admin/dashboard/slideshow',
     icon: (
       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path

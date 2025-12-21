@@ -251,7 +251,7 @@ export default function AdminGalleryPage() {
                 {/* Actions */}
                 <div className="flex border-t border-gray-100">
                   <a
-                    href={`/admin/gallery/${album.id}`}
+                    href={`/admin/dashboard/gallery/${album.id}`}
                     className="flex flex-1 items-center justify-center gap-1 py-2 text-sm text-brand-navy hover:bg-gray-50"
                   >
                     <ImageIcon className="h-4 w-4" />
