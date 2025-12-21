@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans, Noto_Serif } from "next/font/google";
 import { Toaster } from "@/components/ui/Toaster";
 import { Providers } from "@/components/providers/Providers";
+import { BackToHome } from "@/components/public/BackToHome";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -53,6 +54,7 @@ export default function RootLayout({
             Bỏ qua đến nội dung chính
           </a>
           {children}
+          <BackToHome />
           <Toaster />
         </Providers>
       </body>
