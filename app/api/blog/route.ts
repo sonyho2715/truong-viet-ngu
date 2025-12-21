@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
+import { requireAuth } from '@/lib/auth';
 
 const blogPostSchema = z.object({
   title: z.string().min(1, 'Tiêu đề là bắt buộc'),
@@ -25,6 +26,9 @@ const blogPostSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    // Require admin authentication
+    await requireAuth();
+
     const body = await req.json();
     const validated = blogPostSchema.parse(body);
 

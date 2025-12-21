@@ -3,6 +3,7 @@ import { Navigation } from '@/components/public/Navigation';
 import { Footer } from '@/components/public/Footer';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { db } from '@/lib/db';
+import { sanitizeHtml } from '@/lib/sanitize';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Tag, ArrowLeft, User, Eye, Share2 } from 'lucide-react';
@@ -157,7 +158,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
                 <div
                   className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-brand-navy prose-a:text-brand-navy prose-a:no-underline hover:prose-a:underline"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
                 />
 
                 {/* Tags */}

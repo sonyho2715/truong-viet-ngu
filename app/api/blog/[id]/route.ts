@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { db } from '@/lib/db';
+import { requireAuth } from '@/lib/auth';
 
 const updateSchema = z.object({
   title: z.string().min(1, 'Tiêu đề là bắt buộc'),
@@ -54,6 +55,9 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
 
 export async function PUT(req: NextRequest, { params }: RouteParams) {
   try {
+    // Require admin authentication
+    await requireAuth();
+
     const { id } = await params;
     const body = await req.json();
     const validated = updateSchema.parse(body);
@@ -122,6 +126,9 @@ export async function PUT(req: NextRequest, { params }: RouteParams) {
 
 export async function DELETE(req: NextRequest, { params }: RouteParams) {
   try {
+    // Require admin authentication
+    await requireAuth();
+
     const { id } = await params;
 
     const existingPost = await db.blogPost.findUnique({
