@@ -32,14 +32,14 @@ export function AnnouncementsSection({ announcements }: AnnouncementsSectionProp
   }
 
   return (
-    <section id="announcements" className="bg-gray-50 px-6 py-16 lg:py-24">
+    <section id="announcements" className="bg-slate-50 px-6 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
             Thông Báo
           </h2>
-          <p className="mt-3 text-lg text-gray-600">
+          <p className="mt-3 text-lg text-slate-600">
             Cập nhật tin tức mới nhất từ trường
           </p>
         </div>
@@ -49,7 +49,7 @@ export function AnnouncementsSection({ announcements }: AnnouncementsSectionProp
           {activeAnnouncements.map((announcement) => (
             <article
               key={announcement.id}
-              className="group rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
+              className="group rounded-xl border-2 border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg"
             >
               {/* Category & Priority Badges */}
               <div className="mb-4 flex items-start justify-between gap-2">
@@ -81,17 +81,17 @@ export function AnnouncementsSection({ announcements }: AnnouncementsSectionProp
               </div>
 
               {/* Title */}
-              <h3 className="mb-3 font-serif text-xl font-bold text-gray-900 group-hover:text-brand-navy">
+              <h3 className="mb-3 font-serif text-xl font-bold text-slate-900 group-hover:text-red-700">
                 {announcement.title}
               </h3>
 
               {/* Description */}
-              <p className="mb-4 line-clamp-3 text-gray-600">
+              <p className="mb-4 line-clamp-3 text-slate-600">
                 {announcement.description}
               </p>
 
               {/* Date Range */}
-              <div className="mb-4 flex items-center gap-2 text-sm text-gray-500">
+              <div className="mb-4 flex items-center gap-2 text-sm text-slate-500">
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -114,7 +114,7 @@ export function AnnouncementsSection({ announcements }: AnnouncementsSectionProp
               </div>
 
               {/* Read More (Optional - can link to detail page) */}
-              <div className="flex items-center gap-2 text-sm font-medium text-brand-gold opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="flex items-center gap-2 text-sm font-medium text-red-700 opacity-0 transition-opacity group-hover:opacity-100">
                 Xem chi tiết
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path

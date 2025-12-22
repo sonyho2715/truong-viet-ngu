@@ -105,7 +105,7 @@ export function HeroCarousel() {
               priority={index === 0}
             />
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/90 via-brand-navy/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/40" />
           </div>
 
           {/* Content */}
@@ -118,15 +118,15 @@ export function HeroCarousel() {
                   </h1>
                 )}
                 {slide.subtitle && (
-                  <p className="mt-6 text-xl text-brand-cream md:text-2xl">
+                  <p className="mt-6 text-xl text-slate-200 md:text-2xl">
                     {slide.subtitle}
                   </p>
                 )}
                 {slide.linkUrl && slide.linkText && (
-                  <div className="mt-8">
+                  <div className="mt-8 flex flex-wrap gap-4">
                     <a
                       href={slide.linkUrl}
-                      className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-8 py-4 font-semibold text-brand-navy shadow-xl transition-all hover:bg-yellow-400 hover:shadow-2xl"
+                      className="inline-flex items-center gap-2 rounded-lg bg-red-700 px-8 py-4 font-semibold text-white shadow-xl transition-all hover:bg-red-800 hover:shadow-2xl"
                     >
                       {slide.linkText}
                       <svg
@@ -202,7 +202,7 @@ export function HeroCarousel() {
               onClick={() => goToSlide(index)}
               className={`h-3 w-3 rounded-full transition-all ${
                 index === currentSlide
-                  ? 'w-8 bg-brand-gold'
+                  ? 'w-8 bg-yellow-400'
                   : 'bg-white/50 hover:bg-white/80'
               }`}
               aria-label={`Go to slide ${index + 1}`}

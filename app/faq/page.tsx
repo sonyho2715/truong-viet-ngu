@@ -118,11 +118,11 @@ function FAQAccordion({ faq, isOpen, onToggle }: { faq: FAQItem; isOpen: boolean
     <div className="border-b border-gray-200 last:border-0">
       <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between py-4 text-left transition-colors hover:text-brand-gold"
+        className="flex w-full items-center justify-between py-4 text-left transition-colors hover:text-yellow-400"
       >
         <span className="pr-4 font-medium text-gray-900">{faq.question}</span>
         <ChevronDown
-          className={`h-5 w-5 flex-shrink-0 text-brand-gold transition-transform ${
+          className={`h-5 w-5 flex-shrink-0 text-yellow-400 transition-transform ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -154,15 +154,15 @@ export default function FAQPage() {
     : faqs;
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-16 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-16 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb items={[{ label: 'Câu Hỏi Thường Gặp' }]} />
           <div className="mx-auto max-w-3xl text-center">
-            <HelpCircle className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+            <HelpCircle className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
             <h1 className="font-serif text-4xl font-bold md:text-5xl">
               Câu Hỏi Thường Gặp
             </h1>
@@ -181,7 +181,7 @@ export default function FAQPage() {
               onClick={() => setSelectedCategory(null)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === null
-                  ? 'bg-brand-navy text-white'
+                  ? 'bg-slate-900 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -193,7 +193,7 @@ export default function FAQPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-brand-navy text-white'
+                    ? 'bg-slate-900 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -210,7 +210,7 @@ export default function FAQPage() {
           <div className="mx-auto max-w-3xl">
             {selectedCategory ? (
               <div className="rounded-xl bg-white p-6 shadow-sm md:p-8">
-                <h2 className="mb-6 font-serif text-2xl font-bold text-brand-navy">
+                <h2 className="mb-6 font-serif text-2xl font-bold text-slate-900">
                   {selectedCategory}
                 </h2>
                 {filteredFaqs.map((faq) => (
@@ -229,7 +229,7 @@ export default function FAQPage() {
                     key={category}
                     className="rounded-xl bg-white p-6 shadow-sm md:p-8"
                   >
-                    <h2 className="mb-6 font-serif text-2xl font-bold text-brand-navy">
+                    <h2 className="mb-6 font-serif text-2xl font-bold text-slate-900">
                       {category}
                     </h2>
                     {faqs
@@ -253,7 +253,7 @@ export default function FAQPage() {
       {/* Contact CTA */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-r from-brand-navy to-brand-navy/90 p-8 text-center text-white md:p-12">
+          <div className="mx-auto max-w-2xl rounded-2xl bg-gradient-to-r from-slate-900 to-slate-900/90 p-8 text-center text-white md:p-12">
             <h2 className="font-serif text-2xl font-bold md:text-3xl">
               Không tìm thấy câu trả lời?
             </h2>
@@ -263,14 +263,14 @@ export default function FAQPage() {
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
                 href="mailto:truongvietngu@gmail.com"
-                className="flex items-center gap-2 rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-colors hover:bg-brand-gold/90"
+                className="flex items-center gap-2 rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-slate-900 transition-colors hover:bg-yellow-400/90"
               >
                 <Mail className="h-5 w-5" />
                 Email
               </a>
               <a
                 href="tel:+18081234567"
-                className="flex items-center gap-2 rounded-lg border-2 border-white px-6 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-brand-navy"
+                className="flex items-center gap-2 rounded-lg border-2 border-white px-6 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-slate-900"
               >
                 <Phone className="h-5 w-5" />
                 Gọi điện

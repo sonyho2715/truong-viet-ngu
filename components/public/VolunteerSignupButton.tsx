@@ -80,7 +80,7 @@ export function VolunteerSignupButton({
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-4 py-2 font-semibold text-brand-navy transition-colors hover:bg-brand-gold/90"
+        className="inline-flex items-center gap-2 rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-slate-900 transition-colors hover:bg-yellow-400/90"
       >
         <HandHeart className="h-4 w-4" />
         Đăng ký
@@ -110,7 +110,7 @@ export function VolunteerSignupButton({
                 </p>
                 <button
                   onClick={closeModal}
-                  className="mt-6 rounded-lg bg-brand-navy px-6 py-2 font-semibold text-white hover:bg-brand-navy/90"
+                  className="mt-6 rounded-lg bg-slate-900 px-6 py-2 font-semibold text-white hover:bg-slate-900/90"
                 >
                   Đóng
                 </button>
@@ -121,7 +121,7 @@ export function VolunteerSignupButton({
                   <h2 className="font-serif text-2xl font-bold text-gray-900">
                     Đăng Ký Tình Nguyện
                   </h2>
-                  <p className="mt-1 text-brand-navy">{opportunityTitle}</p>
+                  <p className="mt-1 text-slate-900">{opportunityTitle}</p>
                 </div>
 
                 {error && (
@@ -141,7 +141,7 @@ export function VolunteerSignupButton({
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                        className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                         required
                       />
                     </div>
@@ -154,7 +154,7 @@ export function VolunteerSignupButton({
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                        className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                         required
                       />
                     </div>
@@ -169,7 +169,7 @@ export function VolunteerSignupButton({
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -183,7 +183,7 @@ export function VolunteerSignupButton({
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
 
@@ -197,7 +197,7 @@ export function VolunteerSignupButton({
                       onChange={handleChange}
                       rows={3}
                       placeholder="Kinh nghiệm, câu hỏi, hoặc thông tin bổ sung..."
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
 
@@ -212,7 +212,7 @@ export function VolunteerSignupButton({
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 rounded-lg bg-brand-gold px-4 py-2 font-semibold text-brand-navy hover:bg-brand-gold/90 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex-1 rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-slate-900 hover:bg-yellow-400/90 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {isSubmitting ? 'Đang gửi...' : 'Đăng ký'}
                     </button>

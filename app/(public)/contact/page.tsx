@@ -76,7 +76,7 @@ export default function ContactPage() {
             <div className="mt-8 flex justify-center gap-4">
               <Link
                 href="/"
-                className="rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white hover:bg-brand-navy/90"
+                className="rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-900/90"
               >
                 Về trang chủ
               </Link>
@@ -105,10 +105,10 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-brand-navy py-16 text-white">
+      <div className="bg-slate-900 py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 text-center">
           <h1 className="font-serif text-4xl font-bold">Liên Hệ</h1>
-          <p className="mt-4 text-lg text-brand-gold">
+          <p className="mt-4 text-lg text-yellow-400">
             Chúng tôi luôn sẵn sàng hỗ trợ bạn
           </p>
         </div>
@@ -125,8 +125,8 @@ export default function ContactPage() {
 
               <div className="mt-6 space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="rounded-lg bg-brand-navy/10 p-3">
-                    <MapPin className="h-5 w-5 text-brand-navy" />
+                  <div className="rounded-lg bg-slate-900/10 p-3">
+                    <MapPin className="h-5 w-5 text-slate-900" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Địa chỉ</p>
@@ -139,14 +139,14 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="rounded-lg bg-brand-navy/10 p-3">
-                    <Mail className="h-5 w-5 text-brand-navy" />
+                  <div className="rounded-lg bg-slate-900/10 p-3">
+                    <Mail className="h-5 w-5 text-slate-900" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Email</p>
                     <a
                       href="mailto:contact@truongvietngu.org"
-                      className="text-brand-navy hover:underline"
+                      className="text-slate-900 hover:underline"
                     >
                       contact@truongvietngu.org
                     </a>
@@ -154,20 +154,20 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="rounded-lg bg-brand-navy/10 p-3">
-                    <Phone className="h-5 w-5 text-brand-navy" />
+                  <div className="rounded-lg bg-slate-900/10 p-3">
+                    <Phone className="h-5 w-5 text-slate-900" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Điện thoại</p>
-                    <a href="tel:+18081234567" className="text-brand-navy hover:underline">
+                    <a href="tel:+18081234567" className="text-slate-900 hover:underline">
                       (808) 123-4567
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="rounded-lg bg-brand-navy/10 p-3">
-                    <Clock className="h-5 w-5 text-brand-navy" />
+                  <div className="rounded-lg bg-slate-900/10 p-3">
+                    <Clock className="h-5 w-5 text-slate-900" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Giờ học</p>
@@ -205,23 +205,23 @@ export default function ContactPage() {
             </div>
 
             {/* Quick Links */}
-            <div className="rounded-2xl bg-brand-navy/5 p-6">
+            <div className="rounded-2xl bg-slate-900/5 p-6">
               <h2 className="font-serif text-xl font-bold text-gray-900">
                 Liên kết nhanh
               </h2>
               <div className="mt-4 space-y-2">
                 <Link
                   href="/register"
-                  className="block text-brand-navy hover:underline"
+                  className="block text-slate-900 hover:underline"
                 >
                   → Đăng ký học sinh mới
                 </Link>
-                <Link href="/faq" className="block text-brand-navy hover:underline">
+                <Link href="/faq" className="block text-slate-900 hover:underline">
                   → Câu hỏi thường gặp
                 </Link>
                 <Link
                   href="/calendar"
-                  className="block text-brand-navy hover:underline"
+                  className="block text-slate-900 hover:underline"
                 >
                   → Lịch sự kiện
                 </Link>
@@ -256,7 +256,7 @@ export default function ContactPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -269,7 +269,7 @@ export default function ContactPage() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -285,7 +285,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                   <div>
@@ -296,7 +296,7 @@ export default function ContactPage() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     >
                       <option value="">Chọn chủ đề</option>
@@ -319,7 +319,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-gold px-8 py-3 font-semibold text-brand-navy hover:bg-brand-gold/90 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-700 px-8 py-3 font-semibold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     'Đang gửi...'

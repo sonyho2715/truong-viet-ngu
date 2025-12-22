@@ -88,10 +88,10 @@ export default function AlbumPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-brand-cream">
+      <div className="min-h-screen bg-slate-50">
         <Navigation />
         <div className="flex h-64 items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-brand-navy border-t-transparent"></div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-900 border-t-transparent"></div>
         </div>
         <Footer />
       </div>
@@ -100,7 +100,7 @@ export default function AlbumPage() {
 
   if (!album) {
     return (
-      <div className="min-h-screen bg-brand-cream">
+      <div className="min-h-screen bg-slate-50">
         <Navigation />
         <div className="container mx-auto px-4 py-16 text-center">
           <Images className="mx-auto h-16 w-16 text-gray-300" />
@@ -109,7 +109,7 @@ export default function AlbumPage() {
           </h1>
           <Link
             href="/gallery"
-            className="mt-6 inline-block rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white"
+            className="mt-6 inline-block rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white"
           >
             Quay lại thư viện
           </Link>
@@ -120,11 +120,11 @@ export default function AlbumPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-12 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-12 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb
             items={[
@@ -144,7 +144,7 @@ export default function AlbumPage() {
                 {album.title}
               </h1>
               {album.eventDate && (
-                <p className="mt-2 flex items-center gap-2 text-brand-cream/80">
+                <p className="mt-2 flex items-center gap-2 text-slate-200/80">
                   <Calendar className="h-4 w-4" />
                   {new Date(album.eventDate).toLocaleDateString('vi-VN', {
                     year: 'numeric',
@@ -154,7 +154,7 @@ export default function AlbumPage() {
                 </p>
               )}
               {album.description && (
-                <p className="mt-2 text-brand-cream/80">{album.description}</p>
+                <p className="mt-2 text-slate-200/80">{album.description}</p>
               )}
             </div>
           </div>

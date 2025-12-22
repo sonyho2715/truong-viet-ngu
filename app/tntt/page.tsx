@@ -105,7 +105,7 @@ export default function TNTTPage() {
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative h-[400px] overflow-hidden bg-gradient-to-br from-brand-navy to-brand-navy/80">
+        <section className="relative h-[400px] overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900/80">
           <div className="absolute inset-0">
             <Image
               src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&q=80"
@@ -122,13 +122,13 @@ export default function TNTTPage() {
                 <h1 className="font-serif text-5xl font-bold text-white lg:text-6xl">
                   Thiếu Nhi Thánh Thể
                 </h1>
-                <p className="mt-4 text-xl text-brand-cream lg:text-2xl">
+                <p className="mt-4 text-xl text-slate-200 lg:text-2xl">
                   Nuôi dưỡng đức tin và giá trị Công Giáo cho thế hệ trẻ
                 </p>
                 <div className="mt-8">
                   <a
                     href="#enrollment"
-                    className="inline-flex items-center gap-2 rounded-lg bg-brand-gold px-8 py-4 font-semibold text-brand-navy shadow-xl transition-all hover:bg-brand-gold-light hover:shadow-2xl"
+                    className="inline-flex items-center gap-2 rounded-lg bg-yellow-400 px-8 py-4 font-semibold text-slate-900 shadow-xl transition-all hover:bg-yellow-400-light hover:shadow-2xl"
                   >
                     Đăng Ký Ngay
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,10 +146,10 @@ export default function TNTTPage() {
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
               <div>
-                <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+                <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
                   TNTT Là Gì?
                 </h2>
-                <div className="mt-4 h-1 w-24 bg-brand-gold"></div>
+                <div className="mt-4 h-1 w-24 bg-yellow-400"></div>
                 <div className="mt-6 space-y-4 text-lg leading-relaxed text-gray-700">
                   <p>
                     Thiếu Nhi Thánh Thể (TNTT) là một phong trào giáo dục Công Giáo dành cho trẻ em và thanh thiếu niên từ 6 đến 17 tuổi.
@@ -181,7 +181,7 @@ export default function TNTTPage() {
         <section className="bg-gray-50 px-6 py-16 lg:py-24">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
-              <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+              <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
                 Các Cấp Bậc TNTT
               </h2>
               <p className="mt-3 text-lg text-gray-600">
@@ -193,17 +193,17 @@ export default function TNTTPage() {
               {levels.map((level, index) => (
                 <article
                   key={index}
-                  className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
+                  className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg"
                 >
                   {/* Level Image */}
-                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-brand-navy/10 to-brand-navy/5">
+                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-slate-900/10 to-slate-900/5">
                     <Image
                       src={level.image}
                       alt={level.name}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
 
                     {/* Age Range Badge */}
                     <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
@@ -215,7 +215,7 @@ export default function TNTTPage() {
 
                   {/* Level Info */}
                   <div className="p-6">
-                    <h3 className="mb-3 text-center font-serif text-2xl font-bold text-brand-navy">
+                    <h3 className="mb-3 text-center font-serif text-2xl font-bold text-slate-900">
                       {level.name}
                     </h3>
                     <p className="text-center text-sm text-gray-600">
@@ -232,7 +232,7 @@ export default function TNTTPage() {
         <section className="bg-white px-6 py-16 lg:py-24">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
-              <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+              <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
                 Hoạt Động Của TNTT
               </h2>
               <p className="mt-3 text-lg text-gray-600">
@@ -244,12 +244,12 @@ export default function TNTTPage() {
               {activities.map((activity, index) => (
                 <article
                   key={index}
-                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
+                  className="group rounded-xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg"
                 >
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-navy text-brand-gold">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-900 text-yellow-400">
                     {activity.icon}
                   </div>
-                  <h3 className="mb-3 font-serif text-xl font-bold text-brand-navy">
+                  <h3 className="mb-3 font-serif text-xl font-bold text-slate-900">
                     {activity.title}
                   </h3>
                   <p className="text-gray-600">
@@ -262,19 +262,19 @@ export default function TNTTPage() {
         </section>
 
         {/* Schedule Section */}
-        <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 px-6 py-16 lg:py-24">
+        <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 px-6 py-16 lg:py-24">
           <div className="mx-auto max-w-4xl">
             <div className="text-center">
-              <h2 className="font-serif text-3xl font-bold text-brand-gold lg:text-4xl">
+              <h2 className="font-serif text-3xl font-bold text-yellow-400 lg:text-4xl">
                 Lịch Sinh Hoạt
               </h2>
-              <div className="mt-8 rounded-xl border-2 border-brand-gold/30 bg-white/5 p-8 backdrop-blur-sm">
-                <div className="space-y-6 text-brand-cream">
-                  <div className="flex items-center justify-between border-b border-brand-gold/30 pb-4">
+              <div className="mt-8 rounded-xl border-2 border-yellow-400/30 bg-white/5 p-8 backdrop-blur-sm">
+                <div className="space-y-6 text-slate-200">
+                  <div className="flex items-center justify-between border-b border-yellow-400/30 pb-4">
                     <span className="text-lg font-semibold">Ngày:</span>
                     <span className="text-lg">Chủ Nhật hàng tuần</span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-brand-gold/30 pb-4">
+                  <div className="flex items-center justify-between border-b border-yellow-400/30 pb-4">
                     <span className="text-lg font-semibold">Giờ:</span>
                     <span className="text-lg">9:00 AM - 12:00 PM</span>
                   </div>
@@ -289,45 +289,45 @@ export default function TNTTPage() {
         </section>
 
         {/* Enrollment CTA Section */}
-        <section id="enrollment" className="bg-brand-cream px-6 py-16 lg:py-24">
+        <section id="enrollment" className="bg-slate-200 px-6 py-16 lg:py-24">
           <div className="mx-auto max-w-4xl">
             <div className="text-center">
-              <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+              <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
                 Đăng Ký Tham Gia TNTT
               </h2>
               <p className="mt-4 text-lg text-gray-700">
                 Hãy để con em bạn được nuôi dưỡng đức tin và phát triển trong môi trường Công Giáo yêu thương
               </p>
 
-              <div className="mt-8 rounded-xl border-2 border-brand-gold bg-white p-8 shadow-lg">
-                <h3 className="mb-6 font-serif text-2xl font-bold text-brand-navy">
+              <div className="mt-8 rounded-xl border-2 border-yellow-400 bg-white p-8 shadow-lg">
+                <h3 className="mb-6 font-serif text-2xl font-bold text-slate-900">
                   Thông Tin Liên Hệ
                 </h3>
 
                 <div className="space-y-4 text-left">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy">
-                      <svg className="h-5 w-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900">
+                      <svg className="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div>
                       <h4 className="mb-1 font-semibold text-gray-900">Email</h4>
-                      <a href="mailto:tntt@truongvietngu.com" className="text-gray-600 hover:text-brand-gold">
+                      <a href="mailto:tntt@truongvietngu.com" className="text-gray-600 hover:text-yellow-400">
                         tntt@truongvietngu.com
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy">
-                      <svg className="h-5 w-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900">
+                      <svg className="h-5 w-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                       </svg>
                     </div>
                     <div>
                       <h4 className="mb-1 font-semibold text-gray-900">Điện thoại</h4>
-                      <a href="tel:808-123-4567" className="text-gray-600 hover:text-brand-gold">
+                      <a href="tel:808-123-4567" className="text-gray-600 hover:text-yellow-400">
                         (808) 123-4567
                       </a>
                     </div>
@@ -337,7 +337,7 @@ export default function TNTTPage() {
                 <div className="mt-8 border-t border-gray-200 pt-6">
                   <Link
                     href="/"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-brand-navy hover:text-brand-gold"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-yellow-400"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

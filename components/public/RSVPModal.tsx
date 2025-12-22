@@ -101,7 +101,7 @@ export function RSVPModal({
             </p>
             <button
               onClick={onClose}
-              className="mt-6 rounded-lg bg-brand-navy px-6 py-2 font-semibold text-white hover:bg-brand-navy/90"
+              className="mt-6 rounded-lg bg-slate-900 px-6 py-2 font-semibold text-white hover:bg-slate-900/90"
             >
               Đóng
             </button>
@@ -112,7 +112,7 @@ export function RSVPModal({
               <h2 className="font-serif text-2xl font-bold text-gray-900">
                 Đăng ký tham dự
               </h2>
-              <p className="mt-1 text-lg font-medium text-brand-navy">{eventTitle}</p>
+              <p className="mt-1 text-lg font-medium text-slate-900">{eventTitle}</p>
               <p className="text-sm text-gray-500">{eventDate}</p>
               {spotsLeft !== null && (
                 <div className="mt-2 flex items-center gap-2 text-sm">
@@ -140,7 +140,7 @@ export function RSVPModal({
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   required
                 />
               </div>
@@ -154,7 +154,7 @@ export function RSVPModal({
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   required
                 />
               </div>
@@ -168,7 +168,7 @@ export function RSVPModal({
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                 />
               </div>
 
@@ -180,7 +180,7 @@ export function RSVPModal({
                   name="numberOfGuests"
                   value={formData.numberOfGuests}
                   onChange={handleChange}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   required
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
@@ -201,7 +201,7 @@ export function RSVPModal({
                   value={formData.dietaryNeeds}
                   onChange={handleChange}
                   placeholder="Dị ứng, ăn chay, etc."
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                 />
               </div>
 
@@ -214,7 +214,7 @@ export function RSVPModal({
                   value={formData.notes}
                   onChange={handleChange}
                   rows={2}
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                 />
               </div>
 
@@ -229,7 +229,7 @@ export function RSVPModal({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 rounded-lg bg-brand-gold px-4 py-2 font-semibold text-brand-navy hover:bg-brand-gold/90 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex-1 rounded-lg bg-yellow-400 px-4 py-2 font-semibold text-slate-900 hover:bg-yellow-400/90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? 'Đang gửi...' : 'Đăng ký'}
                 </button>

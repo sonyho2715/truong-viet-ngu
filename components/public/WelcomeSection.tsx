@@ -12,32 +12,32 @@ export function WelcomeSection({
   address = '123 Church Street, Honolulu, HI 96817',
 }: WelcomeSectionProps) {
   return (
-    <section id="about" className="bg-brand-cream px-6 py-16 lg:py-24">
+    <section id="about" className="bg-slate-50 px-6 py-16 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Welcome Message */}
           <div id="contact" className="flex flex-col justify-center">
-            <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+            <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
               Chào Mừng
             </h2>
-            <div className="mt-4 h-1 w-24 bg-brand-gold"></div>
-            <p className="mt-6 text-lg leading-relaxed text-gray-700">
+            <div className="mt-4 h-1 w-24 bg-red-700"></div>
+            <p className="mt-6 text-lg leading-relaxed text-slate-700">
               {welcomeMessage}
             </p>
           </div>
 
           {/* Contact Info Card */}
-          <div className="rounded-xl border-2 border-brand-gold bg-white p-8 shadow-lg">
-            <h3 className="mb-6 font-serif text-2xl font-bold text-brand-navy">
+          <div className="rounded-xl border-2 border-yellow-400 bg-white p-8 shadow-lg">
+            <h3 className="mb-6 font-serif text-2xl font-bold text-slate-900">
               Liên Hệ
             </h3>
 
             <div className="space-y-6">
               {/* Email */}
               <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900">
                   <svg
-                    className="h-5 w-5 text-brand-gold"
+                    className="h-5 w-5 text-yellow-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -51,10 +51,10 @@ export function WelcomeSection({
                   </svg>
                 </div>
                 <div>
-                  <h4 className="mb-1 font-semibold text-gray-900">Email</h4>
+                  <h4 className="mb-1 font-semibold text-slate-900">Email</h4>
                   <a
                     href={`mailto:${contactEmail}`}
-                    className="text-gray-600 hover:text-brand-gold"
+                    className="text-slate-600 hover:text-red-700"
                   >
                     {contactEmail}
                   </a>
@@ -63,9 +63,9 @@ export function WelcomeSection({
 
               {/* Phone */}
               <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900">
                   <svg
-                    className="h-5 w-5 text-brand-gold"
+                    className="h-5 w-5 text-yellow-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -79,10 +79,10 @@ export function WelcomeSection({
                   </svg>
                 </div>
                 <div>
-                  <h4 className="mb-1 font-semibold text-gray-900">Điện thoại</h4>
+                  <h4 className="mb-1 font-semibold text-slate-900">Điện thoại</h4>
                   <a
                     href={`tel:${contactPhone}`}
-                    className="text-gray-600 hover:text-brand-gold"
+                    className="text-slate-600 hover:text-red-700"
                   >
                     {contactPhone}
                   </a>
@@ -91,9 +91,9 @@ export function WelcomeSection({
 
               {/* Address */}
               <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand-navy">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-slate-900">
                   <svg
-                    className="h-5 w-5 text-brand-gold"
+                    className="h-5 w-5 text-yellow-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -113,8 +113,8 @@ export function WelcomeSection({
                   </svg>
                 </div>
                 <div>
-                  <h4 className="mb-1 font-semibold text-gray-900">Địa chỉ</h4>
-                  <address className="not-italic text-gray-600">
+                  <h4 className="mb-1 font-semibold text-slate-900">Địa chỉ</h4>
+                  <address className="not-italic text-slate-600">
                     {address}
                   </address>
                 </div>
@@ -122,10 +122,10 @@ export function WelcomeSection({
             </div>
 
             {/* Visit Us Button */}
-            <div className="mt-8 border-t border-gray-200 pt-6">
+            <div className="mt-8 border-t border-slate-200 pt-6">
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-sm font-medium text-brand-navy hover:text-brand-gold"
+                className="inline-flex items-center gap-2 text-sm font-medium text-red-700 hover:text-red-800"
               >
                 <svg
                   className="h-5 w-5"

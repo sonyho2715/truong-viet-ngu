@@ -48,12 +48,12 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
     return (
       <div
         className={`rounded-xl p-6 text-center ${
-          isDark ? 'bg-white/10' : 'bg-brand-gold/10'
+          isDark ? 'bg-white/10' : 'bg-yellow-400/10'
         }`}
       >
         <CheckCircle
           className={`mx-auto h-12 w-12 ${
-            isDark ? 'text-brand-gold' : 'text-green-500'
+            isDark ? 'text-yellow-400' : 'text-green-500'
           }`}
         />
         <p
@@ -65,7 +65,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
         </p>
         <p
           className={`mt-1 text-sm ${
-            isDark ? 'text-brand-cream/80' : 'text-gray-600'
+            isDark ? 'text-slate-200/80' : 'text-gray-600'
           }`}
         >
           Bạn sẽ nhận được tin tức mới nhất từ trường.
@@ -77,16 +77,16 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <Mail className={`h-5 w-5 ${isDark ? 'text-brand-gold' : 'text-brand-navy'}`} />
+        <Mail className={`h-5 w-5 ${isDark ? 'text-yellow-400' : 'text-slate-900'}`} />
         <h3
-          className={`font-semibold ${isDark ? 'text-white' : 'text-brand-navy'}`}
+          className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}
         >
           Nhận Tin Tức
         </h3>
       </div>
       <p
         className={`mt-2 text-sm ${
-          isDark ? 'text-brand-cream/80' : 'text-gray-600'
+          isDark ? 'text-slate-200/80' : 'text-gray-600'
         }`}
       >
         Đăng ký để nhận thông báo về sự kiện và tin tức mới nhất.
@@ -106,8 +106,8 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
           placeholder="Họ và tên"
           className={`w-full rounded-lg border px-4 py-2 text-sm focus:outline-none focus:ring-2 ${
             isDark
-              ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-brand-gold'
-              : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:ring-brand-navy/20'
+              ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-yellow-400'
+              : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:ring-slate-900/20'
           }`}
         />
 
@@ -120,8 +120,8 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
             placeholder="Email của bạn"
             className={`flex-1 rounded-lg border px-4 py-2 text-sm focus:outline-none focus:ring-2 ${
               isDark
-                ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-brand-gold'
-                : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:ring-brand-navy/20'
+                ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-yellow-400'
+                : 'border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:ring-slate-900/20'
             }`}
           />
           <button
@@ -129,8 +129,8 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
             disabled={loading}
             className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${
               isDark
-                ? 'bg-brand-gold text-brand-navy hover:bg-brand-gold/90'
-                : 'bg-brand-navy text-white hover:bg-brand-navy/90'
+                ? 'bg-yellow-400 text-slate-900 hover:bg-yellow-400/90'
+                : 'bg-slate-900 text-white hover:bg-slate-900/90'
             }`}
           >
             {loading ? (

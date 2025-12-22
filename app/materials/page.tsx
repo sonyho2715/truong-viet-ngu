@@ -77,15 +77,15 @@ export default async function MaterialsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-16 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-16 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb items={[{ label: 'Tài Liệu Học Tập' }]} />
           <div className="mx-auto max-w-3xl text-center">
-            <BookOpen className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+            <BookOpen className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
             <h1 className="font-serif text-4xl font-bold md:text-5xl">
               Tài Liệu Học Tập
             </h1>
@@ -100,7 +100,7 @@ export default async function MaterialsPage() {
       <section className="border-b border-gray-200 bg-white py-12">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
-            <h2 className="mb-6 text-center font-serif text-2xl font-bold text-brand-navy">
+            <h2 className="mb-6 text-center font-serif text-2xl font-bold text-slate-900">
               Tài Nguyên Học Tập Trực Tuyến
             </h2>
             <div className="grid gap-4 md:grid-cols-2">
@@ -108,13 +108,13 @@ export default async function MaterialsPage() {
                 href="https://www.tomathien.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border-2 border-brand-gold/20 bg-gradient-to-r from-brand-gold/5 to-transparent p-6 transition-all hover:border-brand-gold hover:shadow-lg"
+                className="flex items-center gap-4 rounded-xl border-2 border-yellow-400/20 bg-gradient-to-r from-yellow-400/5 to-transparent p-6 transition-all hover:border-yellow-400 hover:shadow-lg"
               >
-                <div className="rounded-full bg-brand-gold/20 p-3">
-                  <ExternalLink className="h-6 w-6 text-brand-gold" />
+                <div className="rounded-full bg-yellow-400/20 p-3">
+                  <ExternalLink className="h-6 w-6 text-yellow-400" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg font-bold text-brand-navy">
+                  <h3 className="font-serif text-lg font-bold text-slate-900">
                     Toma Thiên
                   </h3>
                   <p className="text-sm text-gray-600">
@@ -126,13 +126,13 @@ export default async function MaterialsPage() {
                 href="https://www.vietcatholic.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border-2 border-brand-gold/20 bg-gradient-to-r from-brand-gold/5 to-transparent p-6 transition-all hover:border-brand-gold hover:shadow-lg"
+                className="flex items-center gap-4 rounded-xl border-2 border-yellow-400/20 bg-gradient-to-r from-yellow-400/5 to-transparent p-6 transition-all hover:border-yellow-400 hover:shadow-lg"
               >
-                <div className="rounded-full bg-brand-gold/20 p-3">
-                  <ExternalLink className="h-6 w-6 text-brand-gold" />
+                <div className="rounded-full bg-yellow-400/20 p-3">
+                  <ExternalLink className="h-6 w-6 text-yellow-400" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg font-bold text-brand-navy">
+                  <h3 className="font-serif text-lg font-bold text-slate-900">
                     VietCatholic
                   </h3>
                   <p className="text-sm text-gray-600">
@@ -149,7 +149,7 @@ export default async function MaterialsPage() {
       {vietnameseGrades.length > 0 && (
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-brand-navy">
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-slate-900">
               Lớp Việt Ngữ
             </h2>
             <div className="mx-auto max-w-5xl space-y-8">
@@ -158,7 +158,7 @@ export default async function MaterialsPage() {
                   key={grade}
                   className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
                 >
-                  <div className="border-b border-gray-200 bg-brand-navy px-6 py-4">
+                  <div className="border-b border-gray-200 bg-slate-900 px-6 py-4">
                     <h3 className="font-serif text-xl font-bold text-white">
                       {gradeLevelLabels[grade]}
                     </h3>
@@ -170,8 +170,8 @@ export default async function MaterialsPage() {
                         className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-gray-50"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="rounded-lg bg-brand-gold/10 p-2">
-                            <FileText className="h-5 w-5 text-brand-gold" />
+                          <div className="rounded-lg bg-yellow-400/10 p-2">
+                            <FileText className="h-5 w-5 text-yellow-400" />
                           </div>
                           <div>
                             <h4 className="font-medium text-gray-900">
@@ -195,7 +195,7 @@ export default async function MaterialsPage() {
                               href={material.externalLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-1 rounded-lg bg-brand-navy px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-navy/90"
+                              className="flex items-center gap-1 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-900/90"
                             >
                               <ExternalLink className="h-4 w-4" />
                               Xem
@@ -205,7 +205,7 @@ export default async function MaterialsPage() {
                             <a
                               href={material.fileUrl}
                               download
-                              className="flex items-center gap-1 rounded-lg border border-brand-gold bg-brand-gold/10 px-4 py-2 text-sm font-medium text-brand-navy transition-colors hover:bg-brand-gold/20"
+                              className="flex items-center gap-1 rounded-lg border border-yellow-400 bg-yellow-400/10 px-4 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-yellow-400/20"
                             >
                               <Download className="h-4 w-4" />
                               Tải về
@@ -226,7 +226,7 @@ export default async function MaterialsPage() {
       {tnttGrades.length > 0 && (
         <section className="bg-white py-16">
           <div className="container mx-auto px-4">
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-brand-navy">
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-slate-900">
               Tài Liệu TNTT
             </h2>
             <div className="mx-auto max-w-5xl space-y-8">
@@ -235,8 +235,8 @@ export default async function MaterialsPage() {
                   key={grade}
                   className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
                 >
-                  <div className="border-b border-gray-200 bg-gradient-to-r from-brand-gold to-brand-gold/80 px-6 py-4">
-                    <h3 className="font-serif text-xl font-bold text-brand-navy">
+                  <div className="border-b border-gray-200 bg-gradient-to-r from-yellow-400 to-yellow-400/80 px-6 py-4">
+                    <h3 className="font-serif text-xl font-bold text-slate-900">
                       {gradeLevelLabels[grade]}
                     </h3>
                   </div>
@@ -247,8 +247,8 @@ export default async function MaterialsPage() {
                         className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-gray-50"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="rounded-lg bg-brand-navy/10 p-2">
-                            <FileText className="h-5 w-5 text-brand-navy" />
+                          <div className="rounded-lg bg-slate-900/10 p-2">
+                            <FileText className="h-5 w-5 text-slate-900" />
                           </div>
                           <div>
                             <h4 className="font-medium text-gray-900">
@@ -272,7 +272,7 @@ export default async function MaterialsPage() {
                               href={material.externalLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-1 rounded-lg bg-brand-navy px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-navy/90"
+                              className="flex items-center gap-1 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-900/90"
                             >
                               <ExternalLink className="h-4 w-4" />
                               Xem
@@ -282,7 +282,7 @@ export default async function MaterialsPage() {
                             <a
                               href={material.fileUrl}
                               download
-                              className="flex items-center gap-1 rounded-lg border border-brand-gold bg-brand-gold/10 px-4 py-2 text-sm font-medium text-brand-navy transition-colors hover:bg-brand-gold/20"
+                              className="flex items-center gap-1 rounded-lg border border-yellow-400 bg-yellow-400/10 px-4 py-2 text-sm font-medium text-slate-900 transition-colors hover:bg-yellow-400/20"
                             >
                               <Download className="h-4 w-4" />
                               Tải về
@@ -312,7 +312,7 @@ export default async function MaterialsPage() {
             </p>
             <Link
               href="/"
-              className="mt-6 inline-block rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-colors hover:bg-brand-gold/90"
+              className="mt-6 inline-block rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-slate-900 transition-colors hover:bg-yellow-400/90"
             >
               Về trang chủ
             </Link>

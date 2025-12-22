@@ -64,15 +64,15 @@ export default async function CalendarPage() {
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 px-6 py-16 lg:py-20">
+        <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 px-6 py-16 lg:py-20">
           <div className="mx-auto max-w-7xl">
             <Breadcrumb items={[{ label: 'Lịch Học' }]} />
             <div className="text-center">
-              <Calendar className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+              <Calendar className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
               <h1 className="font-serif text-4xl font-bold text-white lg:text-5xl">
                 Lịch Học
               </h1>
-              <p className="mt-4 text-lg text-brand-cream lg:text-xl">
+              <p className="mt-4 text-lg text-slate-200 lg:text-xl">
                 Lịch học và các hoạt động của Trường Việt Ngữ và TNTT
               </p>
             </div>
@@ -140,7 +140,7 @@ export default async function CalendarPage() {
         {/* Calendar Events Section */}
         <section className="px-6 py-12">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-8 font-serif text-3xl font-bold text-brand-navy">
+            <h2 className="mb-8 font-serif text-3xl font-bold text-slate-900">
               Lịch Chi Tiết
             </h2>
 
@@ -148,7 +148,7 @@ export default async function CalendarPage() {
               <div className="space-y-10">
                 {Object.entries(eventsByMonth).map(([month, monthEvents]) => (
                   <div key={month}>
-                    <h3 className="mb-4 border-b-2 border-brand-gold pb-2 font-serif text-xl font-bold capitalize text-brand-navy">
+                    <h3 className="mb-4 border-b-2 border-yellow-400 pb-2 font-serif text-xl font-bold capitalize text-slate-900">
                       {month}
                     </h3>
                     <div className="space-y-4">
@@ -188,13 +188,13 @@ export default async function CalendarPage() {
             )}
 
             {/* Note */}
-            <div className="mt-12 rounded-xl border-2 border-brand-gold bg-brand-cream p-6">
+            <div className="mt-12 rounded-xl border-2 border-yellow-400 bg-slate-200 p-6">
               <div className="flex items-start gap-4">
-                <svg className="h-6 w-6 flex-shrink-0 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-6 w-6 flex-shrink-0 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                  <h4 className="mb-2 font-semibold text-brand-navy">Lưu Ý</h4>
+                  <h4 className="mb-2 font-semibold text-slate-900">Lưu Ý</h4>
                   <ul className="space-y-1 text-sm text-gray-700">
                     <li>• Lịch có thể thay đổi. Vui lòng kiểm tra thường xuyên.</li>
                     <li>• Liên hệ ban quản lý nếu có thắc mắc về lịch học.</li>
@@ -208,7 +208,7 @@ export default async function CalendarPage() {
             <div className="mt-12 text-center">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white transition-all hover:bg-brand-navy/90"
+                className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white transition-all hover:bg-slate-900/90"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

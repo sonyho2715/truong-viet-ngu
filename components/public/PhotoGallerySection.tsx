@@ -62,14 +62,14 @@ export function PhotoGallerySection() {
 
   return (
     <>
-      <section className="bg-gray-50 px-6 py-16 lg:py-24">
+      <section className="bg-slate-50 px-6 py-16 lg:py-24">
         <div className="mx-auto max-w-7xl">
           {/* Section Header */}
           <div className="mb-12 text-center">
-            <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+            <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
               Khoảnh Khắc Đáng Nhớ
             </h2>
-            <p className="mt-3 text-lg text-gray-600">
+            <p className="mt-3 text-lg text-slate-600">
               Những khoảnh khắc vui vẻ của học sinh và cộng đồng
             </p>
           </div>
@@ -80,7 +80,7 @@ export function PhotoGallerySection() {
               <button
                 key={index}
                 onClick={() => setSelectedPhoto(photo)}
-                className="group relative aspect-square overflow-hidden rounded-lg bg-gray-200 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2"
+                className="group relative aspect-square overflow-hidden rounded-lg bg-slate-200 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
               >
                 <Image
                   src={photo.src}
@@ -102,7 +102,7 @@ export function PhotoGallerySection() {
           <div className="mt-12 text-center">
             <a
               href="#"
-              className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-navy px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-navy hover:text-white"
+              className="inline-flex items-center gap-2 rounded-lg bg-red-700 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-red-800 hover:shadow-xl"
             >
               Xem Thêm Hình Ảnh
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -26,15 +26,15 @@ export default async function TeachersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-16 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-16 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb items={[{ label: 'Giáo Viên' }]} />
           <div className="mx-auto max-w-3xl text-center">
-            <Users className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+            <Users className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
             <h1 className="font-serif text-4xl font-bold md:text-5xl">
               Đội Ngũ Giáo Viên
             </h1>
@@ -50,19 +50,19 @@ export default async function TeachersPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-brand-gold">
+              <div className="text-3xl font-bold text-yellow-400">
                 {teachers.length}+
               </div>
               <div className="text-sm text-gray-600">Giáo viên</div>
             </div>
             <div className="h-12 w-px bg-gray-200" />
             <div>
-              <div className="text-3xl font-bold text-brand-gold">15+</div>
+              <div className="text-3xl font-bold text-yellow-400">15+</div>
               <div className="text-sm text-gray-600">Năm kinh nghiệm</div>
             </div>
             <div className="h-12 w-px bg-gray-200" />
             <div>
-              <div className="text-3xl font-bold text-brand-gold">100%</div>
+              <div className="text-3xl font-bold text-yellow-400">100%</div>
               <div className="text-sm text-gray-600">Tận tâm</div>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default async function TeachersPage() {
                     className="group overflow-hidden rounded-xl bg-white shadow-sm transition-all hover:shadow-lg"
                   >
                     {/* Photo */}
-                    <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-brand-navy to-brand-navy/80">
+                    <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-slate-900 to-slate-900/80">
                       {teacher.photoUrl ? (
                         <Image
                           src={teacher.photoUrl}
@@ -92,8 +92,8 @@ export default async function TeachersPage() {
                       ) : (
                         <div className="flex h-full items-center justify-center">
                           <div className="text-center">
-                            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-brand-gold/20">
-                              <span className="font-serif text-3xl font-bold text-brand-gold">
+                            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-yellow-400/20">
+                              <span className="font-serif text-3xl font-bold text-yellow-400">
                                 {teacher.firstName[0]}
                                 {teacher.lastName[0]}
                               </span>
@@ -105,7 +105,7 @@ export default async function TeachersPage() {
 
                     {/* Info */}
                     <div className="p-6">
-                      <h3 className="font-serif text-xl font-bold text-brand-navy">
+                      <h3 className="font-serif text-xl font-bold text-slate-900">
                         {teacher.firstName} {teacher.lastName}
                       </h3>
 
@@ -120,7 +120,7 @@ export default async function TeachersPage() {
                             {teacher.classes.map((cls) => (
                               <span
                                 key={cls.id}
-                                className="rounded-full bg-brand-gold/10 px-3 py-1 text-xs font-medium text-brand-navy"
+                                className="rounded-full bg-yellow-400/10 px-3 py-1 text-xs font-medium text-slate-900"
                               >
                                 {cls.name}
                               </span>
@@ -141,7 +141,7 @@ export default async function TeachersPage() {
                         {teacher.email && (
                           <a
                             href={`mailto:${teacher.email}`}
-                            className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-brand-gold"
+                            className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-yellow-400"
                           >
                             <Mail className="h-4 w-4" />
                             <span className="truncate">{teacher.email}</span>
@@ -150,7 +150,7 @@ export default async function TeachersPage() {
                         {teacher.phone && (
                           <a
                             href={`tel:${teacher.phone}`}
-                            className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-brand-gold"
+                            className="flex items-center gap-2 text-sm text-gray-600 transition-colors hover:text-yellow-400"
                           >
                             <Phone className="h-4 w-4" />
                             <span>{teacher.phone}</span>
@@ -179,8 +179,8 @@ export default async function TeachersPage() {
       {/* Join Us CTA */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-r from-brand-gold/10 to-brand-gold/5 p-8 text-center md:p-12">
-            <h2 className="font-serif text-2xl font-bold text-brand-navy md:text-3xl">
+          <div className="mx-auto max-w-3xl rounded-2xl bg-gradient-to-r from-yellow-400/10 to-yellow-400/5 p-8 text-center md:p-12">
+            <h2 className="font-serif text-2xl font-bold text-slate-900 md:text-3xl">
               Bạn Muốn Trở Thành Giáo Viên?
             </h2>
             <p className="mt-4 text-gray-600">
@@ -189,7 +189,7 @@ export default async function TeachersPage() {
             </p>
             <a
               href="/contact"
-              className="mt-6 inline-block rounded-lg bg-brand-navy px-8 py-3 font-semibold text-white transition-colors hover:bg-brand-navy/90"
+              className="mt-6 inline-block rounded-lg bg-slate-900 px-8 py-3 font-semibold text-white transition-colors hover:bg-slate-900/90"
             >
               Liên Hệ Với Chúng Tôi
             </a>

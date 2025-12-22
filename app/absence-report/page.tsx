@@ -58,7 +58,7 @@ export default function AbsenceReportPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-brand-cream">
+      <div className="min-h-screen bg-slate-50">
         <Navigation />
 
         <main className="px-6 py-16">
@@ -74,7 +74,7 @@ export default function AbsenceReportPage() {
               </p>
               <button
                 onClick={() => setSuccess(false)}
-                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white hover:bg-brand-navy/90"
+                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-900/90"
               >
                 Gửi báo cáo khác
               </button>
@@ -88,15 +88,15 @@ export default function AbsenceReportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-16 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-16 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb items={[{ label: 'Báo Nghỉ Học' }]} />
           <div className="mx-auto max-w-3xl text-center">
-            <FileText className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+            <FileText className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
             <h1 className="font-serif text-4xl font-bold md:text-5xl">
               Báo Nghỉ Học
             </h1>
@@ -134,7 +134,7 @@ export default function AbsenceReportPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, studentName: e.target.value })
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                     placeholder="Nguyễn Văn A"
                   />
                 </div>
@@ -151,7 +151,7 @@ export default function AbsenceReportPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, parentName: e.target.value })
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                     placeholder="Nguyễn Văn B"
                   />
                 </div>
@@ -169,7 +169,7 @@ export default function AbsenceReportPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, parentEmail: e.target.value })
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                       placeholder="email@example.com"
                     />
                   </div>
@@ -183,7 +183,7 @@ export default function AbsenceReportPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, parentPhone: e.target.value })
                       }
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                       placeholder="(808) 123-4567"
                     />
                   </div>
@@ -201,7 +201,7 @@ export default function AbsenceReportPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, absenceDate: e.target.value })
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                   />
                 </div>
 
@@ -217,7 +217,7 @@ export default function AbsenceReportPage() {
                     onChange={(e) =>
                       setFormData({ ...formData, reason: e.target.value })
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                     placeholder="VD: Bị ốm, có việc gia đình..."
                   />
                 </div>
@@ -236,7 +236,7 @@ export default function AbsenceReportPage() {
                         additionalNotes: e.target.value,
                       })
                     }
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-navy/20"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/20"
                     placeholder="Thông tin thêm nếu cần..."
                   />
                 </div>
@@ -245,7 +245,7 @@ export default function AbsenceReportPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-brand-navy px-6 py-4 font-semibold text-white hover:bg-brand-navy/90 disabled:opacity-50"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-6 py-4 font-semibold text-white hover:bg-slate-900/90 disabled:opacity-50"
                 >
                   {loading ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -258,8 +258,8 @@ export default function AbsenceReportPage() {
             </form>
 
             {/* Info Note */}
-            <div className="mt-8 rounded-xl border-2 border-brand-gold/30 bg-brand-gold/10 p-6">
-              <h3 className="font-semibold text-brand-navy">Lưu Ý:</h3>
+            <div className="mt-8 rounded-xl border-2 border-yellow-400/30 bg-yellow-400/10 p-6">
+              <h3 className="font-semibold text-slate-900">Lưu Ý:</h3>
               <ul className="mt-2 space-y-1 text-sm text-gray-700">
                 <li>• Vui lòng báo nghỉ trước ít nhất 1 ngày nếu có thể.</li>
                 <li>• Nhà trường sẽ ghi nhận và liên hệ nếu cần thêm thông tin.</li>

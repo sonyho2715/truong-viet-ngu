@@ -27,15 +27,15 @@ export default async function GalleryPage() {
   });
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-slate-50">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 py-16 text-white">
+      <section className="bg-gradient-to-br from-slate-900 to-slate-900/90 py-16 text-white">
         <div className="container mx-auto px-4">
           <Breadcrumb items={[{ label: 'Thư Viện Ảnh' }]} />
           <div className="mx-auto max-w-3xl text-center">
-            <Camera className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+            <Camera className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
             <h1 className="font-serif text-4xl font-bold md:text-5xl">
               Thư Viện Ảnh
             </h1>
@@ -72,8 +72,8 @@ export default async function GalleryPage() {
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                           />
                         ) : (
-                          <div className="flex h-full items-center justify-center bg-gradient-to-br from-brand-navy to-brand-navy/80">
-                            <Images className="h-16 w-16 text-brand-gold/50" />
+                          <div className="flex h-full items-center justify-center bg-gradient-to-br from-slate-900 to-slate-900/80">
+                            <Images className="h-16 w-16 text-yellow-400/50" />
                           </div>
                         )}
                         {/* Photo Count Badge */}
@@ -84,7 +84,7 @@ export default async function GalleryPage() {
 
                       {/* Album Info */}
                       <div className="p-5">
-                        <h3 className="font-serif text-lg font-bold text-brand-navy group-hover:text-brand-gold">
+                        <h3 className="font-serif text-lg font-bold text-slate-900 group-hover:text-yellow-400">
                           {album.title}
                         </h3>
                         {album.eventDate && (
@@ -122,7 +122,7 @@ export default async function GalleryPage() {
               </p>
               <Link
                 href="/"
-                className="mt-6 inline-block rounded-lg bg-brand-gold px-6 py-3 font-semibold text-brand-navy transition-colors hover:bg-brand-gold/90"
+                className="mt-6 inline-block rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-slate-900 transition-colors hover:bg-yellow-400/90"
               >
                 Về trang chủ
               </Link>

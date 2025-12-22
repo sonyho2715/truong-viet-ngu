@@ -144,7 +144,7 @@ export function EventCard({ event }: EventCardProps) {
               <div className="mt-4 flex items-center gap-4">
                 <button
                   onClick={() => setShowRSVPModal(true)}
-                  className="inline-flex items-center gap-2 rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-navy/90"
+                  className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-900/90"
                 >
                   <UserPlus className="h-4 w-4" />
                   Đăng ký tham dự

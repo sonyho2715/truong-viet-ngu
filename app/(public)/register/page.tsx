@@ -159,7 +159,7 @@ export default function RegistrationPage() {
             <div className="mt-8 flex justify-center gap-4">
               <Link
                 href="/"
-                className="rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white hover:bg-brand-navy/90"
+                className="rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-900/90"
               >
                 Về trang chủ
               </Link>
@@ -191,7 +191,7 @@ export default function RegistrationPage() {
                 <div
                   className={`flex items-center justify-center rounded-full p-2 ${
                     currentStep >= step.id
-                      ? 'bg-brand-navy text-white'
+                      ? 'bg-slate-900 text-white'
                       : 'bg-gray-200 text-gray-500'
                   }`}
                 >
@@ -199,7 +199,7 @@ export default function RegistrationPage() {
                 </div>
                 <span
                   className={`ml-2 hidden text-sm font-medium sm:inline ${
-                    currentStep >= step.id ? 'text-brand-navy' : 'text-gray-400'
+                    currentStep >= step.id ? 'text-slate-900' : 'text-gray-400'
                   }`}
                 >
                   {step.name}
@@ -207,7 +207,7 @@ export default function RegistrationPage() {
                 {index < STEPS.length - 1 && (
                   <div
                     className={`mx-3 h-0.5 w-8 sm:w-12 ${
-                      currentStep > step.id ? 'bg-brand-navy' : 'bg-gray-200'
+                      currentStep > step.id ? 'bg-slate-900' : 'bg-gray-200'
                     }`}
                   />
                 )}
@@ -228,7 +228,7 @@ export default function RegistrationPage() {
           {currentStep === 1 && (
             <div className="space-y-6">
               <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-                <GraduationCap className="h-6 w-6 text-brand-gold" />
+                <GraduationCap className="h-6 w-6 text-yellow-500" />
                 Thông Tin Học Sinh
               </h2>
 
@@ -242,7 +242,7 @@ export default function RegistrationPage() {
                     name="studentFirstName"
                     value={formData.studentFirstName}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -255,7 +255,7 @@ export default function RegistrationPage() {
                     name="studentLastName"
                     value={formData.studentLastName}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -271,7 +271,7 @@ export default function RegistrationPage() {
                     name="studentDOB"
                     value={formData.studentDOB}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -283,7 +283,7 @@ export default function RegistrationPage() {
                     name="preferredGrade"
                     value={formData.preferredGrade}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   >
                     <option value="">Để trường xếp lớp</option>
                     {GRADE_LEVELS.map(grade => (
@@ -301,7 +301,7 @@ export default function RegistrationPage() {
           {currentStep === 2 && (
             <div className="space-y-6">
               <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-                <Users className="h-6 w-6 text-brand-gold" />
+                <Users className="h-6 w-6 text-yellow-500" />
                 Thông Tin Phụ Huynh
               </h2>
 
@@ -315,7 +315,7 @@ export default function RegistrationPage() {
                       name="parentFirstName"
                       value={formData.parentFirstName}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -326,7 +326,7 @@ export default function RegistrationPage() {
                       name="parentLastName"
                       value={formData.parentLastName}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -337,7 +337,7 @@ export default function RegistrationPage() {
                       name="parentEmail"
                       value={formData.parentEmail}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -348,7 +348,7 @@ export default function RegistrationPage() {
                       name="parentPhone"
                       value={formData.parentPhone}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -358,7 +358,7 @@ export default function RegistrationPage() {
                       name="parentRelation"
                       value={formData.parentRelation}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     >
                       <option value="">Chọn quan hệ</option>
@@ -381,7 +381,7 @@ export default function RegistrationPage() {
                       name="parent2FirstName"
                       value={formData.parent2FirstName}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                   <div>
@@ -391,7 +391,7 @@ export default function RegistrationPage() {
                       name="parent2LastName"
                       value={formData.parent2LastName}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                   <div>
@@ -401,7 +401,7 @@ export default function RegistrationPage() {
                       name="parent2Email"
                       value={formData.parent2Email}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                   <div>
@@ -411,7 +411,7 @@ export default function RegistrationPage() {
                       name="parent2Phone"
                       value={formData.parent2Phone}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     />
                   </div>
                   <div className="sm:col-span-2">
@@ -420,7 +420,7 @@ export default function RegistrationPage() {
                       name="parent2Relation"
                       value={formData.parent2Relation}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     >
                       <option value="">Chọn quan hệ</option>
                       <option value="Mẹ">Mẹ</option>
@@ -438,7 +438,7 @@ export default function RegistrationPage() {
           {currentStep === 3 && (
             <div className="space-y-6">
               <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-                <MapPin className="h-6 w-6 text-brand-gold" />
+                <MapPin className="h-6 w-6 text-yellow-500" />
                 Địa Chỉ
               </h2>
 
@@ -452,7 +452,7 @@ export default function RegistrationPage() {
                   value={formData.address}
                   onChange={handleChange}
                   placeholder="Số nhà, tên đường"
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   required
                 />
               </div>
@@ -467,7 +467,7 @@ export default function RegistrationPage() {
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -480,7 +480,7 @@ export default function RegistrationPage() {
                     name="state"
                     value={formData.state}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -493,7 +493,7 @@ export default function RegistrationPage() {
                     name="zipCode"
                     value={formData.zipCode}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                     required
                   />
                 </div>
@@ -505,7 +505,7 @@ export default function RegistrationPage() {
           {currentStep === 4 && (
             <div className="space-y-6">
               <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-                <AlertTriangle className="h-6 w-6 text-brand-gold" />
+                <AlertTriangle className="h-6 w-6 text-yellow-500" />
                 Liên Hệ Khẩn Cấp & Thông Tin Thêm
               </h2>
 
@@ -524,7 +524,7 @@ export default function RegistrationPage() {
                       name="emergencyName"
                       value={formData.emergencyName}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -535,7 +535,7 @@ export default function RegistrationPage() {
                       name="emergencyPhone"
                       value={formData.emergencyPhone}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -547,7 +547,7 @@ export default function RegistrationPage() {
                       value={formData.emergencyRelation}
                       onChange={handleChange}
                       placeholder="Ông, bà, cô, chú..."
-                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                      className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -565,7 +565,7 @@ export default function RegistrationPage() {
                     value={formData.previousSchool}
                     onChange={handleChange}
                     placeholder="Tên trường Việt ngữ trước đây"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   />
                 </div>
 
@@ -579,7 +579,7 @@ export default function RegistrationPage() {
                     onChange={handleChange}
                     rows={2}
                     placeholder="Các vấn đề sức khỏe cần biết"
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   />
                 </div>
 
@@ -593,7 +593,7 @@ export default function RegistrationPage() {
                     value={formData.allergies}
                     onChange={handleChange}
                     placeholder="Thức ăn, thuốc, etc."
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   />
                 </div>
 
@@ -606,7 +606,7 @@ export default function RegistrationPage() {
                     value={formData.specialNeeds}
                     onChange={handleChange}
                     rows={2}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   />
                 </div>
 
@@ -618,7 +618,7 @@ export default function RegistrationPage() {
                     name="howHeard"
                     value={formData.howHeard}
                     onChange={handleChange}
-                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                    className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                   >
                     <option value="">Chọn một</option>
                     <option value="Nhà thờ">Nhà thờ</option>
@@ -636,7 +636,7 @@ export default function RegistrationPage() {
           {currentStep === 5 && (
             <div className="space-y-6">
               <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-900">
-                <FileText className="h-6 w-6 text-brand-gold" />
+                <FileText className="h-6 w-6 text-yellow-500" />
                 Xác Nhận Thông Tin
               </h2>
 
@@ -691,7 +691,7 @@ export default function RegistrationPage() {
                   onChange={handleChange}
                   rows={3}
                   placeholder="Bất kỳ thông tin nào khác bạn muốn chia sẻ..."
-                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+                  className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
                 />
               </div>
 
@@ -723,7 +723,7 @@ export default function RegistrationPage() {
               <button
                 type="button"
                 onClick={handleNext}
-                className="flex items-center gap-2 rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white hover:bg-brand-navy/90"
+                className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 py-3 font-semibold text-white hover:bg-slate-900/90"
               >
                 Tiếp tục
                 <ChevronRight className="h-5 w-5" />
@@ -732,7 +732,7 @@ export default function RegistrationPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 rounded-lg bg-brand-gold px-8 py-3 font-semibold text-brand-navy hover:bg-brand-gold/90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex items-center gap-2 rounded-lg bg-red-700 px-8 py-3 font-semibold text-white hover:bg-red-800 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? 'Đang gửi...' : 'Gửi Đơn Đăng Ký'}
               </button>
@@ -743,7 +743,7 @@ export default function RegistrationPage() {
         {/* Help */}
         <p className="mt-6 text-center text-sm text-gray-500">
           Cần trợ giúp?{' '}
-          <Link href="/contact" className="text-brand-navy hover:underline">
+          <Link href="/contact" className="text-slate-900 hover:underline">
             Liên hệ với chúng tôi
           </Link>
         </p>

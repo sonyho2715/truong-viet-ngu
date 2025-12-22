@@ -37,15 +37,15 @@ export default async function VolunteerPage() {
 
       <main className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-brand-navy to-brand-navy/90 px-6 py-16 lg:py-20">
+        <section className="bg-gradient-to-br from-slate-900 to-slate-800 px-6 py-16 lg:py-20">
           <div className="mx-auto max-w-7xl">
             <Breadcrumb items={[{ label: 'Tình Nguyện' }]} />
             <div className="text-center">
-              <Heart className="mx-auto mb-4 h-16 w-16 text-brand-gold" />
+              <Heart className="mx-auto mb-4 h-16 w-16 text-yellow-400" />
               <h1 className="font-serif text-4xl font-bold text-white lg:text-5xl">
                 Tình Nguyện Viên
               </h1>
-              <p className="mt-4 text-lg text-brand-cream lg:text-xl">
+              <p className="mt-4 text-lg text-slate-200 lg:text-xl">
                 Cùng chung tay xây dựng cộng đồng và hỗ trợ các em học sinh
               </p>
             </div>
@@ -55,37 +55,37 @@ export default async function VolunteerPage() {
         {/* Why Volunteer Section */}
         <section className="bg-white px-6 py-12">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-brand-navy">
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-slate-900">
               Tại Sao Nên Tình Nguyện?
             </h2>
             <div className="grid gap-6 md:grid-cols-3">
-              <div className="rounded-xl bg-brand-cream p-6 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-gold text-brand-navy">
+              <div className="rounded-xl bg-slate-50 p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-400 text-slate-900">
                   <Heart className="h-8 w-8" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-brand-navy">
+                <h3 className="font-serif text-xl font-bold text-slate-900">
                   Đóng Góp Cộng Đồng
                 </h3>
                 <p className="mt-2 text-gray-600">
                   Giúp đỡ các em học sinh học tiếng Việt và gìn giữ văn hóa Việt Nam
                 </p>
               </div>
-              <div className="rounded-xl bg-brand-cream p-6 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-gold text-brand-navy">
+              <div className="rounded-xl bg-slate-50 p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-400 text-slate-900">
                   <Users className="h-8 w-8" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-brand-navy">
+                <h3 className="font-serif text-xl font-bold text-slate-900">
                   Kết Nối
                 </h3>
                 <p className="mt-2 text-gray-600">
                   Gặp gỡ và kết nối với các gia đình trong cộng đồng
                 </p>
               </div>
-              <div className="rounded-xl bg-brand-cream p-6 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-gold text-brand-navy">
+              <div className="rounded-xl bg-slate-50 p-6 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-400 text-slate-900">
                   <Calendar className="h-8 w-8" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-brand-navy">
+                <h3 className="font-serif text-xl font-bold text-slate-900">
                   Linh Hoạt
                 </h3>
                 <p className="mt-2 text-gray-600">
@@ -99,7 +99,7 @@ export default async function VolunteerPage() {
         {/* Opportunities Section */}
         <section className="px-6 py-12">
           <div className="mx-auto max-w-7xl">
-            <h2 className="mb-8 font-serif text-3xl font-bold text-brand-navy">
+            <h2 className="mb-8 font-serif text-3xl font-bold text-slate-900">
               Cơ Hội Tình Nguyện
             </h2>
 
@@ -116,7 +116,7 @@ export default async function VolunteerPage() {
                       key={opportunity.id}
                       className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md"
                     >
-                      <h3 className="font-serif text-xl font-bold text-brand-navy">
+                      <h3 className="font-serif text-xl font-bold text-slate-900">
                         {opportunity.title}
                       </h3>
 
@@ -124,7 +124,7 @@ export default async function VolunteerPage() {
                         <div className="mt-3 flex flex-wrap gap-4 text-sm text-gray-600">
                           {opportunity.date && (
                             <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4 text-brand-gold" />
+                              <Calendar className="h-4 w-4 text-yellow-400" />
                               <span>
                                 {new Date(opportunity.date).toLocaleDateString('vi-VN', {
                                   weekday: 'long',
@@ -137,7 +137,7 @@ export default async function VolunteerPage() {
                           )}
                           {opportunity.startTime && (
                             <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4 text-brand-gold" />
+                              <Clock className="h-4 w-4 text-yellow-400" />
                               <span>
                                 {opportunity.startTime}
                                 {opportunity.endTime && ` - ${opportunity.endTime}`}
@@ -146,7 +146,7 @@ export default async function VolunteerPage() {
                           )}
                           {opportunity.location && (
                             <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4 text-brand-gold" />
+                              <MapPin className="h-4 w-4 text-yellow-400" />
                               <span>{opportunity.location}</span>
                             </div>
                           )}
@@ -207,9 +207,9 @@ export default async function VolunteerPage() {
         </section>
 
         {/* Contact Section */}
-        <section className="bg-brand-cream px-6 py-12">
+        <section className="bg-slate-50 px-6 py-12">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-serif text-2xl font-bold text-brand-navy">
+            <h2 className="font-serif text-2xl font-bold text-slate-900">
               Có Câu Hỏi?
             </h2>
             <p className="mt-4 text-gray-600">
@@ -218,7 +218,7 @@ export default async function VolunteerPage() {
             </p>
             <a
               href="/contact"
-              className="mt-6 inline-block rounded-lg bg-brand-navy px-6 py-3 font-semibold text-white hover:bg-brand-navy/90"
+              className="mt-6 inline-block rounded-lg bg-red-700 px-6 py-3 font-semibold text-white hover:bg-red-800"
             >
               Liên Hệ
             </a>

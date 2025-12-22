@@ -16,7 +16,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
         <li>
           <Link
             href="/"
-            className="text-white/80 transition-colors hover:text-brand-gold"
+            className="text-white/80 transition-colors hover:text-yellow-400"
           >
             Trang Chủ
           </Link>
@@ -37,12 +37,12 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
             {item.href ? (
               <Link
                 href={item.href}
-                className="text-white/80 transition-colors hover:text-brand-gold"
+                className="text-white/80 transition-colors hover:text-yellow-400"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="font-medium text-brand-cream">{item.label}</span>
+              <span className="font-medium text-slate-200">{item.label}</span>
             )}
           </li>
         ))}

@@ -37,7 +37,7 @@ export function BackToHome() {
   return (
     <Link
       href="/"
-      className={`fixed bottom-20 right-4 z-40 flex items-center gap-2 rounded-full bg-brand-navy px-4 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-brand-navy/90 hover:shadow-xl lg:bottom-6 ${
+      className={`fixed bottom-20 right-4 z-40 flex items-center gap-2 rounded-full bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:bg-slate-900/90 hover:shadow-xl lg:bottom-6 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'
       }`}
       aria-label="Về trang chủ"

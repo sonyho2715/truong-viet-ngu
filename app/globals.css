@@ -1,21 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  /* ===== BRAND COLORS ===== */
-  --color-navy: #3e65b2;
-  --color-navy-light: #5d7fc4;
-  --color-navy-dark: #2d4a8a;
-  --color-navy-hover: #4d74c1;
+  /* ===== BRAND COLORS (Red/Yellow/Slate Theme) ===== */
+  --color-navy: #0f172a;        /* slate-900 - primary dark */
+  --color-navy-light: #1e293b;  /* slate-800 */
+  --color-navy-dark: #020617;   /* slate-950 */
+  --color-navy-hover: #1e293b;  /* slate-800 */
 
-  --color-gold: #f6d461;
-  --color-gold-light: #f8de85;
-  --color-gold-dark: #e6bb3a;
-  --color-gold-hover: #f4ca3a;
+  --color-gold: #facc15;        /* yellow-400 - accent */
+  --color-gold-light: #fde047;  /* yellow-300 */
+  --color-gold-dark: #eab308;   /* yellow-500 */
+  --color-gold-hover: #eab308;  /* yellow-500 */
 
-  --color-cream: #FFFBEB;
-  --color-cream-dark: #FEF3C7;
+  --color-cream: #f8fafc;       /* slate-50 - light bg */
+  --color-cream-dark: #f1f5f9;  /* slate-100 */
 
   --color-brown: #78350F;
+
+  /* ===== NEW: Primary Red for CTAs ===== */
+  --color-primary: #b91c1c;     /* red-700 */
+  --color-primary-light: #dc2626; /* red-600 */
+  --color-primary-dark: #991b1b;  /* red-800 */
+  --color-primary-hover: #991b1b; /* red-800 */
 
   /* ===== SEMANTIC COLORS ===== */
   --color-success: #059669;
@@ -96,6 +102,12 @@
 
   --color-brand-brown: var(--color-brown);
 
+  /* Primary CTA Color (Red) */
+  --color-brand-primary: var(--color-primary);
+  --color-brand-primary-light: var(--color-primary-light);
+  --color-brand-primary-dark: var(--color-primary-dark);
+  --color-brand-primary-hover: var(--color-primary-hover);
+
   /* Semantic Colors for Tailwind */
   --color-success: var(--color-success);
   --color-success-light: var(--color-success-light);
@@ -126,7 +138,7 @@ html {
 
 /* Focus visible styles for accessibility */
 *:focus-visible {
-  @apply outline-none ring-2 ring-brand-gold ring-offset-2;
+  @apply outline-none ring-2 ring-yellow-400 ring-offset-2;
 }
 
 /* Vietnamese text rendering optimization */
@@ -146,11 +158,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-brand-navy/30 rounded-lg;
+  @apply bg-slate-400 rounded-lg;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-brand-navy/50;
+  @apply bg-slate-500;
 }
 
 /* ===== TYPOGRAPHY UTILITIES ===== */

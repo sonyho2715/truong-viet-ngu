@@ -59,10 +59,10 @@ export function ValuesSection() {
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
             Giá Trị Cốt Lõi
           </h2>
-          <p className="mt-3 text-lg text-gray-600">
+          <p className="mt-3 text-lg text-slate-600">
             Những giá trị chúng tôi cam kết mang lại cho học sinh
           </p>
         </div>
@@ -72,30 +72,30 @@ export function ValuesSection() {
           {values.map((value, index) => (
             <article
               key={index}
-              className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-xl"
+              className="group overflow-hidden rounded-xl border-2 border-slate-200 bg-white shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-xl"
             >
               {/* Image */}
-              <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-brand-navy/10 to-brand-navy/5">
+              <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-slate-900/10 to-slate-900/5">
                 <Image
                   src={value.image}
                   alt={value.title}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
 
                 {/* Icon Overlay */}
-                <div className="absolute bottom-4 left-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-brand-navy shadow-lg backdrop-blur-sm">
+                <div className="absolute bottom-4 left-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-slate-900 shadow-lg backdrop-blur-sm">
                   {value.icon}
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="mb-3 font-serif text-xl font-bold text-brand-navy">
+                <h3 className="mb-3 font-serif text-xl font-bold text-slate-900 group-hover:text-red-700">
                   {value.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-gray-600">
+                <p className="text-sm leading-relaxed text-slate-600">
                   {value.description}
                 </p>
               </div>
@@ -107,7 +107,7 @@ export function ValuesSection() {
         <div className="mt-12 text-center">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-lg border-2 border-brand-navy px-6 py-3 font-semibold text-brand-navy transition-all hover:bg-brand-navy hover:text-white"
+            className="inline-flex items-center gap-2 rounded-lg bg-red-700 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-red-800 hover:shadow-xl"
           >
             Tìm Hiểu Thêm Về Chúng Tôi
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

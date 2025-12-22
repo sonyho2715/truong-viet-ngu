@@ -38,10 +38,10 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-navy lg:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
             Các Lớp Học
           </h2>
-          <p className="mt-3 text-lg text-gray-600">
+          <p className="mt-3 text-lg text-slate-600">
             Mẫu Giáo A đến Lớp 7 và TNTT
           </p>
         </div>
@@ -51,10 +51,10 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
           {activeClasses.map((classItem) => (
             <article
               key={classItem.id}
-              className="group overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-brand-gold hover:shadow-lg"
+              className="group overflow-hidden rounded-xl border-2 border-slate-200 bg-white shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg"
             >
               {/* Class Image */}
-              <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-brand-navy to-brand-navy/80">
+              <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800">
                 {classItem.classroomImage ? (
                   <Image
                     src={classItem.classroomImage}
@@ -64,7 +64,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center">
-                    <span className="font-serif text-6xl font-bold text-brand-gold opacity-30">
+                    <span className="font-serif text-6xl font-bold text-yellow-400 opacity-30">
                       {gradeLevelLabels[classItem.gradeLevel]}
                     </span>
                   </div>
@@ -73,16 +73,16 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
 
               {/* Class Info */}
               <div className="p-6">
-                <h3 className="mb-4 font-serif text-2xl font-bold text-brand-navy">
+                <h3 className="mb-4 font-serif text-2xl font-bold text-slate-900 group-hover:text-red-700">
                   {classItem.name}
                 </h3>
 
-                <div className="space-y-3 text-sm text-gray-600">
+                <div className="space-y-3 text-sm text-slate-600">
                   {/* Teacher */}
                   {classItem.teacher && (
                     <div className="flex items-center gap-2">
                       <svg
-                        className="h-5 w-5 flex-shrink-0 text-brand-gold"
+                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
                   {classItem.schedule && (
                     <div className="flex items-center gap-2">
                       <svg
-                        className="h-5 w-5 flex-shrink-0 text-brand-gold"
+                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -125,7 +125,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
                   {classItem.roomNumber && (
                     <div className="flex items-center gap-2">
                       <svg
-                        className="h-5 w-5 flex-shrink-0 text-brand-gold"
+                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -146,7 +146,7 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
 
                 {/* Description (if available) */}
                 {classItem.description && (
-                  <p className="mt-4 line-clamp-2 text-sm text-gray-600">
+                  <p className="mt-4 line-clamp-2 text-sm text-slate-600">
                     {classItem.description}
                   </p>
                 )}

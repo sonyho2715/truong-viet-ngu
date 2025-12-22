@@ -23,13 +23,13 @@ export function HighlightsSection() {
   ];
 
   return (
-    <section className="bg-gradient-to-br from-brand-navy via-brand-navy to-brand-navy/90 px-6 py-16 lg:py-20">
+    <section className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 px-6 py-16 lg:py-20">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-brand-gold lg:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-yellow-400 lg:text-4xl">
             Điểm Nổi Bật
           </h2>
-          <p className="mt-3 text-lg text-brand-cream/90">
+          <p className="mt-3 text-lg text-slate-200">
             Những con số nói lên cam kết của chúng tôi
           </p>
         </div>
@@ -38,18 +38,18 @@ export function HighlightsSection() {
           {highlights.map((highlight, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-xl border-2 border-brand-gold/30 bg-white/5 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-brand-gold hover:bg-white/10"
+              className="group relative overflow-hidden rounded-xl border-2 border-yellow-400/30 bg-white/5 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-yellow-400 hover:bg-white/10"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
 
               <div className="relative">
-                <div className="mb-2 font-serif text-5xl font-bold text-brand-gold">
+                <div className="mb-2 font-serif text-5xl font-bold text-yellow-400">
                   {highlight.number}
                 </div>
-                <div className="mb-1 text-xl font-semibold text-brand-cream">
+                <div className="mb-1 text-xl font-semibold text-white">
                   {highlight.label}
                 </div>
-                <div className="text-sm text-brand-cream/70">
+                <div className="text-sm text-slate-300">
                   {highlight.description}
                 </div>
               </div>
