@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+import { put, del } from '@vercel/blob';
 import { requireAuth } from '@/lib/auth';
 
 // Valid upload categories
@@ -14,6 +12,8 @@ const VALID_CATEGORIES = [
   'teachers',
   'materials',
   'general',
+  'slideshow',
+  'gallery',
 ] as const;
 
 type UploadCategory = (typeof VALID_CATEGORIES)[number];
@@ -36,16 +36,16 @@ const MAX_DOCUMENT_SIZE = 10 * 1024 * 1024; // 10MB
 /**
  * Generate a unique filename
  */
-function generateFilename(originalName: string): string {
+function generateFilename(originalName: string, category: string): string {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2, 8);
-  const ext = path.extname(originalName).toLowerCase();
-  const safeName = path
-    .basename(originalName, ext)
+  const ext = originalName.split('.').pop()?.toLowerCase() || 'jpg';
+  const safeName = originalName
+    .replace(/\.[^/.]+$/, '') // Remove extension
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '-')
     .substring(0, 50);
-  return `${safeName}-${timestamp}-${random}${ext}`;
+  return `${category}/${safeName}-${timestamp}-${random}.${ext}`;
 }
 
 /**
@@ -115,31 +115,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare upload directory
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', category);
+    // Generate unique filename with category prefix
+    const filename = generateFilename(file.name, category);
 
-    // Create directory if it doesn't exist
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
-    // Generate unique filename
-    const filename = generateFilename(file.name);
-    const filepath = path.join(uploadDir, filename);
-
-    // Convert file to buffer and save
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
-
-    // Return the public URL
-    const publicUrl = `/uploads/${category}/${filename}`;
+    // Upload to Vercel Blob
+    const blob = await put(filename, file, {
+      access: 'public',
+      addRandomSuffix: false,
+    });
 
     return NextResponse.json({
       success: true,
       data: {
-        url: publicUrl,
-        filename,
+        url: blob.url,
+        filename: filename,
         originalName: file.name,
         size: file.size,
         type: file.type,
@@ -152,6 +141,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Bạn cần đăng nhập để tải file lên' },
         { status: 401 }
+      );
+    }
+
+    // Check for Vercel Blob configuration error
+    if (error instanceof Error && error.message.includes('BLOB_READ_WRITE_TOKEN')) {
+      return NextResponse.json(
+        { success: false, error: 'Chưa cấu hình Vercel Blob. Vui lòng thêm BLOB_READ_WRITE_TOKEN.' },
+        { status: 500 }
       );
     }
 
@@ -170,29 +167,15 @@ export async function DELETE(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const fileUrl = searchParams.get('url');
 
-    if (!fileUrl || !fileUrl.startsWith('/uploads/')) {
+    if (!fileUrl) {
       return NextResponse.json(
         { success: false, error: 'URL file không hợp lệ' },
         { status: 400 }
       );
     }
 
-    const { unlink } = await import('fs/promises');
-    const filepath = path.join(process.cwd(), 'public', fileUrl);
-
-    // Security check: ensure the file is within uploads directory
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    const resolvedPath = path.resolve(filepath);
-    if (!resolvedPath.startsWith(uploadsDir)) {
-      return NextResponse.json(
-        { success: false, error: 'Đường dẫn không hợp lệ' },
-        { status: 400 }
-      );
-    }
-
-    if (existsSync(filepath)) {
-      await unlink(filepath);
-    }
+    // Delete from Vercel Blob
+    await del(fileUrl);
 
     return NextResponse.json({ success: true });
   } catch (error) {
