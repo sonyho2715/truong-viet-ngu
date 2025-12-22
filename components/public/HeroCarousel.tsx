@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { BookOpen, Calendar, School } from 'lucide-react';
 
 interface Slide {
   id: string;
@@ -17,26 +19,26 @@ const defaultSlides: Slide[] = [
   {
     id: 'default-1',
     imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&q=80',
-    title: 'Chào Mừng Đến Với Trường Việt Ngữ',
-    subtitle: 'Giáo dục tiếng Việt và văn hóa cho thế hệ trẻ',
-    linkUrl: '/about',
-    linkText: 'Tìm Hiểu Thêm',
+    title: null,
+    subtitle: null,
+    linkUrl: null,
+    linkText: null,
   },
   {
     id: 'default-2',
     imageUrl: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&q=80',
-    title: 'Thiếu Nhi Thánh Thể',
-    subtitle: 'Nuôi dưỡng đức tin và truyền thống Công Giáo',
-    linkUrl: '/tntt',
-    linkText: 'Xem Chương Trình TNTT',
+    title: null,
+    subtitle: null,
+    linkUrl: null,
+    linkText: null,
   },
   {
     id: 'default-3',
     imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&q=80',
-    title: 'Cộng Đồng Của Chúng Ta',
-    subtitle: 'Xây dựng cầu nối văn hóa Việt Nam tại Hawaii',
-    linkUrl: '/#contact',
-    linkText: 'Tham Gia Cùng Chúng Tôi',
+    title: null,
+    subtitle: null,
+    linkUrl: null,
+    linkText: null,
   },
 ];
 
@@ -86,70 +88,67 @@ export function HeroCarousel() {
   }, [isAutoPlaying, goToNext, slides.length]);
 
   return (
-    <section className="relative h-[500px] overflow-hidden md:h-[600px] lg:h-[700px]">
-      {/* Slides */}
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          {/* Background Image */}
-          <div className="absolute inset-0">
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-slate-900">
+      {/* Background Image Overlay */}
+      <div className="absolute inset-0 z-0">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <Image
               src={slide.imageUrl}
-              alt={slide.title || 'Slideshow'}
+              alt="Vietnamese School Class"
               fill
-              className="object-cover"
+              className="object-cover opacity-40"
               priority={index === 0}
             />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/80 to-slate-900/40" />
+          </div>
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-3xl">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-yellow-300 font-medium text-sm mb-6">
+            <School size={16} />
+            <span>Trực thuộc Cộng Đoàn Các Thánh Tử Đạo Việt Nam - Honolulu</span>
           </div>
 
-          {/* Content */}
-          <div className="relative flex h-full items-center">
-            <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-              <div className="max-w-2xl">
-                {slide.title && (
-                  <h1 className="font-serif text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-                    {slide.title}
-                  </h1>
-                )}
-                {slide.subtitle && (
-                  <p className="mt-6 text-xl text-slate-200 md:text-2xl">
-                    {slide.subtitle}
-                  </p>
-                )}
-                {slide.linkUrl && slide.linkText && (
-                  <div className="mt-8 flex flex-wrap gap-4">
-                    <a
-                      href={slide.linkUrl}
-                      className="inline-flex items-center gap-2 rounded-lg bg-red-700 px-8 py-4 font-semibold text-white shadow-xl transition-all hover:bg-red-800 hover:shadow-2xl"
-                    >
-                      {slide.linkText}
-                      <svg
-                        className="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                )}
-              </div>
-            </div>
+          {/* Main Heading */}
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight font-serif">
+            Sống <span className="text-yellow-400">Đức Tin Kitô</span>,<br />
+            Giữ Gìn <span className="text-red-500">Hồn Việt</span>.
+          </h1>
+
+          {/* Description */}
+          <p className="text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl">
+            Nơi thế hệ trẻ không chỉ học tiếng mẹ đẻ mà còn được nuôi dưỡng trong tình yêu Thiên Chúa và truyền thống văn hóa dân tộc tại hải đảo Hawaii.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/about"
+              className="bg-red-700 hover:bg-red-800 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-red-900/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+            >
+              <BookOpen size={20} />
+              Xem Chương Trình
+            </Link>
+            <Link
+              href="/calendar"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
+            >
+              <Calendar size={20} />
+              Lịch Khai Giảng
+            </Link>
           </div>
         </div>
-      ))}
+      </div>
 
       {/* Navigation Arrows */}
       {slides.length > 1 && (
@@ -160,7 +159,7 @@ export function HeroCarousel() {
               setIsAutoPlaying(false);
               setTimeout(() => setIsAutoPlaying(true), 10000);
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 lg:left-8"
+            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 lg:left-8 z-20"
             aria-label="Previous slide"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,7 +177,7 @@ export function HeroCarousel() {
               setIsAutoPlaying(false);
               setTimeout(() => setIsAutoPlaying(true), 10000);
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 lg:right-8"
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/20 p-3 text-white backdrop-blur-sm transition-all hover:bg-white/30 lg:right-8 z-20"
             aria-label="Next slide"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +194,7 @@ export function HeroCarousel() {
 
       {/* Dots Navigation */}
       {slides.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-3">
+        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-3 z-20">
           {slides.map((_, index) => (
             <button
               key={index}

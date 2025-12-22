@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Class, Teacher } from '@prisma/client';
 
 interface ClassesSectionProps {
@@ -6,6 +7,34 @@ interface ClassesSectionProps {
     teacher: Pick<Teacher, 'id' | 'firstName' | 'lastName'> | null;
   })[];
 }
+
+// Default programs for when database is empty
+const defaultPrograms = [
+  {
+    id: 'kindergarten',
+    name: 'Lớp Mẫu Giáo & Vỡ Lòng',
+    ageRange: '4-6 Tuổi',
+    description: 'Làm quen với bảng chữ cái, các dấu giọng qua bài hát và trò chơi. Tập tô màu và nhận biết đồ vật.',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022',
+    featured: false,
+  },
+  {
+    id: 'primary',
+    name: 'Cấp 1 - Cấp 3',
+    ageRange: 'Căn Bản',
+    description: 'Học đánh vần, tập đọc và chính tả. Bắt đầu tập viết câu ngắn và đọc hiểu các đoạn văn đơn giản.',
+    image: 'https://images.unsplash.com/photo-1427504746074-be4799b9e613?q=80&w=1000',
+    featured: true,
+  },
+  {
+    id: 'advanced',
+    name: 'Cấp 4 - Cấp 6',
+    ageRange: 'Nâng Cao',
+    description: 'Tập làm văn, tìm hiểu lịch sử, địa lý Việt Nam. Thảo luận về văn hóa và phong tục tập quán.',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000',
+    featured: false,
+  },
+];
 
 const gradeLevelLabels: Record<string, string> = {
   MAU_GIAO_A: 'Mẫu Giáo A',
@@ -29,130 +58,130 @@ export function ClassesSection({ classes }: ClassesSectionProps) {
     .filter((c) => c.isActive)
     .sort((a, b) => a.displayOrder - b.displayOrder);
 
-  if (activeClasses.length === 0) {
-    return null;
-  }
+  // Use default programs if no classes
+  const showDefaults = activeClasses.length === 0;
 
   return (
-    <section id="classes" className="bg-white px-6 py-16 lg:py-24">
-      <div className="mx-auto max-w-7xl">
+    <section id="programs" className="py-24 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-12 text-center">
-          <h2 className="font-serif text-3xl font-bold text-slate-900 lg:text-4xl">
-            Các Lớp Học
-          </h2>
-          <p className="mt-3 text-lg text-slate-600">
-            Mẫu Giáo A đến Lớp 7 và TNTT
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+          <div>
+            <span className="text-red-700 font-bold tracking-wider uppercase text-sm">
+              Chương Trình Đào Tạo
+            </span>
+            <h2 className="text-4xl font-bold text-slate-900 mt-2 font-serif">
+              Các Cấp Lớp
+            </h2>
+          </div>
+          <p className="text-slate-500 max-w-md">
+            Chương trình học diễn ra vào mỗi trưa Chúa Nhật, từ 12:30 PM đến 2:30 PM, trước giờ sinh hoạt TNTT.
           </p>
         </div>
 
         {/* Classes Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {activeClasses.map((classItem) => (
-            <article
-              key={classItem.id}
-              className="group overflow-hidden rounded-xl border-2 border-slate-200 bg-white shadow-sm transition-all duration-200 hover:border-yellow-400 hover:shadow-lg"
-            >
-              {/* Class Image */}
-              <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-900 to-slate-800">
-                {classItem.classroomImage ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {showDefaults ? (
+            // Show default programs
+            defaultPrograms.map((program) => (
+              <article
+                key={program.id}
+                className={`bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all group ${
+                  program.featured ? 'border-b-4 border-red-700' : ''
+                }`}
+              >
+                <div className="h-48 bg-slate-200 relative">
                   <Image
-                    src={classItem.classroomImage}
-                    alt={`${classItem.name} classroom`}
+                    src={program.image}
+                    alt={program.name}
                     fill
-                    className="object-cover transition-transform duration-200 group-hover:scale-105"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                ) : (
-                  <div className="flex h-full items-center justify-center">
-                    <span className="font-serif text-6xl font-bold text-yellow-400 opacity-30">
-                      {gradeLevelLabels[classItem.gradeLevel]}
-                    </span>
+                  <div className={`absolute top-4 left-4 backdrop-blur px-3 py-1 rounded text-xs font-bold ${
+                    program.featured
+                      ? 'bg-red-700/90 text-white'
+                      : 'bg-white/90 text-slate-800'
+                  }`}>
+                    {program.ageRange}
                   </div>
-                )}
-              </div>
-
-              {/* Class Info */}
-              <div className="p-6">
-                <h3 className="mb-4 font-serif text-2xl font-bold text-slate-900 group-hover:text-red-700">
-                  {classItem.name}
-                </h3>
-
-                <div className="space-y-3 text-sm text-slate-600">
-                  {/* Teacher */}
-                  {classItem.teacher && (
-                    <div className="flex items-center gap-2">
-                      <svg
-                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                      <span>
-                        <strong>Giáo viên:</strong> {classItem.teacher.firstName}{' '}
-                        {classItem.teacher.lastName}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    {program.name}
+                  </h3>
+                  <p className="text-slate-500 text-sm mb-4 line-clamp-3">
+                    {program.description}
+                  </p>
+                  <Link
+                    href="/about"
+                    className="text-red-700 font-bold text-sm hover:underline"
+                  >
+                    Xem chi tiết &rarr;
+                  </Link>
+                </div>
+              </article>
+            ))
+          ) : (
+            // Show database classes
+            activeClasses.map((classItem) => (
+              <article
+                key={classItem.id}
+                className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all group"
+              >
+                <div className="h-48 bg-slate-200 relative">
+                  {classItem.classroomImage ? (
+                    <Image
+                      src={classItem.classroomImage}
+                      alt={`${classItem.name} classroom`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+                      <span className="font-serif text-4xl font-bold text-yellow-400/30">
+                        {gradeLevelLabels[classItem.gradeLevel]}
                       </span>
                     </div>
+                  )}
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs font-bold text-slate-800">
+                    {gradeLevelLabels[classItem.gradeLevel]}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    {classItem.name}
+                  </h3>
+
+                  {/* Teacher */}
+                  {classItem.teacher && (
+                    <p className="text-slate-500 text-sm mb-2">
+                      Giáo viên: {classItem.teacher.firstName} {classItem.teacher.lastName}
+                    </p>
                   )}
 
                   {/* Schedule */}
                   {classItem.schedule && (
-                    <div className="flex items-center gap-2">
-                      <svg
-                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      <span>{classItem.schedule}</span>
-                    </div>
+                    <p className="text-slate-500 text-sm mb-2">
+                      {classItem.schedule}
+                    </p>
                   )}
 
-                  {/* Room Number */}
-                  {classItem.roomNumber && (
-                    <div className="flex items-center gap-2">
-                      <svg
-                        className="h-5 w-5 flex-shrink-0 text-yellow-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                        />
-                      </svg>
-                      <span>
-                        <strong>Phòng:</strong> {classItem.roomNumber}
-                      </span>
-                    </div>
+                  {classItem.description && (
+                    <p className="text-slate-500 text-sm mb-4 line-clamp-2">
+                      {classItem.description}
+                    </p>
                   )}
+
+                  <Link
+                    href="/about"
+                    className="text-red-700 font-bold text-sm hover:underline"
+                  >
+                    Xem chi tiết &rarr;
+                  </Link>
                 </div>
-
-                {/* Description (if available) */}
-                {classItem.description && (
-                  <p className="mt-4 line-clamp-2 text-sm text-slate-600">
-                    {classItem.description}
-                  </p>
-                )}
-              </div>
-            </article>
-          ))}
+              </article>
+            ))
+          )}
         </div>
       </div>
     </section>

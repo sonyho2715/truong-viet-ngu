@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { NewsletterSignup } from './NewsletterSignup';
+import { MapPin, Mail, Phone, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export function Footer() {
@@ -10,145 +10,118 @@ export function Footer() {
 
   const content = {
     vi: {
-      about: {
-        title: 'Giới Thiệu',
-        description: 'Trường Việt Ngữ - Thiếu Nhi Thánh Thể. Giảng dạy tiếng Việt và giáo lý Công Giáo cho thế hệ trẻ.',
-        aboutSchool: 'Về Trường',
-        teachers: 'Đội Ngũ Giáo Viên',
-        faq: 'Câu Hỏi Thường Gặp',
-      },
-      links: {
-        title: 'Liên Kết',
+      schoolName: 'Trường Việt Ngữ',
+      subtitle: 'Thiếu Nhi Thánh Thể',
+      description: 'Giảng dạy tiếng Việt và giáo lý Công Giáo cho thế hệ trẻ Việt Nam tại Hawaii.',
+      address: '2250 Kuhio Ave, Honolulu, HI 96815',
+      email: 'info@truongvietngu.com',
+      phone: '(808) 123-4567',
+      pages: {
+        title: 'Về Trang',
         home: 'Trang Chủ',
-        announcements: 'Thông Báo',
-        classes: 'Các Lớp Học',
-        tntt: 'TNTT',
-        contact: 'Liên Hệ',
-      },
-      resources: {
-        title: 'Tài Nguyên',
-        materials: 'Tài Liệu Học Tập',
+        about: 'Về Trường',
         calendar: 'Lịch Học',
-        absence: 'Báo Nghỉ Học',
+        contact: 'Liên Hệ',
+        register: 'Ghi Danh',
       },
-      copyright: `© ${currentYear} Trường Việt Ngữ - Thiếu Nhi Thánh Thể. All rights reserved.`,
-      builtWith: 'Xây dựng với ❤️ cho Cộng Đồng Công Giáo Việt Nam',
+      community: {
+        title: 'Cộng Đoàn',
+        cttdvn: 'CTTĐVN Honolulu',
+        tomaThien: 'Toma Thiện',
+        langYouth: 'Làng Youth',
+        facebook: 'Facebook',
+      },
+      copyright: `© ${currentYear} Trường Việt Ngữ - TNTT Honolulu`,
     },
     en: {
-      about: {
-        title: 'About Us',
-        description: 'Vietnamese Language School - Eucharistic Youth Movement. Teaching Vietnamese and Catholic faith to the younger generation.',
-        aboutSchool: 'About School',
-        teachers: 'Our Teachers',
-        faq: 'FAQ',
-      },
-      links: {
-        title: 'Quick Links',
+      schoolName: 'Vietnamese Language School',
+      subtitle: 'Eucharistic Youth Movement',
+      description: 'Teaching Vietnamese language and Catholic faith to Vietnamese youth in Hawaii.',
+      address: '2250 Kuhio Ave, Honolulu, HI 96815',
+      email: 'info@truongvietngu.com',
+      phone: '(808) 123-4567',
+      pages: {
+        title: 'Pages',
         home: 'Home',
-        announcements: 'Announcements',
-        classes: 'Classes',
-        tntt: 'TNTT',
-        contact: 'Contact',
-      },
-      resources: {
-        title: 'Resources',
-        materials: 'Learning Materials',
+        about: 'About',
         calendar: 'Calendar',
-        absence: 'Absence Report',
+        contact: 'Contact',
+        register: 'Register',
       },
-      copyright: `© ${currentYear} Vietnamese Language School - TNTT. All rights reserved.`,
-      builtWith: 'Built with ❤️ for the Vietnamese Catholic Community',
+      community: {
+        title: 'Community',
+        cttdvn: 'VMCC Honolulu',
+        tomaThien: 'Toma Thien',
+        langYouth: 'Lang Youth',
+        facebook: 'Facebook',
+      },
+      copyright: `© ${currentYear} Vietnamese Language School - TNTT Honolulu`,
     },
   };
 
   const t = content[language];
 
   return (
-    <footer className="border-t border-slate-800 bg-slate-900 px-6 py-12 text-white lg:py-16 pb-24 lg:pb-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* About */}
+    <footer className="bg-slate-900 text-white py-16 pb-24 lg:pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* Column 1: School Info */}
           <div>
-            <h3 className="mb-4 font-serif text-lg font-bold text-yellow-400">
-              {t.about.title}
-            </h3>
-            <p className="text-sm leading-relaxed text-slate-300">
-              {t.about.description}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold font-serif text-yellow-400">
+                {t.schoolName}
+              </h3>
+              <p className="text-slate-400 text-sm">{t.subtitle}</p>
+            </div>
+            <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+              {t.description}
             </p>
-            <div className="mt-4 space-y-1 text-sm">
-              <Link href="/about" className="block text-slate-300 hover:text-yellow-400 transition-colors">
-                {t.about.aboutSchool}
-              </Link>
-              <Link href="/teachers" className="block text-slate-300 hover:text-yellow-400 transition-colors">
-                {t.about.teachers}
-              </Link>
-              <Link href="/faq" className="block text-slate-300 hover:text-yellow-400 transition-colors">
-                {t.about.faq}
-              </Link>
+            <div className="space-y-3 text-sm text-slate-300">
+              <div className="flex items-start gap-3">
+                <MapPin size={16} className="text-yellow-400 mt-0.5 flex-shrink-0" />
+                <span>{t.address}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail size={16} className="text-yellow-400 flex-shrink-0" />
+                <a
+                  href={`mailto:${t.email}`}
+                  className="hover:text-yellow-400 transition-colors"
+                >
+                  {t.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone size={16} className="text-yellow-400 flex-shrink-0" />
+                <a
+                  href={`tel:${t.phone.replace(/[^0-9]/g, '')}`}
+                  className="hover:text-yellow-400 transition-colors"
+                >
+                  {t.phone}
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Column 2: Pages */}
           <div>
-            <h3 className="mb-4 font-serif text-lg font-bold text-yellow-400">
-              {t.links.title}
-            </h3>
-            <ul className="space-y-2 text-sm">
+            <h4 className="text-lg font-bold text-white mb-6">
+              {t.pages.title}
+            </h4>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/"
                   className="text-slate-300 hover:text-yellow-400 transition-colors"
                 >
-                  {t.links.home}
+                  {t.pages.home}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/#announcements"
+                  href="/about"
                   className="text-slate-300 hover:text-yellow-400 transition-colors"
                 >
-                  {t.links.announcements}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#classes"
-                  className="text-slate-300 hover:text-yellow-400 transition-colors"
-                >
-                  {t.links.classes}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tntt"
-                  className="text-slate-300 hover:text-yellow-400 transition-colors"
-                >
-                  {t.links.tntt}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#contact"
-                  className="text-slate-300 hover:text-yellow-400 transition-colors"
-                >
-                  {t.links.contact}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="mb-4 font-serif text-lg font-bold text-yellow-400">
-              {t.resources.title}
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/materials"
-                  className="text-slate-300 hover:text-yellow-400 transition-colors"
-                >
-                  {t.resources.materials}
+                  {t.pages.about}
                 </Link>
               </li>
               <li>
@@ -156,87 +129,85 @@ export function Footer() {
                   href="/calendar"
                   className="text-slate-300 hover:text-yellow-400 transition-colors"
                 >
-                  {t.resources.calendar}
+                  {t.pages.calendar}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/absence-report"
+                  href="/contact"
                   className="text-slate-300 hover:text-yellow-400 transition-colors"
                 >
-                  {t.resources.absence}
+                  {t.pages.contact}
                 </Link>
+              </li>
+              <li>
+                <Link
+                  href="/register"
+                  className="text-slate-300 hover:text-yellow-400 transition-colors"
+                >
+                  {t.pages.register}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Community Links */}
+          <div>
+            <h4 className="text-lg font-bold text-white mb-6">
+              {t.community.title}
+            </h4>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a
+                  href="https://cttdvn-honolulu.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-yellow-400 transition-colors inline-flex items-center gap-1"
+                >
+                  {t.community.cttdvn}
+                  <ArrowUpRight size={12} />
+                </a>
               </li>
               <li>
                 <a
                   href="https://tomathien.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-300 hover:text-yellow-400 transition-colors"
+                  className="text-slate-300 hover:text-yellow-400 transition-colors inline-flex items-center gap-1"
                 >
-                  Toma Thien ↗
+                  {t.community.tomaThien}
+                  <ArrowUpRight size={12} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://langyouth.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-yellow-400 transition-colors inline-flex items-center gap-1"
+                >
+                  {t.community.langYouth}
+                  <ArrowUpRight size={12} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://facebook.com/truongvietngu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-yellow-400 transition-colors inline-flex items-center gap-1"
+                >
+                  {t.community.facebook}
+                  <ArrowUpRight size={12} />
                 </a>
               </li>
             </ul>
           </div>
-
-          {/* Newsletter & Contact */}
-          <div>
-            <NewsletterSignup variant="dark" />
-
-            {/* Contact Info */}
-            <div className="mt-6 space-y-2 text-sm text-slate-300">
-              <div className="flex items-center gap-2">
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-                <a href="mailto:info@truongvietngu.com" className="hover:text-yellow-400 transition-colors">
-                  info@truongvietngu.com
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                </svg>
-                <a href="tel:8081234567" className="hover:text-yellow-400 transition-colors">
-                  (808) 123-4567
-                </a>
-              </div>
-            </div>
-
-            {/* Social Media Icons */}
-            <div className="mt-4 flex items-center gap-4">
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="text-slate-300 hover:text-yellow-400 transition-colors"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                aria-label="YouTube"
-                className="text-slate-300 hover:text-yellow-400 transition-colors"
-              >
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-              </a>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 border-t border-slate-700 pt-8 text-center text-sm text-slate-400">
-          <p>
-            {t.copyright}
-          </p>
-          <p className="mt-2">
-            {t.builtWith}
-          </p>
+        <div className="mt-12 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+          <p>{t.copyright}</p>
         </div>
       </div>
     </footer>

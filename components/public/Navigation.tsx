@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, X, Menu, Home, BookOpen, Users, Calendar, Phone, User, Globe, UserPlus, Mail } from 'lucide-react';
+import { ChevronDown, X, Menu, Home, BookOpen, Users, Calendar, Phone, User, Globe, UserPlus, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface DropdownItem {
@@ -37,10 +37,10 @@ function NavDropdown({ label, items, lang, isScrolled }: NavDropdownProps) {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+        className={`flex items-center gap-1 text-sm font-bold uppercase tracking-wide transition-colors ${
           isScrolled
             ? 'text-slate-700 hover:text-red-700'
-            : 'text-white hover:text-yellow-400'
+            : 'text-slate-100 hover:text-yellow-400'
         }`}
       >
         {label}
@@ -52,7 +52,7 @@ function NavDropdown({ label, items, lang, isScrolled }: NavDropdownProps) {
             <Link
               key={item.href}
               href={item.href}
-              className="block px-4 py-2 text-sm text-slate-700 hover:bg-yellow-50 hover:text-red-700"
+              className="block px-4 py-2 text-sm text-slate-700 hover:bg-red-50 hover:text-red-700"
               onClick={() => setIsOpen(false)}
             >
               {lang === 'vi' ? item.label : item.labelEn}
@@ -116,63 +116,60 @@ export function Navigation() {
 
   return (
     <>
-      {/* Top Bar */}
-      <div className="hidden bg-slate-900 py-2 lg:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-6 text-sm text-slate-300">
-            <a href="tel:8081234567" className="flex items-center gap-2 hover:text-yellow-400 transition-colors">
-              <Phone className="h-4 w-4" />
-              (808) 123-4567
-            </a>
-            <a href="mailto:info@truongvietngu.com" className="flex items-center gap-2 hover:text-yellow-400 transition-colors">
-              <Mail className="h-4 w-4" />
-              info@truongvietngu.com
-            </a>
-          </div>
-          <button
-            onClick={() => setLanguage(language === 'vi' ? 'en' : 'vi')}
-            className="flex items-center gap-2 text-sm text-slate-300 hover:text-yellow-400 transition-colors"
+      {/* Top Bar - Community Link */}
+      <div className="bg-red-800 text-white py-1.5 px-4 text-xs font-medium relative z-50">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <span className="hidden sm:inline">Trang thông tin chính thức của Trường Việt Ngữ</span>
+          <a
+            href="https://cttdvn-honolulu.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 hover:text-yellow-300 transition-colors ml-auto sm:ml-0"
           >
-            <Globe className="h-4 w-4" />
-            {language === 'vi' ? 'English' : 'Tiếng Việt'}
-          </button>
+            Về Trang Chính Cộng Đoàn <ArrowUpRight size={12} />
+          </a>
         </div>
       </div>
 
       {/* Main Navigation */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed w-full z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white shadow-lg'
-          : 'bg-transparent'
+          ? 'bg-white shadow-lg py-2 top-0'
+          : 'bg-transparent py-4 top-7'
       }`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between lg:h-20">
+          <div className="flex items-center justify-between">
             {/* Logo/Brand */}
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center gap-2 sm:gap-3">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md border-2 border-red-800 overflow-hidden">
                 <Image
                   src="/uploads/logos/cttd.png"
                   alt="CTTD Logo"
-                  width={48}
-                  height={48}
-                  className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
+                  width={40}
+                  height={40}
+                  className="object-contain"
                 />
-                <span className={`font-serif text-lg sm:text-xl font-bold transition-colors ${
-                  isScrolled ? 'text-slate-900' : 'text-white'
-                }`}>
-                  Trường Việt Ngữ
+              </div>
+              <div className={`flex flex-col transition-colors ${
+                isScrolled ? 'text-slate-800' : 'text-slate-800 lg:text-white'
+              }`}>
+                <span className="text-[10px] font-bold uppercase tracking-wider opacity-90 mb-0.5">
+                  Cộng Đoàn CTTĐVN Honolulu
                 </span>
-              </Link>
-            </div>
+                <span className="font-bold text-xl leading-none tracking-tight font-serif">
+                  TRƯỜNG VIỆT NGỮ
+                </span>
+              </div>
+            </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex lg:items-center lg:gap-8">
+            <div className="hidden lg:flex lg:items-center lg:gap-6">
               <Link
                 href="/"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-bold uppercase tracking-wide transition-colors ${
                   isScrolled
                     ? 'text-slate-700 hover:text-red-700'
-                    : 'text-white hover:text-yellow-400'
+                    : 'text-slate-100 hover:text-yellow-400'
                 }`}
               >
                 {t('nav.home')}
@@ -180,20 +177,20 @@ export function Navigation() {
               <NavDropdown label={t('nav.about')} items={aboutItems} lang={language} isScrolled={isScrolled} />
               <Link
                 href="/blog"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-bold uppercase tracking-wide transition-colors ${
                   isScrolled
                     ? 'text-slate-700 hover:text-red-700'
-                    : 'text-white hover:text-yellow-400'
+                    : 'text-slate-100 hover:text-yellow-400'
                 }`}
               >
                 {t('nav.news')}
               </Link>
               <Link
                 href="/tntt"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-bold uppercase tracking-wide transition-colors ${
                   isScrolled
                     ? 'text-slate-700 hover:text-red-700'
-                    : 'text-white hover:text-yellow-400'
+                    : 'text-slate-100 hover:text-yellow-400'
                 }`}
               >
                 TNTT
@@ -201,20 +198,35 @@ export function Navigation() {
               <NavDropdown label={t('nav.resources')} items={resourceItems} lang={language} isScrolled={isScrolled} />
               <Link
                 href="/contact"
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-bold uppercase tracking-wide transition-colors ${
                   isScrolled
                     ? 'text-slate-700 hover:text-red-700'
-                    : 'text-white hover:text-yellow-400'
+                    : 'text-slate-100 hover:text-yellow-400'
                 }`}
               >
                 {t('nav.contact')}
               </Link>
               <NavDropdown label={t('nav.portal')} items={portalItems} lang={language} isScrolled={isScrolled} />
 
+              <div className={`h-6 w-px mx-2 ${isScrolled ? 'bg-slate-300' : 'bg-white/20'}`} />
+
+              {/* Language Toggle */}
+              <button
+                onClick={() => setLanguage(language === 'vi' ? 'en' : 'vi')}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border transition-all ${
+                  isScrolled
+                    ? 'border-slate-300 text-slate-600 hover:bg-slate-100'
+                    : 'border-white/30 text-white hover:bg-white/10'
+                }`}
+              >
+                <Globe size={14} />
+                {language === 'vi' ? 'VN' : 'EN'}
+              </button>
+
               {/* Register CTA */}
               <Link
                 href="/register"
-                className="rounded-lg bg-red-700 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-red-800 hover:shadow-lg"
+                className="bg-red-700 hover:bg-red-800 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-red-900/20 transition-all transform hover:-translate-y-0.5 text-sm uppercase"
               >
                 {t('nav.register')}
               </Link>
@@ -224,14 +236,14 @@ export function Navigation() {
             <div className="flex items-center gap-2 lg:hidden">
               <button
                 onClick={() => setLanguage(language === 'vi' ? 'en' : 'vi')}
-                className={`flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1 rounded-full px-2.5 py-1.5 text-xs font-bold border transition-colors ${
                   isScrolled
-                    ? 'text-slate-600 border border-slate-200'
-                    : 'text-white border border-white/30'
+                    ? 'text-slate-600 border-slate-200'
+                    : 'text-slate-800 lg:text-white border-white/30'
                 }`}
               >
-                <Globe className="h-4 w-4" />
-                {language === 'vi' ? 'EN' : 'VI'}
+                <Globe className="h-3.5 w-3.5" />
+                {language === 'vi' ? 'VN' : 'EN'}
               </button>
               <button
                 type="button"
@@ -239,11 +251,11 @@ export function Navigation() {
                 className={`inline-flex items-center justify-center rounded-md p-2 transition-colors ${
                   isScrolled
                     ? 'text-slate-700 hover:bg-slate-100'
-                    : 'text-white hover:bg-white/10'
+                    : 'text-slate-800 lg:text-white hover:bg-white/10'
                 }`}
                 aria-label="Open menu"
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-7 w-7" />
               </button>
             </div>
           </div>
@@ -279,7 +291,7 @@ export function Navigation() {
                 {/* Main Links */}
                 <Link
                   href="/"
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700 active:bg-yellow-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700 active:bg-red-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Home className="h-5 w-5" />
@@ -290,7 +302,7 @@ export function Navigation() {
                 <div>
                   <button
                     onClick={() => toggleMobileSubmenu('about')}
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700"
                   >
                     <span className="flex items-center gap-3">
                       <Users className="h-5 w-5" />
@@ -299,12 +311,12 @@ export function Navigation() {
                     <ChevronDown className={`h-5 w-5 transition-transform ${mobileSubmenus['about'] ? 'rotate-180' : ''}`} />
                   </button>
                   {mobileSubmenus['about'] && (
-                    <div className="ml-8 space-y-1 border-l-2 border-yellow-400/30 pl-4">
+                    <div className="ml-8 space-y-1 border-l-2 border-red-200 pl-4">
                       {aboutItems.map((item) => (
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="block rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-yellow-50 hover:text-red-700"
+                          className="block rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-red-50 hover:text-red-700"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {language === 'vi' ? item.label : item.labelEn}
@@ -316,7 +328,7 @@ export function Navigation() {
 
                 <Link
                   href="/blog"
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700 active:bg-yellow-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700 active:bg-red-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <BookOpen className="h-5 w-5" />
@@ -325,7 +337,7 @@ export function Navigation() {
 
                 <Link
                   href="/tntt"
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700 active:bg-yellow-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700 active:bg-red-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Users className="h-5 w-5" />
@@ -336,7 +348,7 @@ export function Navigation() {
                 <div>
                   <button
                     onClick={() => toggleMobileSubmenu('resources')}
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700"
                   >
                     <span className="flex items-center gap-3">
                       <Calendar className="h-5 w-5" />
@@ -345,12 +357,12 @@ export function Navigation() {
                     <ChevronDown className={`h-5 w-5 transition-transform ${mobileSubmenus['resources'] ? 'rotate-180' : ''}`} />
                   </button>
                   {mobileSubmenus['resources'] && (
-                    <div className="ml-8 space-y-1 border-l-2 border-yellow-400/30 pl-4">
+                    <div className="ml-8 space-y-1 border-l-2 border-red-200 pl-4">
                       {resourceItems.map((item) => (
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="block rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-yellow-50 hover:text-red-700"
+                          className="block rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-red-50 hover:text-red-700"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {language === 'vi' ? item.label : item.labelEn}
@@ -362,7 +374,7 @@ export function Navigation() {
 
                 <Link
                   href="/contact"
-                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700 active:bg-yellow-100"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700 active:bg-red-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Phone className="h-5 w-5" />
@@ -389,7 +401,7 @@ export function Navigation() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-yellow-50 hover:text-red-700 active:bg-yellow-100"
+                    className="flex items-center gap-3 rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-red-50 hover:text-red-700 active:bg-red-100"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <User className="h-5 w-5" />
@@ -401,7 +413,7 @@ export function Navigation() {
                 <div className="mt-6 px-3">
                   <Link
                     href="/register"
-                    className="block w-full rounded-lg bg-red-700 py-3 text-center font-semibold text-white hover:bg-red-800 active:bg-red-900"
+                    className="block w-full rounded-full bg-red-700 py-3 text-center font-bold text-white hover:bg-red-800 active:bg-red-900"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {t('nav.register')}
