@@ -20,7 +20,7 @@ export default async function AdminDashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50/50">
       {/* Sidebar */}
       <AdminSidebar session={session} />
 
@@ -30,12 +30,12 @@ export default async function AdminDashboardLayout({
         <AdminHeader session={session} />
 
         {/* Main Content */}
-        <main id="main-content" className="flex-1 p-6 lg:p-8">{children}</main>
+        <main id="main-content" className="flex-1 p-4 lg:p-6">{children}</main>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 bg-white px-6 py-4">
-          <p className="text-center text-sm text-gray-500">
-            © 2025 Trường Việt Ngữ - Thiếu Nhi Thánh Thể, Honolulu, HI
+        <footer className="px-6 py-4">
+          <p className="text-center text-xs text-gray-400">
+            © 2025 Trường Việt Ngữ - Thiếu Nhi Thánh Thể, Honolulu
           </p>
         </footer>
       </div>
