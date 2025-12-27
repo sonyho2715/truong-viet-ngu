@@ -273,7 +273,7 @@ export default function TeacherRegistrationPage() {
                 <p className="text-center text-sm text-gray-500">
                   Đã có tài khoản?{' '}
                   <Link
-                    href="/login/teacher"
+                    href="/teacher/login"
                     className="text-brand-navy hover:underline"
                   >
                     Đăng nhập
