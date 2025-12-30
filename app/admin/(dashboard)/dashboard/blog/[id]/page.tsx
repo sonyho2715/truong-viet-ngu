@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ArrowLeft, Save, Eye, Loader2, Trash2, Globe, EyeOff } from 'lucide-react';
+import { toast } from 'sonner';
 
 const categories = [
   { value: 'NEWS', label: 'Tin Tức' },
@@ -42,7 +44,6 @@ export default function EditBlogPostPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState('');
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [post, setPost] = useState<BlogPost | null>(null);
 
   const [formData, setFormData] = useState({
@@ -133,10 +134,13 @@ export default function EditBlogPostPage() {
         throw new Error(data.error || 'Có lỗi xảy ra');
       }
 
+      toast.success('Đã xóa bài viết thành công');
       router.push('/admin/dashboard/blog');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Có lỗi xảy ra');
+      const errorMessage = err instanceof Error ? err.message : 'Có lỗi xảy ra';
+      setError(errorMessage);
+      toast.error(errorMessage);
       setIsDeleting(false);
     }
   };
@@ -424,43 +428,24 @@ export default function EditBlogPostPage() {
             {/* Danger Zone */}
             <div className="rounded-xl border border-red-200 bg-red-50 p-6">
               <h2 className="mb-4 font-semibold text-red-900">Vùng nguy hiểm</h2>
-              {!showDeleteConfirm ? (
-                <button
-                  type="button"
-                  onClick={() => setShowDeleteConfirm(true)}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-red-300 bg-white px-4 py-3 font-semibold text-red-700 hover:bg-red-50"
-                >
-                  <Trash2 className="h-5 w-5" />
-                  Xóa bài viết
-                </button>
-              ) : (
-                <div className="space-y-3">
-                  <p className="text-sm text-red-700">
-                    Bạn có chắc chắn muốn xóa bài viết này? Hành động này không thể hoàn tác.
-                  </p>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      disabled={isDeleting}
-                      className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700 disabled:opacity-50"
-                    >
-                      {isDeleting ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        'Xác nhận xóa'
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setShowDeleteConfirm(false)}
-                      className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2 font-semibold text-gray-700 hover:bg-gray-50"
-                    >
-                      Hủy
-                    </button>
-                  </div>
-                </div>
-              )}
+              <ConfirmDialog
+                title="Xóa bài viết?"
+                message={`Bạn có chắc muốn xóa "${formData.title}"? Hành động này không thể hoàn tác.`}
+                confirmText="Xóa"
+                cancelText="Hủy"
+                variant="danger"
+                isLoading={isDeleting}
+                onConfirm={handleDelete}
+                trigger={
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-red-300 bg-white px-4 py-3 font-semibold text-red-700 hover:bg-red-50"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                    Xóa bài viết
+                  </button>
+                }
+              />
             </div>
           </div>
         </div>

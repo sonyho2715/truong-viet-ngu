@@ -18,7 +18,7 @@ interface Slide {
 const defaultSlides: Slide[] = [
   {
     id: 'default-1',
-    imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1920&q=80',
+    imageUrl: '/images/hero/tntt-group.jpg',
     title: null,
     subtitle: null,
     linkUrl: null,
@@ -26,15 +26,7 @@ const defaultSlides: Slide[] = [
   },
   {
     id: 'default-2',
-    imageUrl: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=1920&q=80',
-    title: null,
-    subtitle: null,
-    linkUrl: null,
-    linkText: null,
-  },
-  {
-    id: 'default-3',
-    imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1920&q=80',
+    imageUrl: '/images/hero/school-group.jpg',
     title: null,
     subtitle: null,
     linkUrl: null,

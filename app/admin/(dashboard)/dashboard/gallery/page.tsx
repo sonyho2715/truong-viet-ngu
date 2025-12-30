@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Plus, Edit, Trash2, Image as ImageIcon, Eye, EyeOff, FolderOpen } from 'lucide-react';
+import { toast } from 'sonner';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 
 interface Album {
   id: string;
@@ -23,7 +25,6 @@ export default function AdminGalleryPage() {
   const [loading, setLoading] = useState(true);
   const [editingAlbum, setEditingAlbum] = useState<Album | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -107,11 +108,14 @@ export default function AdminGalleryPage() {
         method: 'DELETE',
       });
       if (res.ok) {
+        toast.success('Đã xóa album thành công');
         fetchAlbums();
-        setDeleteId(null);
+      } else {
+        toast.error('Không thể xóa album');
       }
     } catch (error) {
       console.error('Failed to delete album:', error);
+      toast.error('Có lỗi xảy ra khi xóa album');
     }
   };
 
@@ -280,13 +284,23 @@ export default function AdminGalleryPage() {
                     <Edit className="h-4 w-4" />
                     Sửa
                   </button>
-                  <button
-                    onClick={() => setDeleteId(album.id)}
-                    className="flex flex-1 items-center justify-center gap-1 border-l border-gray-100 py-2 text-sm text-red-600 hover:bg-red-50"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Xóa
-                  </button>
+                  <ConfirmDialog
+                    title="Xóa album?"
+                    message={`Bạn có chắc muốn xóa "${album.title}"? Tất cả ảnh trong album cũng sẽ bị xóa.`}
+                    confirmText="Xóa"
+                    cancelText="Hủy"
+                    variant="danger"
+                    onConfirm={() => handleDelete(album.id)}
+                    trigger={
+                      <button
+                        type="button"
+                        className="flex flex-1 items-center justify-center gap-1 border-l border-gray-100 py-2 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Xóa
+                      </button>
+                    }
+                  />
                 </div>
               </div>
             ))}
@@ -414,31 +428,6 @@ export default function AdminGalleryPage() {
         </div>
       )}
 
-      {/* Delete Confirmation */}
-      {deleteId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900">Xác nhận xóa</h3>
-            <p className="mt-2 text-gray-600">
-              Bạn có chắc chắn muốn xóa album này? Tất cả ảnh trong album cũng sẽ bị xóa.
-            </p>
-            <div className="mt-4 flex justify-end gap-3">
-              <button
-                onClick={() => setDeleteId(null)}
-                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Hủy
-              </button>
-              <button
-                onClick={() => handleDelete(deleteId)}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-              >
-                Xóa
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

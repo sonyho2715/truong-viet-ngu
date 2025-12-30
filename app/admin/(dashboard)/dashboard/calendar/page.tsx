@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Calendar, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { toast } from 'sonner';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 
 interface CalendarEvent {
   id: string;
@@ -44,7 +46,6 @@ export default function AdminCalendarPage() {
   const [filterType, setFilterType] = useState<string>('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -79,11 +80,14 @@ export default function AdminCalendarPage() {
         method: 'DELETE',
       });
       if (res.ok) {
+        toast.success('Đã xóa sự kiện thành công');
         fetchEvents();
-        setDeleteId(null);
+      } else {
+        toast.error('Không thể xóa sự kiện');
       }
     } catch (error) {
       console.error('Failed to delete event:', error);
+      toast.error('Có lỗi xảy ra khi xóa sự kiện');
     }
   };
 
@@ -108,7 +112,7 @@ export default function AdminCalendarPage() {
           </p>
         </div>
         <Link
-          href="/admin/calendar/new"
+          href="/admin/dashboard/calendar/new"
           className="inline-flex items-center gap-2 rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white hover:bg-brand-navy/90"
         >
           <Plus className="h-4 w-4" />
@@ -160,7 +164,7 @@ export default function AdminCalendarPage() {
             <Calendar className="mx-auto h-12 w-12 text-gray-300" />
             <p className="mt-2 text-gray-600">Chưa có sự kiện nào</p>
             <Link
-              href="/admin/calendar/new"
+              href="/admin/dashboard/calendar/new"
               className="mt-4 inline-block text-brand-navy hover:underline"
             >
               Thêm sự kiện mới
@@ -238,17 +242,27 @@ export default function AdminCalendarPage() {
                   <td className="whitespace-nowrap px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link
-                        href={`/admin/calendar/${event.id}`}
+                        href={`/admin/dashboard/calendar/${event.id}`}
                         className="rounded p-1 text-gray-600 hover:bg-gray-100 hover:text-brand-navy"
                       >
                         <Edit className="h-4 w-4" />
                       </Link>
-                      <button
-                        onClick={() => setDeleteId(event.id)}
-                        className="rounded p-1 text-gray-600 hover:bg-red-100 hover:text-red-600"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                      <ConfirmDialog
+                        title="Xóa sự kiện?"
+                        message={`Bạn có chắc muốn xóa "${event.title}"? Hành động này không thể hoàn tác.`}
+                        confirmText="Xóa"
+                        cancelText="Hủy"
+                        variant="danger"
+                        onConfirm={() => handleDelete(event.id)}
+                        trigger={
+                          <button
+                            type="button"
+                            className="rounded p-1 text-gray-600 hover:bg-red-100 hover:text-red-600"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        }
+                      />
                     </div>
                   </td>
                 </tr>
@@ -283,34 +297,6 @@ export default function AdminCalendarPage() {
         )}
       </div>
 
-      {/* Delete Confirmation Modal */}
-      {deleteId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900">
-              Xác nhận xóa
-            </h3>
-            <p className="mt-2 text-gray-600">
-              Bạn có chắc chắn muốn xóa sự kiện này? Hành động này không thể
-              hoàn tác.
-            </p>
-            <div className="mt-4 flex justify-end gap-3">
-              <button
-                onClick={() => setDeleteId(null)}
-                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                Hủy
-              </button>
-              <button
-                onClick={() => handleDelete(deleteId)}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-              >
-                Xóa
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
