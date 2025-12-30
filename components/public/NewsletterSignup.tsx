@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { Mail, Loader2, CheckCircle } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface NewsletterSignupProps {
   variant?: 'light' | 'dark';
 }
 
 export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
+  const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,10 +35,10 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
         setEmail('');
         setName('');
       } else {
-        setError(data.error || 'Có lỗi xảy ra. Vui lòng thử lại.');
+        setError(data.error || t('home.newsletter.error'));
       }
     } catch {
-      setError('Không thể đăng ký. Vui lòng thử lại.');
+      setError(t('home.newsletter.networkError'));
     } finally {
       setLoading(false);
     }
@@ -61,14 +63,14 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
             isDark ? 'text-white' : 'text-gray-900'
           }`}
         >
-          Cảm ơn bạn đã đăng ký!
+          {t('home.newsletter.successTitle')}
         </p>
         <p
           className={`mt-1 text-sm ${
             isDark ? 'text-slate-200/80' : 'text-gray-600'
           }`}
         >
-          Bạn sẽ nhận được tin tức mới nhất từ trường.
+          {t('home.newsletter.successDescription')}
         </p>
       </div>
     );
@@ -81,7 +83,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
         <h3
           className={`font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}
         >
-          Nhận Tin Tức
+          {t('home.newsletter.title')}
         </h3>
       </div>
       <p
@@ -89,7 +91,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
           isDark ? 'text-slate-200/80' : 'text-gray-600'
         }`}
       >
-        Đăng ký để nhận thông báo về sự kiện và tin tức mới nhất.
+        {t('home.newsletter.description')}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-4 space-y-3">
@@ -103,7 +105,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Họ và tên"
+          placeholder={t('home.newsletter.namePlaceholder')}
           className={`w-full rounded-lg border px-4 py-2 text-sm focus:outline-none focus:ring-2 ${
             isDark
               ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-yellow-400'
@@ -117,7 +119,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email của bạn"
+            placeholder={t('home.newsletter.emailPlaceholder')}
             className={`flex-1 rounded-lg border px-4 py-2 text-sm focus:outline-none focus:ring-2 ${
               isDark
                 ? 'border-white/20 bg-white/10 text-white placeholder-white/60 focus:ring-yellow-400'
@@ -136,7 +138,7 @@ export function NewsletterSignup({ variant = 'light' }: NewsletterSignupProps) {
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              'Đăng ký'
+              t('home.newsletter.submit')
             )}
           </button>
         </div>

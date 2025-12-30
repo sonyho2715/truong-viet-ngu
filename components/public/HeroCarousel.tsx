@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BookOpen, Calendar, School } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface Slide {
   id: string;
@@ -35,6 +36,7 @@ const defaultSlides: Slide[] = [
 ];
 
 export function HeroCarousel() {
+  const { t } = useLanguage();
   const [slides, setSlides] = useState<Slide[]>(defaultSlides);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -108,18 +110,18 @@ export function HeroCarousel() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-yellow-300 font-medium text-sm mb-6">
             <School size={16} />
-            <span>Trực thuộc Cộng Đoàn Các Thánh Tử Đạo Việt Nam - Honolulu</span>
+            <span>{t('home.hero.badge')}</span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight font-serif">
-            Sống <span className="text-yellow-400">Đức Tin Kitô</span>,<br />
-            Giữ Gìn <span className="text-red-500">Hồn Việt</span>.
+            {t('home.hero.mainTitle1')} <span className="text-yellow-400">{t('home.hero.mainTitle2')}</span>,<br />
+            {t('home.hero.mainTitle3')} <span className="text-red-500">{t('home.hero.mainTitle4')}</span>.
           </h1>
 
           {/* Description */}
           <p className="text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl">
-            Nơi thế hệ trẻ không chỉ học tiếng mẹ đẻ mà còn được nuôi dưỡng trong tình yêu Thiên Chúa và truyền thống văn hóa dân tộc tại hải đảo Hawaii.
+            {t('home.hero.description')}
           </p>
 
           {/* CTA Buttons */}
@@ -129,14 +131,14 @@ export function HeroCarousel() {
               className="bg-red-700 hover:bg-red-800 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-red-900/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
             >
               <BookOpen size={20} />
-              Xem Chương Trình
+              {t('home.hero.viewProgram')}
             </Link>
             <Link
               href="/calendar"
               className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
             >
               <Calendar size={20} />
-              Lịch Khai Giảng
+              {t('home.hero.openingDate')}
             </Link>
           </div>
         </div>

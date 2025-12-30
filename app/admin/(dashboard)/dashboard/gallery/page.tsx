@@ -93,12 +93,18 @@ export default function AdminGalleryPage() {
         }),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(editingAlbum ? 'Đã cập nhật album thành công' : 'Đã tạo album thành công');
         fetchAlbums();
         setIsModalOpen(false);
+      } else {
+        toast.error(data.error || 'Không thể lưu album');
       }
     } catch (error) {
       console.error('Failed to save album:', error);
+      toast.error('Có lỗi xảy ra khi lưu album');
     }
   };
 
@@ -121,7 +127,7 @@ export default function AdminGalleryPage() {
 
   const toggleActive = async (album: Album) => {
     try {
-      await fetch(`/api/admin/gallery/${album.id}`, {
+      const res = await fetch(`/api/admin/gallery/${album.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -132,9 +138,16 @@ export default function AdminGalleryPage() {
           isActive: !album.isActive,
         }),
       });
-      fetchAlbums();
+      const data = await res.json();
+      if (res.ok && data.success) {
+        toast.success(album.isActive ? 'Đã ẩn album' : 'Đã hiện album');
+        fetchAlbums();
+      } else {
+        toast.error(data.error || 'Không thể thay đổi trạng thái');
+      }
     } catch (error) {
       console.error('Failed to toggle album:', error);
+      toast.error('Có lỗi xảy ra');
     }
   };
 
@@ -154,9 +167,13 @@ export default function AdminGalleryPage() {
       const data = await res.json();
       if (data.success) {
         setFormData({ ...formData, coverImage: data.url });
+        toast.success('Đã tải ảnh lên thành công');
+      } else {
+        toast.error(data.error || 'Không thể tải ảnh lên');
       }
     } catch (error) {
       console.error('Failed to upload image:', error);
+      toast.error('Có lỗi xảy ra khi tải ảnh lên');
     }
   };
 

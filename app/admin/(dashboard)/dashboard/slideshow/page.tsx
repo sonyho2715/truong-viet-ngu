@@ -91,12 +91,18 @@ export default function AdminSlideshowPage() {
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        toast.success(editingSlide ? 'Đã cập nhật slide thành công' : 'Đã thêm slide thành công');
         fetchSlides();
         setIsModalOpen(false);
+      } else {
+        toast.error(data.error || 'Không thể lưu slide');
       }
     } catch (error) {
       console.error('Failed to save slide:', error);
+      toast.error('Có lỗi xảy ra khi lưu slide');
     }
   };
 
@@ -119,14 +125,21 @@ export default function AdminSlideshowPage() {
 
   const toggleActive = async (slide: Slide) => {
     try {
-      await fetch(`/api/admin/slideshow/${slide.id}`, {
+      const res = await fetch(`/api/admin/slideshow/${slide.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...slide, isActive: !slide.isActive }),
       });
-      fetchSlides();
+      const data = await res.json();
+      if (res.ok && data.success) {
+        toast.success(slide.isActive ? 'Đã ẩn slide' : 'Đã hiện slide');
+        fetchSlides();
+      } else {
+        toast.error(data.error || 'Không thể thay đổi trạng thái');
+      }
     } catch (error) {
       console.error('Failed to toggle slide:', error);
+      toast.error('Có lỗi xảy ra');
     }
   };
 
@@ -146,9 +159,13 @@ export default function AdminSlideshowPage() {
       const data = await res.json();
       if (data.success) {
         setFormData({ ...formData, imageUrl: data.url });
+        toast.success('Đã tải ảnh lên thành công');
+      } else {
+        toast.error(data.error || 'Không thể tải ảnh lên');
       }
     } catch (error) {
       console.error('Failed to upload image:', error);
+      toast.error('Có lỗi xảy ra khi tải ảnh lên');
     }
   };
 
